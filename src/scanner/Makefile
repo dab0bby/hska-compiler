@@ -34,7 +34,7 @@ $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(HEADER_DIR)/%.h
 
 
 # Builds Scanner_Test executable
-scanner-executable: $(HEADER_DIR)/Scanner.h $(SOURCE_DIR)/Scanner_Test.cpp
+scanner-executable: clean scanner $(HEADER_DIR)/Scanner.h $(SOURCE_DIR)/Scanner_Test.cpp
 	@echo 'Building Scanner Test Executable ...'
 	$(CC) $(CFLAGS) $(SOURCE_DIR)/Scanner_Test.cpp -o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o
 	$(CC) $(LFLAGS) $(DEBUG_DIR)/Scanner_Test.o $(BUILD_DIR)/*.o $(STATE_MACHINE_DIR)/$(BUILD_DIR)/*.o $(BUFFER_DIR)/$(BUILD_DIR)/*.o $(SYMBOL_TABLE_DIR)/$(BUILD_DIR)/*.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test

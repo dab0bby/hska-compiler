@@ -11,22 +11,30 @@ DEBUG_DIR  = debug
 
 # Target
 BUILD_DIR  = build
+
+# List of targets
+TARGETS = $(BUILD_DIR)/StateMachine.o \
+	# add more here
+	# last without escape sequence
+
 EXECUTABLE = StateMachine
 
 
-# StateMachine.o depends on StateMachine.h and StateMachine.cpp
-state-machine: $(HEADER_DIR)/StateMachine.h $(SOURCE_DIR)/StateMachine.cpp
-	@echo 'Building StateMachine ...'
-	$(CC) $(CFLAGS) $(SOURCE_DIR)/StateMachine.cpp -o $(BUILD_DIR)/$(EXECUTABLE).o
+# Builds targets
+state-machine: clean $(TARGETS)
+
+$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(HEADER_DIR)/%.h
+	@echo $(CC) " $*.cpp"
+	$(CC) $(CFLAGS) $< -o $@
 
 
-# StateMachine_Test.o depends on StateMachine.h and StateMachine_Test.cpp
+# Builds StateMachine_Test object files.
 state-machine-test: $(HEADER_DIR)/StateMachine.h $(SOURCE_DIR)/StateMachine_Test.cpp
 	@echo 'Building StateMachine Test ...'
 	$(CC) $(CFLAGS) $(SOURCE_DIR)/StateMachine_Test.cpp -o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o
 
 
-# StateMachine_Test_Executable depends on StateMachine.o and StateMachine_Test.o
+# Builds StateMachine_Test executable.
 state-machine-test-executable: clean state-machine state-machine-test
 	@echo 'Building StateMachine Test Executable ...'
 	$(CC) $(LFLAGS) $(BUILD_DIR)/$(EXECUTABLE).o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test

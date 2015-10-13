@@ -8,10 +8,7 @@
 All components:  
 `make`
 
-Options: `scanner`, `buffer`, `state-machine`, `symbol-table`   
-`make [ option ]`
-
-Clean all `build/`directories:   
+Clean all `build/` and `debug/` directories:   
 `make clean`
 
 Target location:   
@@ -19,24 +16,23 @@ Target location:
 
 #### Buffer `src/buffer/`:
 `make clean`: clean up `debug/` and `build/` directory.   
-`make buffer`: builds `Buffer.o` into `build/`   
+`make buffer`: builds defined targets into `build/`   
 `make buffer-test`: builds `Buffer_Test.o` into `debug/`   
-`make buffer-test-executable`: builds `Buffer_Test` ececutable into `debug/`
+`make buffer-test-executable`: builds `Buffer_Test` executable and dependencies into `debug/`
 
 #### StateMachine `src/state-machine`:
 `make clean`: clean up `debug/` and `build/` directory.  
-`make state-machine`: builds `StateMachine.o` into `build/`   
+`make state-machine`: builds defined targets into `build/`   
 `make state-machine-test`: builds `StateMachine_Test.o` into `debug/`   
-`make state-machine-test-executable`: builds `StateMachine_Test` ececutable into `debug/`
-
-#### Scanner `src/scanner`:
-`make clean`: clean up `debug/` and `build/` directory.  
-`make state-machine`: builds `StateMachine.o` into `build/`   
-`make state-machine-test`: builds `StateMachine_Test.o` into `debug/`   
-`make state-machine-test-executable`: builds `StateMachine_Test` ececutable into `debug/`
+`make state-machine-test-executable`: builds `StateMachine_Test` executable and dependencies into `debug/`
 
 #### SymbolTable `src/symbol-table`:
 `make clean`: clean up `debug/` and `build/` directory.  
-`make symb-table`: builds `SymbolTable.o` into `build/`   
+`make symb-table`: builds defined targets into `build/`     
 `make symb-table-test`: builds `SymbolTable_Test.o` into `debug/`   
-`make symb-table-test-executable`: builds `SymbolTable_Test` ececutable into `debug/`
+`make symb-table-test-executable`: builds `SymbolTable_Test` executable and dependencies into `debug/`
+
+#### Scanner `src/scanner`:
+`make clean`: clean up `debug/` and `build/` directory.  
+`make scanner`: builds defined targets into `build/`     
+`make scanner-test-executable`: builds `Scanner_Test` executable and dependencies into `debug/`

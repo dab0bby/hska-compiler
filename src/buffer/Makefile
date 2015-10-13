@@ -11,25 +11,33 @@ DEBUG_DIR  = debug
 
 # Target
 BUILD_DIR  = build
+
+# List of targets
+TARGETS = $(BUILD_DIR)/Buffer.o \
+	# add more here
+	# last without escape sequence
+
 EXECUTABLE = Buffer
 
 
-# Buffer.o depends on Buffer.h and Buffer.cpp
-buffer: $(HEADER_DIR)/Buffer.h $(SOURCE_DIR)/Buffer.cpp
-	@echo 'Building Buffer ...'
-	$(CC) $(CFLAGS) $(SOURCE_DIR)/Buffer.cpp -o $(BUILD_DIR)/$(EXECUTABLE).o
+# Builds Targets and saves to BUILD_DIR
+buffer: clean $(TARGETS)
+
+$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(HEADER_DIR)/%.h
+	@echo $(CC) " $*.cpp"
+	$(CC) $(CFLAGS) $< -o $@
 
 
-# Buffer_Test.o depends on Buffer.h and Buffer_Test.cpp
+# Builds test Target
 buffer-test: $(HEADER_DIR)/Buffer.h $(SOURCE_DIR)/Buffer_Test.cpp
 	@echo 'Building Buffer Test ...'
 	$(CC) $(CFLAGS) $(SOURCE_DIR)/Buffer_Test.cpp -o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o
 
 
-# Buffer_Test_Executable depends on Buffer.o and Buffer_Test.o
+# Build test executable
 buffer-test-executable: clean buffer buffer-test
 	@echo 'Building Buffer Test Executable ...'
-	$(CC) $(LFLAGS) $(BUILD_DIR)/$(EXECUTABLE).o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
+	$(CC) $(LFLAGS) $(BUILD_DIR)/Buffer.o $(DEBUG_DIR)/Buffer_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
 
 
 # Cleaning up debug/ and build/ directory
