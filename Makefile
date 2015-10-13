@@ -21,7 +21,7 @@ all: clean state-machine scanner buffer symbol-table $(BUILD_DIR)/$(EXECUTABLE)
 
 
 state-machine:
-	$(MAKE) -C $(STATE_MACHINE_DIR)
+	$(MAKE) -C $(STATE_MACHINE_DIR) state-machine
 
 
 scanner:
