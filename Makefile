@@ -25,7 +25,7 @@ state-machine:
 
 
 scanner:
-	$(MAKE) -C $(SCANNER_DIR)
+	$(MAKE) -C $(SCANNER_DIR) scanner
 
 
 buffer:
@@ -33,11 +33,11 @@ buffer:
 
 
 symbol-table:
-	$(MAKE) -C $(SYM_TAB_DIR)
+	$(MAKE) -C $(SYM_TAB_DIR) symb-table
 
 
 clean:
-	rm -f build/*.*
+	rm -f build/*
 	rm -f $(SCANNER_DIR)/build/*
 	rm -f $(STATE_MACHINE_DIR)/build/*
 	rm -f $(BUFFER_DIR)/build/*

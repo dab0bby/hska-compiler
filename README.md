@@ -28,3 +28,15 @@ Target location:
 `make state-machine`: builds `StateMachine.o` into `build/`   
 `make state-machine-test`: builds `StateMachine_Test.o` into `debug/`   
 `make state-machine-test-executable`: builds `StateMachine_Test` ececutable into `debug/`
+
+#### Scanner `src/scanner`:
+`make clean`: clean up `debug/` and `build/` directory.  
+`make state-machine`: builds `StateMachine.o` into `build/`   
+`make state-machine-test`: builds `StateMachine_Test.o` into `debug/`   
+`make state-machine-test-executable`: builds `StateMachine_Test` ececutable into `debug/`
+
+#### SymbolTable `src/symbol-table`:
+`make clean`: clean up `debug/` and `build/` directory.  
+`make symb-table`: builds `SymbolTable.o` into `build/`   
+`make symb-table-test`: builds `SymbolTable_Test.o` into `debug/`   
+`make symb-table-test-executable`: builds `SymbolTable_Test` ececutable into `debug/`
