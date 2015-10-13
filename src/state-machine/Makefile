@@ -21,9 +21,9 @@ state-machine: $(HEADER_DIR)/StateMachine.h $(SOURCE_DIR)/StateMachine.cpp
 
 
 # StateMachine_Test.o depends on StateMachine.h and StateMachine_Test.cpp
-state-machine-test: $(HEADER_DIR)/StateMachine.h $(SOURCE_DIR)/$(EXECUTABLE)_Test.cpp
+state-machine-test: $(HEADER_DIR)/StateMachine.h $(SOURCE_DIR)/StateMachine_Test.cpp
 	@echo 'Building StateMachine Test ...'
-	$(CC) $(CFLAGS) $(SOURCE_DIR)/$(EXECUTABLE)_Test.cpp -o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o
+	$(CC) $(CFLAGS) $(SOURCE_DIR)/StateMachine_Test.cpp -o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o
 
 
 # StateMachine_Test_Executable depends on StateMachine.o and StateMachine_Test.o

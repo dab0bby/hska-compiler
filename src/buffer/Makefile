@@ -7,7 +7,7 @@ LFLAGS = -Wall $(DEBUG)
 # Sources
 HEADER_DIR = headers
 SOURCE_DIR = src
-DEBUG_DIR = debug
+DEBUG_DIR  = debug
 
 # Target
 BUILD_DIR  = build
