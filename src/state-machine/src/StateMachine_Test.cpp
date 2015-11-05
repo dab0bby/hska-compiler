@@ -7,4 +7,7 @@ int main ( int argc, char* argv[] )
 
     stateMachine = new StateMachine();
 
+
+
+    delete stateMachine;
 }
