@@ -3,6 +3,10 @@
 // template classes must have definition and implementation in a single file.
 //
 
+// todo: rewrite 50% of this class that the buffer is an array of pointers to the objects and not an array of objects
+// reason: It seems that if a new array is initialized, the default constructor of the array-type is called.
+//         But if the array-type has no default (parameterless) constructor, the compiler crashes.
+
 //
 // Created by timo on 05.11.15.
 //
@@ -17,7 +21,7 @@ class vector
 public:
     vector();
     vector(int initialSize);
-    vector(vector<T> &copy);
+    //vector(vector<T> &copy);
     ~vector();
 
     void add(const T &t);
@@ -34,14 +38,13 @@ public:
 private:
     void resize();
 
-    T *buffer;
+    T (*buffer)[];
     int index;
     int maxSize;
 
 };
 
 
-#endif //HSKA_COMPILER_VECTOR_H
 
 
 //
@@ -62,6 +65,7 @@ vector<T>::vector(int initialSize)
     maxSize = initialSize;
 }
 
+/*
 template <class T>
 vector::vector(vector<T> &copy)
 {
@@ -70,6 +74,7 @@ vector::vector(vector<T> &copy)
     buffer = new T[copy.maxSize];
     for (int i = 0; i < index; i++) buffer[i] = copy.buffer[i];
 }
+*/
 
 template <class T>
 vector<T>::~vector()
@@ -150,7 +155,7 @@ void vector<T>::resize()
         newBuf[i] = buffer[i];
     }
 
-    delete[] buffer;
+    delete[] *buffer;
     buffer = newBuf;
     maxSize *= 2;
 }
@@ -164,6 +169,8 @@ T vector<T>::get(int position)
 template <class T>
 T & vector<T>::operator[](int position)
 {
-    return buffer[position];
+    return *buffer[position];
 }
 
+
+#endif //HSKA_COMPILER_VECTOR_H

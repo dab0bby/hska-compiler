@@ -24,13 +24,14 @@ public:
     vector<Transition> getTransitions();
 
     bool isFinalState();
+    void setFinalState(bool isFinal);
 
     // Checks, which states can be reached through transitions that accept the input.
     // Returns the count of states that can be reached. All reached states are stored in the destinations array.
-    int findPaths(char input, State *destinations);
+    vector<State*> findPaths(char input, bool addEpsilon = false);
 
 private:
-    vector<Transition> *transitions;
+    vector<Transition> transitions;
     bool isFinal;
 
 };

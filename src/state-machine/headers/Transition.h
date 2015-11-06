@@ -13,12 +13,14 @@ public:
     Transition(State &first, State &second);
     Transition(State &first, State &second, char condition);
 
-    State getFirstState();
-    State getSecondState();
+    State *getFirstState();
+    State *getSecondState();
     char getCondition();
     bool isEpsilonTransition();
 
     bool operator ==(Transition other);
+
+    char*print();
 
 private:
     State *firstState, *secondState;

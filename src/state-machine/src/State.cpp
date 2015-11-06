@@ -6,7 +6,7 @@
 
 State::State()
 {
-    transitions = new vector<Transition>();
+    transitions = *(new vector<Transition>());
 }
 
 State::~State()
@@ -16,12 +16,12 @@ State::~State()
 Transition State::connect(State &other)
 {
     Transition *t = new Transition(*this, other);
-    for (int i = 0; i < transitions->size(); i++)
+    for (int i = 0; i < transitions.size(); i++)
     {
-        if (transitions->get(i) == *t)
+        if (transitions.get(i) == *t)
         {
             delete t;
-            return (*transitions)[i];
+            return transitions[i];
         }
     }
     return *t;
@@ -30,12 +30,12 @@ Transition State::connect(State &other)
 Transition State::connect(State other, char condition)
 {
     Transition *t = new Transition(*this, other, condition);
-    for (int i = 0; i < transitions->size(); i++)
+    for (int i = 0; i < transitions.size(); i++)
     {
-        if (transitions->get(i) == *t)
+        if (transitions.get(i) == *t)
         {
             delete t;
-            return (*transitions)[i];
+            return transitions[i];
         }
     }
     return *t;
@@ -43,15 +43,30 @@ Transition State::connect(State other, char condition)
 
 vector<Transition> State::getTransitions()
 {
-    return new vector<Transition>(transitions);  // todo: WHY?!?!?
+    return transitions;
 }
 
 bool State::isFinalState()
 {
-    return false;
+    return isFinal;
 }
 
-int State::findPaths(char input, State *destinations)
+vector<State*> State::findPaths(char input, bool allowEpsilon)
 {
-    return 0;
+    vector<State*> destinations = *(new vector<State*>());
+    for (int i = 0; i < transitions.size(); i++)
+    {
+        // check if transition's condition is matched or if it is an epsilon transition
+        if (transitions[i].getCondition() == input || (transitions[i].isEpsilonTransition() && allowEpsilon))
+        {
+            // add the state from the other side of the transition
+            destinations.add((transitions[i].getFirstState() == this) ? transitions[i].getSecondState() : transitions[i].getFirstState());
+        }
+    }
+    return destinations;
+}
+
+void State::setFinalState(bool isFinal)
+{
+    this->isFinal = isFinal;
 }

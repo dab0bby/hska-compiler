@@ -6,7 +6,7 @@
 
 Transition::Transition(State &first, State &second)
 {
-    Transition(first, second);
+    Transition(first, second, '\0');
     empty = true;
 }
 
@@ -17,14 +17,14 @@ Transition::Transition(State &first, State &second, char condition)
     this->condition = condition;
 }
 
-State Transition::getFirstState()
+State *Transition::getFirstState()
 {
-    return *firstState;
+    return firstState;
 }
 
-State Transition::getSecondState()
+State *Transition::getSecondState()
 {
-    return *secondState;
+    return secondState;
 }
 
 char Transition::getCondition()
@@ -42,4 +42,18 @@ bool Transition::operator ==(Transition other)
     return  (condition == other.condition) &&
             ((firstState == other.firstState && secondState == other.secondState) ||
             (firstState == other.secondState && secondState == other.firstState));
+}
+
+char *Transition::print()
+{
+    char string[] = "State -------> State";
+
+    if (!empty)
+    {
+        string[8] = ' ';
+        string[9] = condition;
+        string[10] = ' ';
+    }
+
+    return string;
 }
