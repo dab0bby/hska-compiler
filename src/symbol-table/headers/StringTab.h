@@ -6,14 +6,18 @@
 #define HSKA_COMPILER_STRINGTAB_H
 
 
+#include "StringTabNode.h"
+
 class StringTab {
 
 private:
     char* freeP; //Pointer auf Anfang des freien Bereichs
     int freeSpace;
 
+    StringTabEntry* first = nullptr;
 
 public:
+    StringTab();
     char* insert(char* lexem, int size);
 };
 

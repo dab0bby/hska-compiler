@@ -9,9 +9,18 @@
 class StringTabEntry {
 
 private:
-    char vector[];
+    char* vector;
     StringTabEntry* next = nullptr;
 public:
+    StringTabEntry();
+    char * getVector() const;
+    StringTabEntry* getNext() const;
+    void setNext(StringTabEntry* next);
+
+    static const int DEFAULT_SIZE = 512;
+
+
+
 
 };
 

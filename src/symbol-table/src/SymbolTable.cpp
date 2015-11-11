@@ -6,13 +6,12 @@
 
 SymbolTable::SymbolTable()
 {
-    // TODO Auto-generated constructor stub
-
+    stringTab = new StringTab();
 }
 
 SymbolTable::~SymbolTable()
 {
-    // TODO Auto-generated destructor stub
+
 }
 
 /**
@@ -30,7 +29,10 @@ int SymbolTable::hash(char* lexem) {
     return h;
 }
 
+/**
+ * Zur Vorbelegung der Symboltabelle mit Schlüsselworten
+ */
 void SymbolTable::initSymbols() {
-//    insert("while", TokenWhile);
+    //    insert("while", TokenWhile);
     //....
 }

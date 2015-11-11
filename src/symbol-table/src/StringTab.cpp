@@ -3,10 +3,20 @@
 //
 
 #include <string.h>
+#include <stdlib.h>
 #include "../headers/StringTab.h"
 
 
-char* StringTab::insert(char* lexem, int size){
+
+StringTab::StringTab() {
+
+    first = new StringTabEntry();
+    freeP = first->getVector();
+    freeSpace = StringTabEntry::DEFAULT_SIZE;
+
+}
+
+char* StringTab::insert(char* lexem, int size) {
     char* tmp = this->freeP;
     if (size < this->freeSpace) {
         memcpy(this->freeP, lexem, size + 1);
@@ -14,7 +24,22 @@ char* StringTab::insert(char* lexem, int size){
         this->freeP += size + 1;
         this->freeSpace -= size + 1;
     } else {
-        //TODO: Implement
+        StringTabEntry* newEntry = new StringTabEntry();
+        freeP = newEntry->getVector();
+        freeSpace = StringTabEntry::DEFAULT_SIZE;
+
+        StringTabEntry* entry = first;
+        while(entry->getNext()) {
+            entry = entry->getNext();
+        }
+        entry->setNext(newEntry);
+
+        tmp = freeP;
+        memcpy(this->freeP, lexem, size + 1);
+        this->freeP[size] = '\0';
+        this->freeP += size + 1;
+        this->freeSpace -= size + 1;
     }
+
     return tmp;
 }

@@ -1,7 +1,7 @@
 # Compiler
 CC     = g++
 DEBUG  = -g
-CFLAGS = -Wall -c $(DEBUG)
+CFLAGS = -Wall -c -std=c++11 -Wwrite-strings $(DEBUG)
 LFLAGS = -Wall $(DEBUG)
 
 # Sources
@@ -14,6 +14,10 @@ BUILD_DIR  = build
 
 # List of targets
 TARGETS = $(BUILD_DIR)/SymbolTable.o \
+	  $(BUILD_DIR)/Information.o \
+	  $(BUILD_DIR)/StringTab.o \
+	  $(BUILD_DIR)/StringTabEntry.o \
+	  $(BUILD_DIR)/SymbolTableEntry.o
 	# add more here
 	# last without escape sequence
 
