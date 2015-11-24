@@ -6,26 +6,23 @@
 #define HSKA_COMPILER_TRANSITION_H
 
 #include "Core.h"
+#include "../../utils/header/Helper.h"
 
+
+// The base class for the different transitions. A Transition connects two states of a state machine.
 class Transition
 {
 public:
     Transition(State &first, State &second);
-    Transition(State &first, State &second, char condition);
 
     State *getFirstState();
     State *getSecondState();
-    char getCondition();
-    bool isEpsilonTransition();
 
-    bool operator ==(Transition other);
-
-    char*print();
+    // Checks if the given char (input) passes this condition.
+    virtual bool accepts(char input) = 0;
 
 private:
     State *firstState, *secondState;
-    char condition;
-    bool empty;
 };
 
 #endif //HSKA_COMPILER_TRANSITION_H

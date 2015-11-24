@@ -6,42 +6,57 @@
 
 State::State()
 {
-    transitions = *(new vector<Transition>());
+    transitions = *(new vector<Transition*>());
 }
 
 State::~State()
 {
 }
 
-Transition State::connect(State &other)
+EpsilonTransition *State::connect(State &other)
 {
-    Transition *t = new Transition(*this, other);
+    EpsilonTransition *t = new EpsilonTransition(*this, other);
     for (int i = 0; i < transitions.size(); i++)
     {
-        if (transitions.get(i) == *t)
+        if (transitions.get(i) == t)
         {
             delete t;
-            return transitions[i];
+            return static_cast<EpsilonTransition*>(transitions[i]);
         }
     }
-    return *t;
+    return t;
 }
 
-Transition State::connect(State other, char condition)
+SingleCharTransition *State::connect(State other, char condition)
 {
-    Transition *t = new Transition(*this, other, condition);
+    SingleCharTransition *t = new SingleCharTransition(*this, other, condition);
     for (int i = 0; i < transitions.size(); i++)
     {
-        if (transitions.get(i) == *t)
+        if (transitions.get(i) == t)
         {
             delete t;
-            return transitions[i];
+            return static_cast<SingleCharTransition*>(transitions[i]);
         }
     }
-    return *t;
+    return t;
 }
 
-vector<Transition> State::getTransitions()
+
+MultiCharTransition *State::connect(State other, char *conditions)
+{
+    MultiCharTransition *t = new MultiCharTransition(*this, other, conditions);
+    for (int i = 0; i < transitions.size(); i++)
+    {
+        if (transitions.get(i) == t)
+        {
+            delete t;
+            return static_cast<MultiCharTransition*>(transitions[i]);
+        }
+    }
+    return t;
+}
+
+vector<Transition*> State::getTransitions()
 {
     return transitions;
 }
@@ -49,21 +64,6 @@ vector<Transition> State::getTransitions()
 bool State::isFinalState()
 {
     return isFinal;
-}
-
-vector<State*> State::findPaths(char input, bool allowEpsilon)
-{
-    vector<State*> destinations = *(new vector<State*>());
-    for (int i = 0; i < transitions.size(); i++)
-    {
-        // check if transition's condition is matched or if it is an epsilon transition
-        if (transitions[i].getCondition() == input || (transitions[i].isEpsilonTransition() && allowEpsilon))
-        {
-            // add the state from the other side of the transition
-            destinations.add((transitions[i].getFirstState() == this) ? transitions[i].getSecondState() : transitions[i].getFirstState());
-        }
-    }
-    return destinations;
 }
 
 void State::setFinalState(bool isFinal)

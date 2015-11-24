@@ -3,15 +3,16 @@
 //
 
 #include <iostream>
-#include "vector.h"
+#include "../header/vector.h"
 
+/*
 using namespace std;
 
 int main()
 {
     vector<int> v(4);
 
-    cout << "Tests for the vector-class:" << endl;
+    cout << "Tests for the utils-class:" << endl;
     cout << "- add(T &t)                    ";
     v.add(1);
     v.add(2);
@@ -26,3 +27,4 @@ int main()
     cout << endl;
 
 }
+ */

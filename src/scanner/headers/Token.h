@@ -7,6 +7,9 @@
 
 enum TType {
     //TODO: Add more Token Types
+    IDENTIFIER_TYPE,
+    OPERATOR_TYPE,
+
     ERROR_TYPE
 };
 

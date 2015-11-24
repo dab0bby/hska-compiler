@@ -21,7 +21,7 @@ class vector
 public:
     vector();
     vector(int initialSize);
-    //vector(vector<T> &copy);
+    //utils(utils<T> &copy);
     ~vector();
 
     void add(const T &t);
@@ -38,7 +38,7 @@ public:
 private:
     void resize();
 
-    T (*buffer)[];
+    T buffer[];
     int index;
     int maxSize;
 
@@ -61,13 +61,13 @@ vector<T>::vector()
 template <class T>
 vector<T>::vector(int initialSize)
 {
-    buffer = new T[initialSize];
+    *buffer = *(new T[initialSize]);
     maxSize = initialSize;
 }
 
 /*
 template <class T>
-vector::vector(vector<T> &copy)
+utils::utils(utils<T> &copy)
 {
     maxSize = copy.maxSize;
     index = copy.index;
@@ -169,7 +169,7 @@ T vector<T>::get(int position)
 template <class T>
 T & vector<T>::operator[](int position)
 {
-    return *buffer[position];
+    return buffer[position];
 }
 
 
