@@ -19,6 +19,7 @@ BUILD_DIR  = build
 
 # List of targets
 TARGETS = $(BUILD_DIR)/Scanner.o \
+		$(BUILD_DIR)/Token.o
 	# add more here
 	# last without escape sequence
 
