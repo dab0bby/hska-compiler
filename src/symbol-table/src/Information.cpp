@@ -3,3 +3,12 @@
 //
 
 #include "../headers/Information.h"
+
+Information::Information(TType type) : type(type) {
+
+}
+
+
+TType Information::getType() {
+    return this->type;
+}

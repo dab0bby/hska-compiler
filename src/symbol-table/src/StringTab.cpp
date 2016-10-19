@@ -16,7 +16,7 @@ StringTab::StringTab() {
 
 }
 
-char* StringTab::insert(char* lexem, int size) {
+char* StringTab::insert(char const *lexem, int size) {
     char* tmp = this->freeP;
     if (size < this->freeSpace) {
         memcpy(this->freeP, lexem, size + 1);

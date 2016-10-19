@@ -3,6 +3,7 @@
  */
 
 #include "../headers/SymbolTable.h"
+#include "../headers/SymbolTableEntry.h"
 
 SymbolTable::SymbolTable()
 {
@@ -33,6 +34,22 @@ int SymbolTable::hash(char* lexem) {
  * Zur Vorbelegung der Symboltabelle mit Schlüsselworten
  */
 void SymbolTable::initSymbols() {
-    //    insert("while", TokenWhile);
+    insert("while", TType::ERROR_TYPE);
     //....
 }
+
+/**
+ *
+ */
+SymbolTableEntry* SymbolTable::insert(char const *lexem, TType type) {
+
+}
+
+
+/**
+ *
+ */
+Information SymbolTable::lookup(SymbolTableEntry* key) {
+
+}
+

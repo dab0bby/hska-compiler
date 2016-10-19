@@ -3,11 +3,13 @@
  */
 #include "../headers/StringTab.h"
 #include "Information.h"
+#include "../../scanner/headers/Token.h"
 
 #ifndef SYMBOLTABLE_H_
 #define SYMBOLTABLE_H_
 
 
+class SymbolTableEntry;
 
 class SymbolTable
 {
@@ -24,8 +26,8 @@ public:
 
     int hash(char* lexem);
 
-    //Key insert(char* lexem);
-    //Information lookup(Key key);
+    SymbolTableEntry* insert(char const *lexem, TType type);
+    Information lookup(SymbolTableEntry* key);
 
 };
 

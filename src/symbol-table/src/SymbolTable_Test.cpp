@@ -1,22 +1,42 @@
+
 #include "../headers/SymbolTable.h"
 
 #include <iostream>
+#include "../headers/colormod.h"
 
 using namespace std;
 
 int main( int argc, char **argv )
 {
-
+    Color::Modifier red(Color::FG_RED);
+    Color::Modifier green(Color::FG_GREEN);
+    Color::Modifier def(Color::FG_DEFAULT);
     //Test SymTable
     SymbolTable* symbolTable;
 
     symbolTable = new SymbolTable();
 
     char test[] = "test";
+    char test3[] = "test";
     char test2[] = "test2";
-    std::cout << "Hash: " << symbolTable->hash(test) << std::endl;
-    std::cout << "Hash: " << symbolTable->hash(test) << std::endl;
-    std::cout << "Hash2: " << symbolTable->hash(test2) << std::endl;
+
+    cout << "Hash Test 1(Equal Hash)" << endl;
+    bool result = symbolTable->hash(test) == symbolTable->hash(test3);
+
+    if(result) {
+        cout << "Result: " << green << "\t[OK]" << def << endl;
+    } else {
+        cout << "Result: " << red << "\t[FAIL]" << def << endl;
+    }
+
+    cout << "Hash Test 2(Non equal Hash)" << endl;
+    result = symbolTable->hash(test) != symbolTable->hash(test2);
+
+    if(result) {
+        cout << "Result: " << green << "\t[OK]" << def << endl;
+    } else {
+        cout << "Result: " << red << "\t[FAIL]" << def << endl;
+    }
 
 
     //Test StringTab
