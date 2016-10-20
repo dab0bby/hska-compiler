@@ -2,7 +2,7 @@
 #include "../headers/SymbolTable.h"
 
 #include <iostream>
-#include "../headers/colormod.h"
+#include "../../utils/header/colormod.h"
 
 using namespace std;
 
@@ -11,6 +11,7 @@ int main( int argc, char **argv )
     Color::Modifier red(Color::FG_RED);
     Color::Modifier green(Color::FG_GREEN);
     Color::Modifier def(Color::FG_DEFAULT);
+    
     //Test SymTable
     SymbolTable* symbolTable;
 
