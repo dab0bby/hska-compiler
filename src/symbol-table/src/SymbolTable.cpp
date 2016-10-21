@@ -5,9 +5,15 @@
 #include "../headers/SymbolTable.h"
 #include "../headers/SymbolTableEntry.h"
 
+
 SymbolTable::SymbolTable()
 {
     stringTab = new StringTab();
+
+    //Necessary?
+    for(int i=0; i < TABLE_SIZE; i++) {
+        this->symTabEntries[i] = nullptr;
+    }
 }
 
 SymbolTable::~SymbolTable()
@@ -16,10 +22,10 @@ SymbolTable::~SymbolTable()
 }
 
 /**
- * Erzeugt einen Hash 8 Bit Hash
+ * Erzeugt einen Hash
  */
-int SymbolTable::hash(char* lexem) {
-    unsigned char h = 0;
+unsigned int SymbolTable::hash(char const* lexem) {
+    unsigned int h = 0;
 
     while( *lexem != 0)
     {
@@ -27,7 +33,7 @@ int SymbolTable::hash(char* lexem) {
         lexem++;
     }
 
-    return h;
+    return h % TABLE_SIZE;
 }
 
 /**
@@ -36,20 +42,50 @@ int SymbolTable::hash(char* lexem) {
 void SymbolTable::initSymbols() {
     insert("while", TType::ERROR_TYPE);
     //....
+    //TODO: Should this be done by the scanner?
 }
 
 /**
  *
  */
-SymbolTableEntry* SymbolTable::insert(char const *lexem, TType type) {
+Information* SymbolTable::insert(char const *lexem, TType type) {
+    // 1. Check if lexem is already in SymTab
+    // 2. If not insert and return Information
+    // 3. If yes, get Information and return
+
+    unsigned int hash = this->hash(lexem);
+
+
+    if(symTabEntries[hash] == nullptr) {
+        Information* info = new Information(type, lexem);
+        symTabEntries[hash] = new SymbolTableEntry(info);
+        numEntries++;
+        return info;
+    } else {
+        SymbolTableEntry* currentEntry = symTabEntries[hash];
+        do {
+            if(currentEntry->getInformation()->compareLex(lexem)) {
+                return currentEntry->getInformation();
+            } else {
+                if (currentEntry->getNext() != nullptr) {
+                    currentEntry = currentEntry->getNext();
+                }
+            }
+        } while(currentEntry->getNext() != nullptr);
+
+        //No lexem found
+        Information* info = new Information(type, lexem);
+        currentEntry->setNext(new SymbolTableEntry(info));
+        numEntries++;
+        return info;
+    }
+
 
 }
 
-
-/**
- *
- */
-Information SymbolTable::lookup(SymbolTableEntry* key) {
-
+unsigned int SymbolTable::getNumEntries() const {
+    return this->numEntries;
 }
+
+
 

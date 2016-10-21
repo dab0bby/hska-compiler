@@ -6,8 +6,21 @@
 #define HSKA_COMPILER_SYMBOLTABLEENTRY_H
 
 
+#include "Information.h"
+
 class SymbolTableEntry {
 
+private:
+    Information* information = nullptr;
+    SymbolTableEntry* next = nullptr;
+
+public:
+    SymbolTableEntry(Information * information);
+
+    void setNext(SymbolTableEntry* next);
+    SymbolTableEntry* getNext() const;
+
+    Information* getInformation() const;
 };
 
 

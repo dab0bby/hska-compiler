@@ -10,13 +10,13 @@
 class Information {
 private:
     TType type;
-
+    char* lexem;
 
 public:
-    Information(TType type);
+    Information(TType type, char const * lexem);
 
-    //virtual bool compareLex(char * lexem) = 0;
-    //virtual char * getName() = 0;
+    bool compareLex(char  const* lexem);
+    char const * getName();
 
     TType getType();
 };

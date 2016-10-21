@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <cstring>
+#include <stdio.h>
+#include <stdlib.h>
 #include "../../utils/header/colormod.h"
 
 using namespace std;
@@ -12,26 +14,54 @@ Color::Modifier green(Color::FG_GREEN);
 Color::Modifier def(Color::FG_DEFAULT);
 
 void comp(char * msg, char * str1, char * str2, bool expected);
-void comp(char * msg, int num1, int num2, bool expected);
+void comp(char * msg, unsigned int result,unsigned int expectedValue, bool expected);
+void comp(char * msg, Information * info1, Information * info2, bool expected);
 
 
 int main( int argc, char **argv )
 {
     cout << "====================================" << endl;
-    cout << "==      Hash Table Tests        ===" << endl;
+    cout << "==          Hash Tests           ===" << endl;
     cout << "====================================" << endl;
+
+    SymbolTable* symbolTable = new SymbolTable();
 
     char test[] = "test";
     char test2[] = "test2";
     char test3[] = "test";
 
-    SymbolTable* symbolTable = new SymbolTable();
+    comp("Test 1: Compare equal Hashs", symbolTable->hash(test), symbolTable->hash(test3), true);
+    comp("Test 2: Compare non equal Hashs", symbolTable->hash(test), symbolTable->hash(test2), false);
+    cout << endl << endl;
 
-    comp("Test 1: Equal Hash", symbolTable->hash(test), symbolTable->hash(test3), true);
-    comp("Test 2: Non equal Hash", symbolTable->hash(test), symbolTable->hash(test2), false);
+
+    cout << "====================================" << endl;
+    cout << "==      Symbol Table Tests       ===" << endl;
+    cout << "====================================" << endl;
+
+    Information* info1 = symbolTable->insert("test", TType::IDENTIFIER_TYPE);
+    Information* info2 = symbolTable->insert("test", TType::IDENTIFIER_TYPE);
+    Information* info3 = symbolTable->insert("test2", TType::IDENTIFIER_TYPE);
+    comp("Test 1: Compare equal lexems", info1, info2, true);
+    comp("Test 2: Compare non equal lexems", info2, info3, false);
+    comp("Test 3: Table contains 2 entries", symbolTable->getNumEntries(), 2, true);
+
+    Information* info4 = symbolTable->insert("test3", TType::IDENTIFIER_TYPE);
+    comp("Test 4: Table contains 3 entries", symbolTable->getNumEntries(), 3, true);
+
+
+    int numEntriesBefore = symbolTable->getNumEntries();
+    char buffer[6];
+    for(int i = 0; i < 10000; i++) {
+        sprintf(buffer,"%d",i);
+        symbolTable->insert(buffer, TType::IDENTIFIER_TYPE);
+    }
+    int numEntriesAfter = symbolTable->getNumEntries();
+    comp("Test 5: 10.000 new entries in SymbolTable", numEntriesAfter - numEntriesBefore, 10000, true);
 
 
     cout << endl << endl;
+
 
     cout << "====================================" << endl;
     cout << "==     String Table Tests        ===" << endl;
@@ -50,6 +80,11 @@ int main( int argc, char **argv )
     char c3[] = "essig12";
     char* str3 = stringTab->insert(c3, 5); // Wrong size, returned string should be trimmed by two characters
     comp("Test 3", c3, str3, false);
+
+    for(int i=0; i < 10000; i++) {
+        stringTab->insert("test", 4);
+    }
+    cout << "10.000 elements test:" << endl << green << "\t [OK]" << def << endl; //At least the app didn't crash after 10k inserts
 
 }
 
@@ -72,12 +107,22 @@ void comp(char * msg, char * str1, char * str2, bool expected) {
 /**
  * Check if the two integers are equal
  * @param msg
- * @param num1
- * @param num2
+ * @param result
+ * @param expectedValue
  * @param expected
  */
-void comp(char * msg, int num1, int num2, bool expected) {
-    bool result = num1 == num2;
+void comp(char * msg, unsigned int result, unsigned int expectedValue, bool expected) {
+
+    if((result == expectedValue) == expected) {
+        cout << msg << ": " << endl << green << "\t [OK]" << def << endl;
+    } else {
+        cout << msg << ": " << endl << red << "\t[FAIL]" << def << "Expected: " << expectedValue << " got: " << result << endl;
+    }
+}
+
+
+void comp(char * msg, Information* info1, Information* info2, bool expected) {
+    bool result = info1 == info2;
 
     if(result == expected) {
         cout << msg << ": " << endl << green << "\t [OK]" << def << endl;

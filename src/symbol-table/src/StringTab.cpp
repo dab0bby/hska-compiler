@@ -3,10 +3,7 @@
 //
 
 #include <string.h>
-#include <stdlib.h>
 #include "../headers/StringTab.h"
-
-
 
 StringTab::StringTab() {
 
@@ -16,6 +13,13 @@ StringTab::StringTab() {
 
 }
 
+
+/**
+ * Insert the given lexem into the StringTab, returns a pointer to the stored string
+ * @param lexem
+ * @param size
+ * @return
+ */
 char* StringTab::insert(char const *lexem, int size) {
     char* tmp = this->freeP;
     if (size < this->freeSpace) {
