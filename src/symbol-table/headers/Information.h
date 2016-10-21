@@ -15,6 +15,9 @@ private:
 public:
     Information(TType type);
 
+    //virtual bool compareLex(char * lexem) = 0;
+    //virtual char * getName() = 0;
+
     TType getType();
 };
 
