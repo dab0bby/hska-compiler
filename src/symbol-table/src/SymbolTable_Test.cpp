@@ -58,6 +58,7 @@ int main( int argc, char **argv )
     }
     int numEntriesAfter = symbolTable->getNumEntries();
     comp("Test 5: 10.000 new entries in SymbolTable", numEntriesAfter - numEntriesBefore, 10000, true);
+    //symbolTable->dumpSymbolDistribution();
 
 
     cout << endl << endl;

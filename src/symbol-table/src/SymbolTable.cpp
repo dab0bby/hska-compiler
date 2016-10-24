@@ -5,6 +5,10 @@
 #include "../headers/SymbolTable.h"
 #include "../headers/SymbolTableEntry.h"
 
+#include <iostream>
+
+using namespace std;
+
 
 SymbolTable::SymbolTable()
 {
@@ -86,6 +90,31 @@ Information* SymbolTable::insert(char const *lexem, TType type) {
 unsigned int SymbolTable::getNumEntries() const {
     return this->numEntries;
 }
+
+
+void SymbolTable::dumpSymbolDistribution() const {
+    cout << "Num Entires per Hash" << endl;
+
+    for(int i=0; i < TABLE_SIZE; i++) {
+        cout << "Hash " << i << ": " << countNumEntries(i) << endl;
+    }
+}
+
+int SymbolTable::countNumEntries( int hast) const {
+    if(this->symTabEntries[hast] == nullptr)
+        return 0;
+
+    int num = 1;
+    SymbolTableEntry* entry = this->symTabEntries[hast];
+    while(entry->getNext() != nullptr) {
+        entry = entry->getNext();
+        num++;
+    }
+
+    return num;
+}
+
+
 
 
 

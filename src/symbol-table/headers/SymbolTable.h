@@ -19,6 +19,8 @@ private:
     SymbolTableEntry* symTabEntries[TABLE_SIZE];
     unsigned int numEntries = 0;
 
+    int countNumEntries(int hast) const;
+
 public:
     SymbolTable();
     virtual ~SymbolTable();
@@ -30,6 +32,10 @@ public:
     Information* insert(char const *lexem, TType type);
 
     unsigned int getNumEntries() const;
+
+    void dumpSymbolDistribution() const;
+
+
 };
 
 #endif /* SYMBOLTABLE_H_ */
