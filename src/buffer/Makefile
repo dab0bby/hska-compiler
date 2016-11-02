@@ -5,12 +5,12 @@ CFLAGS = -Wall -c $(DEBUG)
 LFLAGS = -Wall $(DEBUG)
 
 # Sources
-HEADER_DIR = headers
+HEADER_DIR = include
 SOURCE_DIR = src
 DEBUG_DIR  = debug
 
 # Target
-BUILD_DIR  = build
+BUILD_DIR  = bin
 
 # List of targets
 TARGETS = $(BUILD_DIR)/Buffer.o \
@@ -43,5 +43,5 @@ buffer-test-executable: clean buffer buffer-test
 # Cleaning up debug/ and build/ directory
 clean:
 	@echo 'Cleaning up buffer directory ...'
-	rm -f build/*
-	rm -f debug/*
+	rm -rf $(BUILD_DIR) && mkdir $(BUILD_DIR)
+	rm -rf $(DEBUG_DIR) && mkdir $(DEBUG_DIR)
