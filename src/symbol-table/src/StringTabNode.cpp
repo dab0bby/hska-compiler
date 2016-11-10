@@ -3,7 +3,6 @@
 //
 
 #include <stdlib.h>
-#include <malloc.h>
 #include "../headers/StringTabNode.h"
 
 StringTabEntry::StringTabEntry() {
