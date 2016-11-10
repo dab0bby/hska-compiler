@@ -5,7 +5,7 @@ CFLAGS = -Wall -c $(DEBUG)
 LFLAGS = -Wall $(DEBUG)
 
 # Sources
-HEADER_DIR = headers
+HEADER_DIR = include
 SOURCE_DIR = src
 DEBUG_DIR  = debug
 
@@ -15,7 +15,7 @@ SYMBOL_TABLE_DIR  = ../symbol-table
 STATE_MACHINE_DIR = ../state-machine
 
 # Target
-BUILD_DIR  = build
+BUILD_DIR  = bin
 
 # List of targets
 TARGETS = $(BUILD_DIR)/Scanner.o \
@@ -41,8 +41,8 @@ scanner-executable: clean scanner $(HEADER_DIR)/Scanner.h $(SOURCE_DIR)/Scanner_
 	$(CC) $(LFLAGS) $(DEBUG_DIR)/Scanner_Test.o $(BUILD_DIR)/*.o $(STATE_MACHINE_DIR)/$(BUILD_DIR)/*.o $(BUFFER_DIR)/$(BUILD_DIR)/*.o $(SYMBOL_TABLE_DIR)/$(BUILD_DIR)/*.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
 
 
-# Cleaning up debug/ and build/ directory
+# Cleaning up debug/ and bin/ directory
 clean:
 	@echo 'Cleaning up scanner directory ...'
-	rm -f build/*
-	rm -f debug/*
+	rm -rf $(BUILD_DIR) && mkdir $(BUILD_DIR)
+	rm -rf $(DEBUG_DIR) && mkdir $(DEBUG_DIR)

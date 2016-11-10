@@ -8,9 +8,9 @@
  *
  */
 
-#include "../headers/Scanner.h"
 // #include "../../buffer/headers/Buffer.h"
 // #include "../../symbol-table/headers/SymbolTable.h"
+#include "../include/Scanner.h"
 #include <iostream>
 
 using namespace std;

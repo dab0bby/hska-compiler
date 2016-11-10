@@ -3,7 +3,7 @@
  */
 #include "../headers/StringTab.h"
 #include "Information.h"
-#include "../../scanner/headers/Token.h"
+#include "../../scanner/include/Token.h"
 
 #ifndef SYMBOLTABLE_H_
 #define SYMBOLTABLE_H_

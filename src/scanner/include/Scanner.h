@@ -1,3 +1,7 @@
+#ifndef SCANNER_H_
+#define SCANNER_H_
+
+
 /**
  * @file     Scanner.h
  * @author   Gennadi Eirich
@@ -9,16 +13,15 @@
  */
 
 
-#ifndef SCANNER_H_
-#define SCANNER_H_
-
 #include "../../symbol-table/headers/SymbolTable.h"
+
 
 class Scanner
 {
     public:
-        Scanner( char*, SymbolTable* );
+        Scanner(char*, SymbolTable* symbolTable);
         virtual ~Scanner();
+
         void nextToken();
 
     private:

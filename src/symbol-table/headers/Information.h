@@ -5,7 +5,7 @@
 #ifndef HSKA_COMPILER_INFORMATION_H
 #define HSKA_COMPILER_INFORMATION_H
 
-#include "../../scanner/headers/Token.h"
+#include "../../scanner/include/Token.h"
 
 class Information {
 private:

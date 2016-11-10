@@ -8,7 +8,8 @@
  *
  */
 
-#include "../headers/Scanner.h"
+
+#include "../include/Scanner.h"
 #include "../../symbol-table/headers/SymbolTable.h"
 
 
