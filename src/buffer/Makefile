@@ -40,7 +40,7 @@ buffer-test-executable: clean buffer buffer-test
 	$(CC) $(LFLAGS) $(BUILD_DIR)/Buffer.o $(DEBUG_DIR)/Buffer_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
 
 
-# Cleaning up debug/ and build/ directory
+# Cleaning up debug/ and bin/ directory
 clean:
 	@echo 'Cleaning up buffer directory ...'
 	rm -rf $(BUILD_DIR) && mkdir $(BUILD_DIR)

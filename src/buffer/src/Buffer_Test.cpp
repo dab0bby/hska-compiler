@@ -5,31 +5,50 @@
  * @version  1.0
  *
  * @brief    Test source file for the Buffer.
- *
  */
 
-#include "../headers/Buffer.h"
+
 #include <iostream>
 
-using namespace std;
+#include "../include/Buffer.h"
+#include "../../utils/header/colormod.h"
 
-int main( int argc, char** argv )
+
+Color::Modifier red(Color::FG_RED);
+Color::Modifier green(Color::FG_GREEN);
+Color::Modifier white(Color::FG_DEFAULT);
+
+
+int main(int argc, char** argv)
 {
-    std::cout << "Buffer Test" << std::endl;
+    std::cout << "--- buffer Test ---\n" << std::endl;
 
-    if ( argc != 3 )
+    if (argc != 2)
     {
-        argc < 3 ? fprintf ( stderr, "Less than 2 Argumets." ) : fprintf ( stderr, "Too many arguments." );
+        if (argc < 2)
+            std::cerr << "One Argument is required." << std::endl;
+        else
+            std::cerr << "Only one argument is allowed." << std::endl;
         return EXIT_FAILURE;
     }
 
-    std::cout << argv[ 1 ] << std::endl;
-    std::cout << argv[ 2 ] << std::endl;
+    std::cout << "Input file: " << argv[1] << "\n" << std::endl;
 
-    Buffer*  buffer;
-    buffer = new Buffer(  );
+    Buffer buffer(argv[1]);
 
-    // std::cout << buffer->getChar() << std::cout;
+    while (true)
+    {
+        char c = buffer.nextChar();
+        if (c == 0)
+        {
+            std::cout << "EOF reached" << std::endl;
+            break;
+        }
+//        else if (c == '\n')
+//            continue;
+        else
+            std::cout << buffer.getLineNum() << ":" << buffer.getColumnNum() << "  :  "  << c << std::endl;
+    }
 
     return EXIT_SUCCESS;
 }
