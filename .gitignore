@@ -1,10 +1,18 @@
 .DS_Store
 .idea/
 *.dSYM/
-build/
+bin/
 debug/
 
 # compiled sources
 ##########################
 *.o
 *.exe
+
+# LaTeX stuff
+##########################
+doc.pdf
+*.aux
+*.log
+*.gz
+*.toc

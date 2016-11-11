@@ -1,0 +1,60 @@
+\documentclass[
+    a4paper
+]{scrreprt}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp, expdlist, array, colortbl, xcolor}
+\usepackage[pdftex]{graphicx}
+\usepackage[TS1, T1]{fontenc}
+\usepackage{palatino} % Schriftart
+\usepackage{parskip} %Erste Zeile eines Paragrafen nicht einrücken
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+
+
+\begin{document}
+    \sffamily % Whole document sans-serif
+
+
+    % Titelseite
+    \begin{titlepage}
+        \centering
+        \includegraphics[width=0.8\textwidth]{./images/logo_hska.png}\par\vspace{1cm}
+        \vspace{1cm}
+
+        {\scshape\Large Systemnahes Programmieren\par}
+        \vspace{1.5cm}
+
+        {\huge\textbf{Compiler}\par}
+        \vspace{2cm}
+
+        {\Large\itshape Timo Blust, 48594\par}
+        {\Large\itshape Gennadi Eirich, 50629\par}
+        {\Large\itshape Tim Essig, 49683\par}
+
+        \vfill
+
+        % Bottom of the page
+        {\large \today\par}
+    \end{titlepage}
+
+
+    % Inhaltsverzeichnis
+    \tableofcontents
+
+
+    % Scanner
+    \chapter{Scanner}
+    \section{Symboltabelle}
+    
+    \section{Automat}
+    
+    \section{Scanner}
+    
+            
+	 % Parser
+%	\chapter{Parser}
+
+\end{document}
