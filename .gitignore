@@ -3,6 +3,7 @@
 *.dSYM/
 bin/
 debug/
+cmake-build-debug
 
 # compiled sources
 ##########################
