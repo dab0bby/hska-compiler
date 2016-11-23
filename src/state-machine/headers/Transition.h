@@ -23,9 +23,9 @@ public:
     bool accepts(char input);
 
 private:
-    State& _first;
-    const State& _second;
-    const Condition& _condition;    
+    State* _first;
+    const State* _second;
+    const Condition* _condition;    
 };
 
 #endif //HSKA_COMPILER_TRANSITION_H
