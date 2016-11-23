@@ -13,6 +13,7 @@
 
 #ifndef HSKA_COMPILER_VECTOR_H
 #define HSKA_COMPILER_VECTOR_H
+#include <memory>
 
 
 template <class T>
@@ -20,7 +21,8 @@ class vector
 {
 public:
     vector();
-    vector(int initialSize);
+    vector(int initialSize);    
+    vector(const vector<T>& copy);
     //utils(utils<T> &copy);
     ~vector();
 
@@ -28,19 +30,20 @@ public:
     void insert(int index, const T &t);
     void remove(const T &t);
     void remove(int position);
-    T get(int position);
-    T &operator [](int position);
+    T get(int position) const;
+    T& operator [](int position);
+    T& operator [](int position) const;
 
-    int size();
-    int currentCapacity();
+    int size() const;
+    int currentCapacity() const;
 
 
 private:
     void resize();
 
-    T buffer[];
+    T* buffer;
     int index;
-    int maxSize;
+    int bufferSize;
 
 };
 
@@ -53,16 +56,25 @@ private:
 
 
 template <class T>
-vector<T>::vector()
-{
-    vector(4);
+vector<T>::vector() : vector(4)
+{    
 }
 
 template <class T>
 vector<T>::vector(int initialSize)
 {
-    *buffer = *(new T[initialSize]);
-    maxSize = initialSize;
+    index = 0;
+    buffer = new T[initialSize];
+    bufferSize = initialSize;
+}
+
+template <class T>
+vector<T>::vector(const vector<T>& copy) : vector(copy.bufferSize)
+{
+    for (int i = 0; i < copy.size(); i++)
+        buffer[i] = copy[i];    
+    
+    index = copy.index;    
 }
 
 /*
@@ -95,7 +107,7 @@ void vector<T>::insert(int position, const T &t)
     if (position > index) return;
 
     // array is full -> reallocating memory
-    if (index >= maxSize) resize();
+    if (index >= bufferSize) resize();
 
     // move all elements after 'position' one level down
     for (int i = index; i > position; i--)
@@ -134,34 +146,34 @@ void vector<T>::remove(int position)
 }
 
 template <class T>
-int vector<T>::size()
+int vector<T>::size() const
 {
     return index;
 }
 
 template <class T>
-int vector<T>::currentCapacity()
+int vector<T>::currentCapacity() const
 {
-    return maxSize;
+    return bufferSize;
 }
 
 template <class T>
 void vector<T>::resize()
 {
-    T *newBuf = new T[maxSize * 2];
+    T *newBuf = new T[bufferSize * 2];
 
-    for (int i = 0; i < maxSize; i++)
+    for (int i = 0; i < bufferSize; i++)
     {
         newBuf[i] = buffer[i];
     }
 
-    delete[] *buffer;
+    delete[] buffer;
     buffer = newBuf;
-    maxSize *= 2;
+    bufferSize *= 2;
 }
 
 template <class T>
-T vector<T>::get(int position)
+T vector<T>::get(int position) const
 {
     return buffer[position];
 }
@@ -172,5 +184,10 @@ T & vector<T>::operator[](int position)
     return buffer[position];
 }
 
+template <class T>
+T & vector<T>::operator[](int position) const
+{
+    return buffer[position];
+}
 
 #endif //HSKA_COMPILER_VECTOR_H

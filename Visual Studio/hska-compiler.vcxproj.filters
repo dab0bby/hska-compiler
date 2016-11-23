@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="scanner">
+      <UniqueIdentifier>{f93877cc-cb08-4c77-879f-6e2e3ab67099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="state-machine">
+      <UniqueIdentifier>{1dfd9181-b52c-473f-ac67-c833e877b528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{4d31b82a-10bc-4dd1-8750-6cbf0d2a8019}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\state-machine\src\State.cpp">
+      <Filter>state-machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\state-machine\src\StateMachine.cpp">
+      <Filter>state-machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\state-machine\src\StateMachine_Test.cpp">
+      <Filter>state-machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\state-machine\src\Transition.cpp">
+      <Filter>state-machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scanner\src\Token.cpp">
+      <Filter>scanner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\state-machine\src\LanguageParser.cpp">
+      <Filter>state-machine</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\utils\header\colormod.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\header\Helper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\header\vector.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\headers\State.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\headers\StateMachine.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\headers\Transition.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\headers\Transitions.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scanner\include\Token.h">
+      <Filter>scanner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\headers\Condition.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\headers\LanguageParser.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\test-files\test_01.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
