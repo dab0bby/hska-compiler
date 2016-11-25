@@ -19,12 +19,12 @@ State::State(bool isFinal, int token) : State(isFinal)
     this->token = token;
 }
 
-State::State(State& other, Condition& condition, bool isFinal, int token) : State(other, condition, isFinal)
+State::State(State* other, Condition& condition, bool isFinal, int token) : State(other, condition, isFinal)
 {
     this->token = token;
 }
 
-State::State(State& other, Condition& condition, bool isFinal) : State(isFinal)
+State::State(State* other, Condition& condition, bool isFinal) : State(isFinal)
 {
     connect(other, condition);
 }
@@ -34,14 +34,14 @@ State::~State()
    // delete _transitions;
 }
 
-Transition& State::connect(const State& other, const Condition& condition)
+Transition* State::connect(const State* other, const Condition& condition)
 {
-    auto t = Transition(*this, other, condition);
+    auto t = new Transition(this, other, condition);
     addTransition(t);
     return t;
 }
 
-vector<Transition> State::getTransitions() const
+vector<Transition*> State::getTransitions() const
 {
     return _transitions;
 }
@@ -56,23 +56,23 @@ void State::setFinalState(bool isFinal)
     this->_isFinal = isFinal;
 }
 
-void State::addTransition(const Transition& t)
+void State::addTransition(const Transition* t)
 {
-    _transitions.add(t);
+    _transitions.add(const_cast<Transition* const&>(t));
 }
 
-void State::removeTransition(const Transition& t)
+void State::removeTransition(Transition const*  t)
 {
-    _transitions.remove(t);
+    _transitions.remove(const_cast<Transition* const&>(t));
 }
 
 bool State::accepts(char input, State& next) const
 {
     for (int i = 0; i < _transitions.size(); i++)
     {
-        if (_transitions[i].accepts(input))
+        if (_transitions[i]->accepts(input))
         {
-            next = _transitions[i].getSecondState();
+            next = *_transitions[i]->getSecondState();
             return true;
         }
     }

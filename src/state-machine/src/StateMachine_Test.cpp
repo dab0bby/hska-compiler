@@ -4,6 +4,7 @@
 
 using namespace std;
 
+/*
 int main ( int argc, char* argv[] )
 {
     char* testText =
@@ -66,3 +67,4 @@ int main ( int argc, char* argv[] )
     getchar();
     return 0;
 }
+*/

@@ -12,20 +12,20 @@ class State;
 class Transition
 {
 public:
-    Transition();
-    Transition(State& first, const State& second, const Condition& condition);
+    Transition(const Transition& other) = default;
+    Transition(State* first, const State* second, const Condition& condition);
     ~Transition();
 
-    const State& getFirstState() const;
-    const State& getSecondState() const;
-    const Condition& getCondition() const;
+    State* getFirstState() const;
+    State* getSecondState() const;
+    Condition& getCondition() const;
     
     bool accepts(char input);
 
 private:
     State* _first;
-    const State* _second;
-    const Condition* _condition;    
+    State* _second;
+    Condition& _condition;    
 };
 
 #endif //HSKA_COMPILER_TRANSITION_H

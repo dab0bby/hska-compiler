@@ -16,20 +16,20 @@ public:
     State();
     explicit State(bool isFinal);
     State(bool isFinal, int token);
-    State(State& other, Condition& condition, bool isFinal);
-    State(State& other, Condition& condition, bool isFinal, int token);
+    State(State* other, Condition& condition, bool isFinal);
+    State(State* other, Condition& condition, bool isFinal, int token);
 
     ~State();
 
     // Connects this state with another state through an epsilon transition.
-    Transition& connect(const State& other, const Condition& condition);
+    Transition* connect(const State* other, const Condition& condition);
 
-    vector<Transition> getTransitions() const;
+    vector<Transition*> getTransitions() const;
 
     bool isFinalState() const;
     void setFinalState(bool isFinal);
-    void addTransition(const Transition& t);
-    void removeTransition(const Transition& t);
+    void addTransition(const Transition* t);
+    void removeTransition(const Transition* t);
     bool accepts(char input, State& next) const;
     bool hasTransitions() const;
     int token;
@@ -37,7 +37,7 @@ public:
     static State empty;
 
 private:
-    vector<Transition> _transitions;
+    vector<Transition*> _transitions;
     bool _isFinal;
 };
 

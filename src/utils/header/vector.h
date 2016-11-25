@@ -22,15 +22,15 @@ class vector
 public:
     vector();
     vector(int initialSize);    
-    vector(const vector<T>& copy);
-    //utils(utils<T> &copy);
+    vector(const vector<T>& copy);    
     ~vector();
+
+    vector<T>& operator=(const vector<T>& other);
 
     void add(const T &t);
     void insert(int index, const T &t);
     void remove(const T &t);
     void remove(int position);
-    T get(int position) const;
     T& operator [](int position);
     T& operator [](int position) const;
 
@@ -38,21 +38,14 @@ public:
     int currentCapacity() const;
 
 
-private:
+private:    
     void resize();
 
     T* buffer;
-    int index;
+    int dataSize;
     int bufferSize;
 
 };
-
-
-
-
-//
-// Created by timo on 05.11.15.
-//
 
 
 template <class T>
@@ -63,7 +56,10 @@ vector<T>::vector() : vector(4)
 template <class T>
 vector<T>::vector(int initialSize)
 {
-    index = 0;
+    if (initialSize <= 0)
+        initialSize = 4;
+
+    dataSize = 0;    
     buffer = new T[initialSize];
     bufferSize = initialSize;
 }
@@ -74,19 +70,21 @@ vector<T>::vector(const vector<T>& copy) : vector(copy.bufferSize)
     for (int i = 0; i < copy.size(); i++)
         buffer[i] = copy[i];    
     
-    index = copy.index;    
+    dataSize = copy.dataSize;    
 }
 
-/*
 template <class T>
-utils::utils(utils<T> &copy)
+vector<T>& vector<T>::operator=(const vector<T>& other)
 {
-    maxSize = copy.maxSize;
-    index = copy.index;
-    buffer = new T[copy.maxSize];
-    for (int i = 0; i < index; i++) buffer[i] = copy.buffer[i];
+    delete[] buffer;
+    bufferSize = other.bufferSize;
+    dataSize = other.dataSize;
+
+    for (int i = 0; i < other.size(); i++)
+        buffer[i] = other[i];
+
+    return *this;
 }
-*/
 
 template <class T>
 vector<T>::~vector()
@@ -97,33 +95,30 @@ vector<T>::~vector()
 template <class T>
 void vector<T>::add(const T &t)
 {
-    insert(index, t);
+    insert(dataSize, t);
 }
 
 template <class T>
 void vector<T>::insert(int position, const T &t)
 {
-    // position is out of range
-    if (position > index) return;
+    if (position > dataSize || position < 0) 
+        return;
 
-    // array is full -> reallocating memory
-    if (index >= bufferSize) resize();
+    if (dataSize >= bufferSize) 
+        resize();
 
-    // move all elements after 'position' one level down
-    for (int i = index; i > position; i--)
-    {
-        buffer[i + 1] = buffer[i];
-    }
+    if (position < dataSize)
+        for (int i = dataSize; i > position; i--)    
+            buffer[i] = buffer[i - 1];    
 
-    // inserting the new element and increment the index (=size())
     buffer[position] = t;
-    index++;
+    dataSize++;
 }
 
 template <class T>
 void vector<T>::remove(const T &t)
 {
-    for (int i = 0; i < index; i++)
+    for (int i = 0; i < dataSize; i++)
     {
         if (&(buffer[i]) == &t)
         {
@@ -137,18 +132,18 @@ template <class T>
 void vector<T>::remove(int position)
 {
     // move all elements after 'position' one level up
-    for (int i = position; i < index - 1; i++)
+    for (int i = position; i < dataSize - 2; i++)
     {
         buffer[i] = buffer[i + 1];
     }
 
-    index--;
+    dataSize--;
 }
 
 template <class T>
 int vector<T>::size() const
 {
-    return index;
+    return dataSize;
 }
 
 template <class T>
@@ -160,22 +155,14 @@ int vector<T>::currentCapacity() const
 template <class T>
 void vector<T>::resize()
 {
-    T *newBuf = new T[bufferSize * 2];
-
+    auto tmp = new T[bufferSize * 2];
+    //memcpy(tmp, buffer, bufferSize * sizeof(T));
     for (int i = 0; i < bufferSize; i++)
-    {
-        newBuf[i] = buffer[i];
-    }
+        tmp[i] = buffer[i];
 
     delete[] buffer;
-    buffer = newBuf;
+    buffer = tmp;
     bufferSize *= 2;
-}
-
-template <class T>
-T vector<T>::get(int position) const
-{
-    return buffer[position];
 }
 
 template <class T>

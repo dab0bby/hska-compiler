@@ -35,6 +35,9 @@
     <ClCompile Include="..\src\state-machine\src\LanguageParser.cpp">
       <Filter>state-machine</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\utils\src\vector_test.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\utils\header\colormod.h">

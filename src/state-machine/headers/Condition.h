@@ -50,7 +50,7 @@ private:
 class NotCondition : public Condition
 {
 public:
-    explicit NotCondition(Condition& unallowed) : _condition(unallowed) {};
+    explicit NotCondition(const Condition& unallowed) : _condition(unallowed) {};
 
 	bool accepts(char input) const override
 	{
@@ -58,7 +58,7 @@ public:
 	}
 
 private:
-	Condition& _condition;
+	const Condition& _condition;
 };
 
 
@@ -124,7 +124,7 @@ public:
     bool accepts(char input) const override
     {
         for (int i = 0; i < _conditions.size(); i++)            
-            if (_conditions.get(i)->accepts(input))
+            if (_conditions[i]->accepts(input))
                 return true;
 
         return false;

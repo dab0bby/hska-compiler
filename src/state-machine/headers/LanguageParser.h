@@ -23,6 +23,7 @@ public:
 
 private:    
     StateMachine* _sm;
+    vector<Transition*> states;
 };
 
 #endif //HSKA_COMPILER_LANGUAGEPARSER_H
