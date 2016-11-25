@@ -13,15 +13,17 @@
 #include "../../symbol-table/headers/SymbolTable.h"
 
 
-Scanner::Scanner( char*, SymbolTable* )
+Scanner::Scanner(char*, SymbolTable* symbolTable)
 {
     // TODO Auto-generated constructor stub
 }
+
 
 Scanner::~Scanner()
 {
     // TODO Auto-generated destructor stub
 }
+
 
 void Scanner::nextToken()
 {
