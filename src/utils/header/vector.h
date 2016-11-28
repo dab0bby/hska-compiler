@@ -27,7 +27,7 @@ public:
 
     vector<T>& operator=(const vector<T>& other);
 
-    void add(const T &t);
+    void push_back(const T &t);
     void insert(int index, const T &t);
     void remove(const T &t);
     void remove(int position);
@@ -93,7 +93,7 @@ vector<T>::~vector()
 }
 
 template <class T>
-void vector<T>::add(const T &t)
+void vector<T>::push_back(const T &t)
 {
     insert(dataSize, t);
 }

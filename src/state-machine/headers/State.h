@@ -7,22 +7,26 @@
 
 #include "Transition.h"
 #include "Condition.h"
-#include "../../utils/header/vector.h"
+//#include "../../utils/header/vector.h"
 
+#include "vector"
+
+using namespace std;
 
 class State
 {
 public:
     State();
+    State(const State& other);
     explicit State(bool isFinal);
     State(bool isFinal, int token);
-    State(State* other, Condition& condition, bool isFinal);
-    State(State* other, Condition& condition, bool isFinal, int token);
+    State(int other, Condition* condition, bool isFinal);
+    State(int other, Condition* condition, bool isFinal, int token);
 
     ~State();
 
     // Connects this state with another state through an epsilon transition.
-    Transition* connect(const State* other, const Condition& condition);
+    Transition* connect(int other, const Condition* condition);
 
     vector<Transition*> getTransitions() const;
 
@@ -30,7 +34,7 @@ public:
     void setFinalState(bool isFinal);
     void addTransition(const Transition* t);
     void removeTransition(const Transition* t);
-    bool accepts(char input, State& next) const;
+    bool accepts(char input, int& next) const;
     bool hasTransitions() const;
     int token;
 

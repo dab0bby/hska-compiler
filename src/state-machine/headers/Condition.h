@@ -1,7 +1,10 @@
 #ifndef CONDITION_H
 #define CONDITION_H
 
-#include "../../utils/header/vector.h"
+//#include "../../utils/header/vector.h"
+#include "vector"
+
+using namespace std;
 
 class Condition
 {
@@ -35,11 +38,11 @@ public:
 
 	bool accepts(char input) const override
 	{
-		int i = 0;
-		while (_chars[i] != '\0')
-			if (input == _chars[i])
-				return true;
-
+		int i = -1;
+        while (_chars[++i] != '\0')        
+            if (input == _chars[i])
+                return true;
+        
 		return false;
 	}
 
@@ -50,15 +53,20 @@ private:
 class NotCondition : public Condition
 {
 public:
-    explicit NotCondition(const Condition& unallowed) : _condition(unallowed) {};
+    explicit NotCondition(const Condition* unallowed) : _condition(unallowed) {};
+
+    ~NotCondition()
+    {
+        delete _condition;
+    }
 
 	bool accepts(char input) const override
 	{
-        return !_condition.accepts(input);
+        return !_condition->accepts(input);
 	}
 
 private:
-	const Condition& _condition;
+	const Condition* _condition;
 };
 
 
@@ -93,32 +101,22 @@ public:
 class MultiCondition : public Condition
 {
 public:
-    MultiCondition( Condition* c) 
+    MultiCondition(Condition* c) 
     {
-        _conditions.add(c);
+        _conditions.push_back(c);
     } 
 
-    MultiCondition( Condition* c1,  Condition* c2)
+    MultiCondition(Condition* c1,  Condition* c2)
     {
-        _conditions.add(c1);
-        _conditions.add(c2);
+        _conditions.push_back(c1);
+        _conditions.push_back(c2);
     }
 
-    MultiCondition( Condition* c1,  Condition* c2,  Condition* c3)
+    MultiCondition(Condition* c1,  Condition* c2,  Condition* c3)
     {
-        _conditions.add(c1);
-        _conditions.add(c2);
-        _conditions.add(c3);
-    }
-
-    void add( Condition* condition)
-    {
-        _conditions.add(condition);
-    }
-
-    void remove( Condition* condition)
-    {
-        _conditions.remove(condition);
+        _conditions.push_back(c1);
+        _conditions.push_back(c2);
+        _conditions.push_back(c3);
     }
 
     bool accepts(char input) const override

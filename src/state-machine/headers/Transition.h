@@ -13,19 +13,19 @@ class Transition
 {
 public:
     Transition(const Transition& other) = default;
-    Transition(State* first, const State* second, const Condition& condition);
+    Transition(/*int first,*/ int target, const Condition* condition);
     ~Transition();
 
-    State* getFirstState() const;
-    State* getSecondState() const;
-    Condition& getCondition() const;
+    //int getFirstState() const;
+    int getTarget() const;
+    Condition* getCondition() const;
     
     bool accepts(char input);
 
 private:
-    State* _first;
-    State* _second;
-    Condition& _condition;    
+   // int _first;
+    int _target;
+    Condition* _condition;    
 };
 
 #endif //HSKA_COMPILER_TRANSITION_H

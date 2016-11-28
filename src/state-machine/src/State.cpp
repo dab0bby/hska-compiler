@@ -3,6 +3,8 @@
 //
 
 #include "../headers/State.h"
+#include <iostream>
+#include "../../scanner/include/Token.h"
 
 State State::empty = State();
 
@@ -19,12 +21,12 @@ State::State(bool isFinal, int token) : State(isFinal)
     this->token = token;
 }
 
-State::State(State* other, Condition& condition, bool isFinal, int token) : State(other, condition, isFinal)
+State::State(int other, Condition* condition, bool isFinal, int token) : State(other, condition, isFinal)
 {
     this->token = token;
 }
 
-State::State(State* other, Condition& condition, bool isFinal) : State(isFinal)
+State::State(int other, Condition* condition, bool isFinal) : State(isFinal)
 {
     connect(other, condition);
 }
@@ -34,9 +36,9 @@ State::~State()
    // delete _transitions;
 }
 
-Transition* State::connect(const State* other, const Condition& condition)
+Transition* State::connect(int other, const Condition* condition)
 {
-    auto t = new Transition(this, other, condition);
+    auto t = new Transition(other, condition);
     addTransition(t);
     return t;
 }
@@ -58,25 +60,30 @@ void State::setFinalState(bool isFinal)
 
 void State::addTransition(const Transition* t)
 {
-    _transitions.add(const_cast<Transition* const&>(t));
+    _transitions.push_back(const_cast<Transition* const&>(t));
 }
 
 void State::removeTransition(Transition const*  t)
 {
-    _transitions.remove(const_cast<Transition* const&>(t));
+    //_transitions.remove(const_cast<Transition* const&>(t));
+    
 }
 
-bool State::accepts(char input, State& next) const
+bool State::accepts(char input, int& next) const
 {
+    //cout << "checking for " << Token::getTokenName(token);
+
     for (int i = 0; i < _transitions.size(); i++)
     {
         if (_transitions[i]->accepts(input))
         {
-            next = *_transitions[i]->getSecondState();
+            next = _transitions[i]->getTarget();
+        //    cout << " accept" << endl;
             return true;
         }
     }
 
+    //cout << " faield" << endl;
     return false;
 }
 

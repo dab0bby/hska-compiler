@@ -1,70 +1,50 @@
 
 #include "../headers/LanguageParser.h"
 #include <iostream>
+#include "../../symbol-table/headers/Information.h"
 
 using namespace std;
 
-/*
+
 int main ( int argc, char* argv[] )
 {
     char* testText =
-        "X: = 3 + 4;\n"
-        ": *eine einfache Aufgabe !!* : ? y : = 7 = : = X : (X – 4);\n"
-        "Z: = ((3 + 4 – 6);\n"
-        "Resultat: = : X y %";
-
-    char* tokenNames[] =
-    {
-        "NONE",
-
-        "PLUS",
-        "MINUS",
-        "STAR",
-        "COLON",
-        "IF",
-        "WHILE",
-        "INTEGER",
-        "IDENTIFIER",
-        "SEMICOLON",
-        "GREATER",
-        "LESS",
-        "EQUAL",
-        "ASSIGN",
-        "UNKNOWN_BULLSHIT_OPERATOR",
-        "NOT",
-        "AND",
-        "BRACKET_OPEN",
-        "BRACKET_CLOSE",
-        "SQUARE_BRACKET_OPEN",
-        "SQUARE_BRACKET_CLOSE",
-        "CURLY_BRACKET_OPEN",
-        "CURLY_BRACKET_CLOSE",
-        "IGNORE",                     // white spaces and comments
-        "ERROR",
-
-        "STATE_TBD",      // special state (no valid token found right now)
-        "STATE_FAILED"    // special state (no valid token can be found any further)        
-    };
-    
+        ":* Comment *: "
+        ": * Invalid Comment *: "
+        "X := 3 + 4; "
+        "Z := 3 + 4; "
+        "X = Z; "
+        "Resultat := X : Z; "
+        "WTF =:= IsThat; "
+        "Y := X && Z";
+        
     cout << "Testing state-machine with input: " << endl << testText << endl << endl;
 
     LanguageParser lp;
     
     int i = 0;
-    while(auto c = testText[i++] != '\0')
+    char c;
+    int lastToken = Token::NONE;
+
+    while((c = testText[i++]) != '\0')
     {
         auto token = lp.parse(c);
-        cout << i << " - " << c << " - " << tokenNames[token] << endl;
-        
-        if (token != Token::ERROR && lp.forecast(testText[i]) == token)
-            continue;
+        bool suppressCout = false;
 
-        if (token == Token::ERROR || token != Token::NONE)
+        if (lp.needsReset())
+        {
             lp.reset();
+            if ((suppressCout = token == Token::ERROR && lastToken != Token::ERROR))
+                i--;
+        }
+
+        if (!suppressCout)
+            cout << i << " - " << c << " - " << Token::getTokenName(token) << endl;   
+
+        lastToken = token;
     }
 
     cout << "finished";
     getchar();
     return 0;
 }
-*/

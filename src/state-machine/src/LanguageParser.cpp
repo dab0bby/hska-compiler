@@ -3,91 +3,87 @@
 //
 
 #include "../headers/LanguageParser.h"
+#include "../../symbol-table/headers/Information.h"
+
 
 LanguageParser::LanguageParser()
 {
-    auto whitespace = StringCondition(" \t\n\r");
-    auto digit = StringCondition("0123456789");
-    auto lowerCase = CharRangeCondition('a', 'z');
-    auto upperCase = CharRangeCondition('A', 'Z');
-    auto letter = MultiCondition(&lowerCase, &upperCase);
 
-    vector<State*> states;
-    /* 00 */ states.add(new State(true, Token::IGNORE));
-    /* 01 */ states.add(new State(false, Token::COLON));
-    /* 02 */ states.add(new State(false, Token::IGNORE));
-    /* 03 */ states.add(new State(false, Token::NONE));
-    /* 04 */ states.add(new State(true, Token::IGNORE));
-    /* 05 */ states.add(new State(true, Token::ASSIGN));
-    /* 06 */ states.add(new State(true, Token::PLUS));
-    /* 07 */ states.add(new State(true, Token::MINUS));
-    /* 08 */ states.add(new State(true, Token::EQUAL));
-    /* 09 */ states.add(new State(false, Token::NONE));
-    /* 10 */ states.add(new State(true, Token::UNKNOWN_BULLSHIT_OPERATOR));
-    /* 11 */ states.add(new State(false, Token::NONE));
-    /* 12 */ states.add(new State(true, Token::AND));
-    /* 13 */ states.add(new State(true, Token::INTEGER));
-    /* 14 */ states.add(new State(true, Token::IDENTIFIER));
-    /* 15 */ states.add(new State(true, Token::STAR));
-    /* 16 */ states.add(new State(true, Token::LESS));
-    /* 17 */ states.add(new State(true, Token::GREATER));
-    /* 18 */ states.add(new State(true, Token::NOT));
-    /* 19 */ states.add(new State(true, Token::SEMICOLON));
-    /* 20 */ states.add(new State(true, Token::BRACKET_OPEN));
-    /* 21 */ states.add(new State(true, Token::BRACKET_CLOSE));
-    /* 22 */ states.add(new State(true, Token::CURLY_BRACKET_OPEN));
-    /* 23 */ states.add(new State(true, Token::CURLY_BRACKET_CLOSE));
-    /* 24 */ states.add(new State(true, Token::SQUARE_BRACKET_OPEN));
-    /* 25 */ states.add(new State(true, Token::SQUARE_BRACKET_CLOSE));
 
-    
-    states[0]->connect(states[0], whitespace);
-    states[0]->connect(states[1], CharCondition(':'));
-    states[0]->connect(states[6], CharCondition('+'));
-    states[0]->connect(states[7], CharCondition('-'));
-    states[0]->connect(states[8], CharCondition('='));
-    states[0]->connect(states[11], CharCondition('&'));
-    states[0]->connect(states[13], digit);
-    states[0]->connect(states[14], letter);
-    states[0]->connect(states[15], CharCondition('*'));
-    states[0]->connect(states[16], CharCondition('<'));
-    states[0]->connect(states[17], CharCondition('>'));
-    states[0]->connect(states[18], CharCondition('!'));
-    states[0]->connect(states[19], CharCondition(';'));
-    states[0]->connect(states[20], CharCondition('('));
-    states[0]->connect(states[21], CharCondition(')'));
-    states[0]->connect(states[22], CharCondition('{'));
-    states[0]->connect(states[23], CharCondition('}'));
-    states[0]->connect(states[24], CharCondition('['));
-    states[0]->connect(states[25], CharCondition(']'));
+    /* 00 */ _states.push_back(new State(true, Token::IGNORE));
+    /* 01 */ _states.push_back(new State(false, Token::COLON));
+    /* 02 */ _states.push_back(new State(false, Token::IGNORE));
+    /* 03 */ _states.push_back(new State(false, Token::IGNORE));
+    /* 04 */ _states.push_back(new State(true, Token::IGNORE));
+    /* 05 */ _states.push_back(new State(true, Token::ASSIGN));
+    /* 06 */ _states.push_back(new State(true, Token::PLUS));
+    /* 07 */ _states.push_back(new State(true, Token::MINUS));
+    /* 08 */ _states.push_back(new State(true, Token::EQUAL));
+    /* 09 */ _states.push_back(new State(false, Token::NONE));
+    /* 10 */ _states.push_back(new State(true, Token::UNKNOWN_BULLSHIT_OPERATOR));
+    /* 11 */ _states.push_back(new State(false, Token::NONE));
+    /* 12 */ _states.push_back(new State(true, Token::AND));
+    /* 13 */ _states.push_back(new State(true, Token::INTEGER));
+    /* 14 */ _states.push_back(new State(true, Token::IDENTIFIER));
+    /* 15 */ _states.push_back(new State(true, Token::STAR));
+    /* 16 */ _states.push_back(new State(true, Token::LESS));
+    /* 17 */ _states.push_back(new State(true, Token::GREATER));
+    /* 18 */ _states.push_back(new State(true, Token::NOT));
+    /* 19 */ _states.push_back(new State(true, Token::SEMICOLON));
+    /* 20 */ _states.push_back(new State(true, Token::BRACKET_OPEN));
+    /* 21 */ _states.push_back(new State(true, Token::BRACKET_CLOSE));
+    /* 22 */ _states.push_back(new State(true, Token::CURLY_BRACKET_OPEN));
+    /* 23 */ _states.push_back(new State(true, Token::CURLY_BRACKET_CLOSE));
+    /* 24 */ _states.push_back(new State(true, Token::SQUARE_BRACKET_OPEN));
+    /* 25 */ _states.push_back(new State(true, Token::SQUARE_BRACKET_CLOSE));
 
-    states[1]->connect(states[2], CharCondition('*'));
-    states[1]->connect(states[5], CharCondition('='));
-  
-    states[2]->connect(states[2], NotCondition(CharCondition('*')));
-    states[2]->connect(states[3], CharCondition('*'));
+    _states[0]->connect(0, _whitespace);
+    _states[0]->connect(1, new CharCondition(':'));
+    _states[0]->connect(6, new CharCondition('+'));
+    _states[0]->connect(7, new CharCondition('-'));
+    _states[0]->connect(8, new CharCondition('='));
+    _states[0]->connect(11, new CharCondition('&'));
+    _states[0]->connect(13, _digit);
+    _states[0]->connect(14, _letter);
+    _states[0]->connect(15, new CharCondition('*'));
+    _states[0]->connect(16, new CharCondition('<'));
+    _states[0]->connect(17, new CharCondition('>'));
+    _states[0]->connect(18, new CharCondition('!'));
+    _states[0]->connect(19, new CharCondition(';'));
+    _states[0]->connect(20, new CharCondition('('));
+    _states[0]->connect(21, new CharCondition(')'));
+    _states[0]->connect(22, new CharCondition('{'));
+    _states[0]->connect(23, new CharCondition('}'));
+    _states[0]->connect(24, new CharCondition('['));
+    _states[0]->connect(25, new CharCondition(']'));
 
-    states[3]->connect(states[3], CharCondition('*'));
-    states[3]->connect(states[4], CharCondition(':'));
-    states[3]->connect(states[2], NotCondition(StringCondition("*:")));
+    _states[1]->connect(2, new CharCondition('*'));
+    _states[1]->connect(5, new CharCondition('='));
 
-    states[8]->connect(states[9], CharCondition(':'));
+    _states[2]->connect(2, new NotCondition(new CharCondition('*')));
+    _states[2]->connect(3, new CharCondition('*'));
 
-    states[9]->connect(states[10], CharCondition('='));
+    _states[3]->connect(0, new CharCondition(':'));
+    _states[3]->connect(3, new CharCondition('*'));
+    _states[3]->connect(2, new NotCondition(new StringCondition("*:")));
 
-    states[11]->connect(states[12], CharCondition('&'));
+    _states[8]->connect(9, new CharCondition(':'));
 
-    states[13]->connect(states[13], digit);
-    
-    states[14]->connect(states[14], MultiCondition(&digit, &letter));
-    
-    _sm = new StateMachine(*states[0]);
+    _states[9]->connect(10, new CharCondition('='));
+
+    _states[11]->connect(12, new CharCondition('&'));
+
+    _states[13]->connect(13, _digit);
+
+    _states[14]->connect(14, new MultiCondition(_digit, _letter));
+
+    _sm = new StateMachine(_states, 0);
 }
 
 LanguageParser::~LanguageParser()
 {
-    for (int i = 0; i < states.size(); i++)
-        delete states[i];
+    for (int i = 0; i < _states.size(); i++)    
+        delete _states[i];    
 
     delete _sm;
 }
@@ -98,9 +94,9 @@ void LanguageParser::reset()
     _sm->reset();
 }
 
-Token::TokenType LanguageParser::parse(char input) const
+Token::TokenType LanguageParser::parse(char input)
 {
-    if (_sm->forward(input))    
+    if ((_didForward = _sm->forward(input)))    
         return static_cast<Token::TokenType>(_sm->getCurrentToken());    
     
     return Token::ERROR;
@@ -114,3 +110,9 @@ Token::TokenType LanguageParser::forecast(char input) const
 
     return Token::ERROR;
 }
+
+bool LanguageParser::needsReset() const
+{
+    return !_didForward || _sm->getCurrentToken() == Token::ERROR /*|| !_sm->canForward()*/ ;
+}
+

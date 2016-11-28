@@ -41,10 +41,47 @@ public:
         STATE_FAILED    // special state (no valid token can be found any further)        
 	};
 
+    static const char* getTokenName(int type)
+    {
+        const static char* tokenNames[] =
+        {
+            "NONE",
+
+            "PLUS",
+            "MINUS",
+            "STAR",
+            "COLON",
+            "IF",
+            "WHILE",
+            "INTEGER",
+            "IDENTIFIER",
+            "SEMICOLON",
+            "GREATER",
+            "LESS",
+            "EQUAL",
+            "ASSIGN",
+            "UNKNOWN_BULLSHIT_OPERATOR",
+            "NOT",
+            "AND",
+            "BRACKET_OPEN",
+            "BRACKET_CLOSE",
+            "SQUARE_BRACKET_OPEN",
+            "SQUARE_BRACKET_CLOSE",
+            "CURLY_BRACKET_OPEN",
+            "CURLY_BRACKET_CLOSE",
+            "IGNORE",                     // white spaces and comments
+            "ERROR",
+
+            "STATE_TBD",      // special state (no valid token found right now)
+            "STATE_FAILED"    // special state (no valid token can be found any further)        
+        };
+
+        return tokenNames[type];
+    }
+
     TokenType type;
     int line;
-    int column;
-    // TODO: Ref to class Information?
+    int column;  
 };
 
 

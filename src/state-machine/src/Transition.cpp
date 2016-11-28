@@ -7,33 +7,34 @@
 #include "../headers/Condition.h"
 
 
-Transition::Transition(State* first, const State* second, const Condition& condition) :
-    _first(first),
-    _second(const_cast<State*>(second)),
-    _condition(const_cast<Condition&>(condition))
+Transition::Transition(int target, const Condition* condition) :
+    //_first(first),
+    _target(target),
+    _condition(const_cast<Condition*>(condition))
 {
 }
 
 Transition::~Transition()
 {
+    delete _condition;
 }
+//
+//int Transition::getFirstState() const 
+//{
+//    return _first;
+//}
 
-State* Transition::getFirstState() const 
+int Transition::getTarget() const
 {
-    return _first;
+    return _target;
 }
 
-State* Transition::getSecondState() const
-{
-    return _second;
-}
-
-Condition& Transition::getCondition() const
+Condition* Transition::getCondition() const
 {
     return _condition;
 }
 
 bool Transition::accepts(char input)
 {
-    return _condition.accepts(input);
+    return _condition->accepts(input);
 }
