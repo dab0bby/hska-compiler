@@ -3,20 +3,38 @@
 //
 
 #include "../headers/Transition.h"
-#include "../../utils/header/Helper.h"
+#include "../headers/State.h"
+#include "../headers/Condition.h"
 
-Transition::Transition(State &first, State &second)
+
+Transition::Transition(int target, const Condition* condition) :
+    //_first(first),
+    _target(target),
+    _condition(const_cast<Condition*>(condition))
 {
-    firstState = &first;
-    secondState = &second;
 }
 
-State *Transition::getFirstState()
+Transition::~Transition()
 {
-    return firstState;
+    delete _condition;
+}
+//
+//int Transition::getFirstState() const 
+//{
+//    return _first;
+//}
+
+int Transition::getTarget() const
+{
+    return _target;
 }
 
-State *Transition::getSecondState()
+Condition* Transition::getCondition() const
 {
-    return secondState;
+    return _condition;
+}
+
+bool Transition::accepts(char input)
+{
+    return _condition->accepts(input);
 }

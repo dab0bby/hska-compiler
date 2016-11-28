@@ -3,70 +3,91 @@
 //
 
 #include "../headers/State.h"
+#include <iostream>
+#include "../../scanner/include/Token.h"
 
-State::State()
+State State::empty = State();
+
+State::State() : token(0), _isFinal(false)
 {
-    transitions = *(new vector<Transition*>());
+}
+
+State::State(bool isFinal) : _isFinal(isFinal), token(0)
+{    
+}
+
+State::State(bool isFinal, int token) : State(isFinal)
+{
+    this->token = token;
+}
+
+State::State(int other, Condition* condition, bool isFinal, int token) : State(other, condition, isFinal)
+{
+    this->token = token;
+}
+
+State::State(int other, Condition* condition, bool isFinal) : State(isFinal)
+{
+    connect(other, condition);
 }
 
 State::~State()
 {
+   // delete _transitions;
 }
 
-EpsilonTransition *State::connect(State &other)
+Transition* State::connect(int other, const Condition* condition)
 {
-    EpsilonTransition *t = new EpsilonTransition(*this, other);
-    for (int i = 0; i < transitions.size(); i++)
-    {
-        if (transitions.get(i) == t)
-        {
-            delete t;
-            return static_cast<EpsilonTransition*>(transitions[i]);
-        }
-    }
+    auto t = new Transition(other, condition);
+    addTransition(t);
     return t;
 }
 
-SingleCharTransition *State::connect(State other, char condition)
+vector<Transition*> State::getTransitions() const
 {
-    SingleCharTransition *t = new SingleCharTransition(*this, other, condition);
-    for (int i = 0; i < transitions.size(); i++)
-    {
-        if (transitions.get(i) == t)
-        {
-            delete t;
-            return static_cast<SingleCharTransition*>(transitions[i]);
-        }
-    }
-    return t;
+    return _transitions;
 }
 
-
-MultiCharTransition *State::connect(State other, char *conditions)
+bool State::isFinalState() const
 {
-    MultiCharTransition *t = new MultiCharTransition(*this, other, conditions);
-    for (int i = 0; i < transitions.size(); i++)
-    {
-        if (transitions.get(i) == t)
-        {
-            delete t;
-            return static_cast<MultiCharTransition*>(transitions[i]);
-        }
-    }
-    return t;
-}
-
-vector<Transition*> State::getTransitions()
-{
-    return transitions;
-}
-
-bool State::isFinalState()
-{
-    return isFinal;
+    return _isFinal;
 }
 
 void State::setFinalState(bool isFinal)
 {
-    this->isFinal = isFinal;
+    this->_isFinal = isFinal;
+}
+
+void State::addTransition(const Transition* t)
+{
+    _transitions.push_back(const_cast<Transition* const&>(t));
+}
+
+void State::removeTransition(Transition const*  t)
+{
+    //_transitions.remove(const_cast<Transition* const&>(t));
+    
+}
+
+bool State::accepts(char input, int& next) const
+{
+    //cout << "checking for " << Token::getTokenName(token);
+
+    for (int i = 0; i < _transitions.size(); i++)
+    {
+        if (_transitions[i]->accepts(input))
+        {
+            next = _transitions[i]->getTarget();
+        //    cout << " accept" << endl;
+            return true;
+        }
+    }
+
+    //cout << " faield" << endl;
+    return false;
+}
+
+bool State::hasTransitions() const
+{
+    return _transitions.size() > 0;
 }

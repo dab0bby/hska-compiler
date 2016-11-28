@@ -17,3 +17,4 @@ doc.pdf
 *.log
 *.gz
 *.toc
+*.opendb

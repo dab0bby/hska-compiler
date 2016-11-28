@@ -9,9 +9,22 @@
 
 class StateMachine
 {
-    public:
-        StateMachine();
-        virtual ~StateMachine();
+public:
+    explicit StateMachine(vector<State*> states, int initialState);
+    //StateMachine(State& initialState, Token::TokenType token);
+    ~StateMachine();
+    
+    bool forward(char input);
+    bool forecast(char input, int& token) const;
+    void reset();
+    bool canForward() const;  
+    bool isFinal() const;
+    int getCurrentToken() const;
+    
+private:
+    int _initialState;
+    int _currentState;
+    vector<State*> _states;
 };
 
 #endif /* StateMachine_H_ */
