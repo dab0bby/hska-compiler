@@ -7,19 +7,19 @@
 
 #include "../../scanner/include/Token.h"
 
-//class Information {
-//private:
-//    TType type;
-//    char* lexem;
-//
-//public:
-//    Information(TType type, char const * lexem);
-//
-//    bool compareLex(char  const* lexem);
-//    char const * getName();
-//
-//    TType getType();
-//};
+class Information {
+private:
+    TType type;
+    char* lexem;
+
+public:
+    Information(TType type, char const * lexem);
+
+    bool compareLex(char  const* lexem);
+    char const * getName();
+
+    TType getType();
+};
 
 
 #endif //HSKA_COMPILER_INFORMATION_H
