@@ -8,9 +8,9 @@
  *
  */
 
-// #include "../../buffer/headers/Buffer.h"
-// #include "../../symbol-table/headers/SymbolTable.h"
 #include "../include/Scanner.h"
+// #include "../../buffer/include/buffer.h"
+// #include "../../symbol-table/include/SymbolTable.h"
 #include <iostream>
 
 using namespace std;
@@ -23,7 +23,7 @@ int main( int argc, char *argv[] )
     fprintf ( stderr, "Error!" );
 
     Scanner* scanner;
-    //scanner = new Scanner();
+    //scanner = new scanner();
 
     cout << "Test" << endl;
 
