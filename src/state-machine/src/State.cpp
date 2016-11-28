@@ -2,9 +2,8 @@
 // Created by timo on 05.11.15.
 //
 
-#include "../headers/State.h"
+#include "../include/State.h"
 #include <iostream>
-#include "../../scanner/include/Token.h"
 
 State State::empty = State();
 

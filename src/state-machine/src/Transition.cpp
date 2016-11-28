@@ -2,9 +2,8 @@
 // Created by timo on 05.11.15.
 //
 
-#include "../headers/Transition.h"
-#include "../headers/State.h"
-#include "../headers/Condition.h"
+#include "../include/Transition.h"
+#include "../include/State.h"
 
 
 Transition::Transition(int target, const Condition* condition) :

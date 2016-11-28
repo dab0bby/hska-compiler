@@ -3,7 +3,7 @@
 //
 
 #include <string.h>
-#include "../headers/StringTab.h"
+#include "../include/StringTab.h"
 
 StringTab::StringTab() {
 

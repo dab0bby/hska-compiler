@@ -3,7 +3,7 @@
 //
 
 #include <stdlib.h>
-#include "../headers/StringTabNode.h"
+#include "../include/StringTabNode.h"
 
 StringTabEntry::StringTabEntry() {
     vector = (char*) malloc( DEFAULT_SIZE * sizeof(char));

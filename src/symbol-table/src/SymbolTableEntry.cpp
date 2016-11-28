@@ -2,7 +2,7 @@
 // Created by tim on 04.11.15.
 //
 
-#include "../headers/SymbolTableEntry.h"
+#include "../include/SymbolTableEntry.h"
 
 SymbolTableEntry::SymbolTableEntry(Information *information) : information(information) {
 

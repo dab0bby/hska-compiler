@@ -2,14 +2,11 @@
 // Created by timo on 05.11.15.
 //
 
-#include "../headers/LanguageParser.h"
-#include "../../symbol-table/headers/Information.h"
+#include "../include/LanguageParser.h"
 
 
 LanguageParser::LanguageParser()
 {
-
-
     /* 00 */ _states.push_back(new State(true, Token::IGNORE));
     /* 01 */ _states.push_back(new State(false, Token::COLON));
     /* 02 */ _states.push_back(new State(false, Token::IGNORE));

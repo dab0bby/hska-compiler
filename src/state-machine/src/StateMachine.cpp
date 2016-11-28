@@ -2,9 +2,8 @@
  * StateMachine.cpp
  */
 
-#include "../headers/StateMachine.h"
+#include "../include/StateMachine.h"
 #include <iostream>
-#include "../../scanner/include/Token.h"
 
 
 StateMachine::StateMachine(vector<State*> states, int initialState) : _states(states), _initialState(initialState), _currentState(initialState)

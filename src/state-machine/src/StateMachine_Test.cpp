@@ -1,7 +1,6 @@
 
-#include "../headers/LanguageParser.h"
+#include "../include/LanguageParser.h"
 #include <iostream>
-#include "../../symbol-table/headers/Information.h"
 
 using namespace std;
 

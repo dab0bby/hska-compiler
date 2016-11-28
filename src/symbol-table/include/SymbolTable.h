@@ -1,7 +1,7 @@
 /**
  * SymbolTable.h
  */
-#include "../headers/StringTab.h"
+#include "../include/StringTab.h"
 #include "Information.h"
 #include "../../scanner/include/Token.h"
 
@@ -29,7 +29,7 @@ public:
 
     unsigned int hash(char const* lexem);
 
-    Information* insert(char const *lexem, TType type);
+    Information* insert(char const *lexem, Token::TokenType type);
 
     unsigned int getNumEntries() const;
 

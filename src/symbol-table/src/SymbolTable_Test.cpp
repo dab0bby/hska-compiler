@@ -1,5 +1,5 @@
 
-#include "../headers/SymbolTable.h"
+#include "../include/SymbolTable.h"
 
 #include <iostream>
 #include <cstring>
@@ -30,8 +30,8 @@ int main( int argc, char **argv )
     char test2[] = "test2";
     char test3[] = "test";
 
-    comp("Test 1: Compare equal Hashs", symbolTable->hash(test), symbolTable->hash(test3), true);
-    comp("Test 2: Compare non equal Hashs", symbolTable->hash(test), symbolTable->hash(test2), false);
+    comp((char *) "Test 1: Compare equal Hashs", symbolTable->hash(test), symbolTable->hash(test3), true);
+    comp((char *) "Test 2: Compare non equal Hashs", symbolTable->hash(test), symbolTable->hash(test2), false);
     cout << endl << endl;
 
 
@@ -39,25 +39,25 @@ int main( int argc, char **argv )
     cout << "==      Symbol Table Tests       ===" << endl;
     cout << "====================================" << endl;
 
-    Information* info1 = symbolTable->insert("test", TType::IDENTIFIER_TYPE);
-    Information* info2 = symbolTable->insert("test", TType::IDENTIFIER_TYPE);
-    Information* info3 = symbolTable->insert("test2", TType::IDENTIFIER_TYPE);
-    comp("Test 1: Compare equal lexems", info1, info2, true);
-    comp("Test 2: Compare non equal lexems", info2, info3, false);
-    comp("Test 3: Table contains 2 entries", symbolTable->getNumEntries(), 2, true);
+    Information* info1 = symbolTable->insert("test", Token::TokenType::IDENTIFIER);
+    Information* info2 = symbolTable->insert("test", Token::TokenType::IDENTIFIER);
+    Information* info3 = symbolTable->insert("test2", Token::TokenType::IDENTIFIER);
+    comp((char *) "Test 1: Compare equal lexems", info1, info2, true);
+    comp((char *) "Test 2: Compare non equal lexems", info2, info3, false);
+    comp((char *) "Test 3: Table contains 2 entries", symbolTable->getNumEntries(), 2, true);
 
-    Information* info4 = symbolTable->insert("test3", TType::IDENTIFIER_TYPE);
-    comp("Test 4: Table contains 3 entries", symbolTable->getNumEntries(), 3, true);
+    Information* info4 = symbolTable->insert("test3", Token::TokenType::IDENTIFIER);
+    comp((char *) "Test 4: Table contains 3 entries", symbolTable->getNumEntries(), 3, true);
 
 
     int numEntriesBefore = symbolTable->getNumEntries();
     char buffer[6];
     for(int i = 0; i < 10000; i++) {
         sprintf(buffer,"%d",i);
-        symbolTable->insert(buffer, TType::IDENTIFIER_TYPE);
+        symbolTable->insert(buffer, Token::TokenType::IDENTIFIER);
     }
     int numEntriesAfter = symbolTable->getNumEntries();
-    comp("Test 5: 10.000 new entries in SymbolTable", numEntriesAfter - numEntriesBefore, 10000, true);
+    comp((char *) "Test 5: 10.000 new entries in SymbolTable", numEntriesAfter - numEntriesBefore, 10000, true);
     //symbolTable->dumpSymbolDistribution();
 
 
@@ -72,15 +72,15 @@ int main( int argc, char **argv )
 
     char c1[] = "tim";
     char* str1 = stringTab->insert(c1, 3);
-    comp("Test 1", c1, str1, true);
+    comp((char *) "Test 1", c1, str1, true);
 
     char c2[] = "essig";
     char* str2 = stringTab->insert(c2, 5);
-    comp("Test 2", c2, str2, true);
+    comp((char *) "Test 2", c2, str2, true);
 
     char c3[] = "essig12";
     char* str3 = stringTab->insert(c3, 5); // Wrong size, returned string should be trimmed by two characters
-    comp("Test 3", c3, str3, false);
+    comp((char *) "Test 3", c3, str3, false);
 
     for(int i=0; i < 10000; i++) {
         stringTab->insert("test", 4);

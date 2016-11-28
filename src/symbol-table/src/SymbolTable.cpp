@@ -2,8 +2,8 @@
  * SymbolTable.cpp
  */
 
-#include "../headers/SymbolTable.h"
-#include "../headers/SymbolTableEntry.h"
+#include "../include/SymbolTable.h"
+#include "../include/SymbolTableEntry.h"
 
 #include <iostream>
 
@@ -44,7 +44,7 @@ unsigned int SymbolTable::hash(char const* lexem) {
  * Zur Vorbelegung der Symboltabelle mit Schlüsselworten
  */
 void SymbolTable::initSymbols() {
-    insert("while", TType::ERROR_TYPE);
+    insert("while", Token::TokenType::ERROR);
     //....
     //TODO: Should this be done by the scanner?
 }
@@ -52,7 +52,7 @@ void SymbolTable::initSymbols() {
 /**
  *
  */
-Information* SymbolTable::insert(char const *lexem, TType type) {
+Information* SymbolTable::insert(char const *lexem, Token::TokenType type) {
     // 1. Check if lexem is already in SymTab
     // 2. If not insert and return Information
     // 3. If yes, get Information and return

@@ -9,16 +9,16 @@
 
 class Information {
 private:
-    TType type;
+    Token::TokenType type;
     char* lexem;
 
 public:
-    Information(TType type, char const * lexem);
+    Information(Token::TokenType type, char const * lexem);
 
     bool compareLex(char  const* lexem);
     char const * getName();
 
-    TType getType();
+    Token::TokenType getType();
 };
 
 

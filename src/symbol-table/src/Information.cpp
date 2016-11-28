@@ -2,12 +2,12 @@
 // Created by tim on 04.11.15.
 //
 
-#include "../headers/Information.h"
+#include "../include/Information.h"
 
 #include <cstring>
 
 
-Information::Information(TType type, char const* lexem) : type(type) {
+Information::Information(Token::TokenType type, char const* lexem) : type(type) {
     this->lexem = new char[sizeof (lexem)];
     strncpy(this->lexem, lexem, sizeof(this->lexem));
 
@@ -23,7 +23,7 @@ char const *Information::getName() {
 }
 
 
-TType Information::getType() {
+Token::TokenType Information::getType() {
     return this->type;
 }
 
