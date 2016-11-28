@@ -1,5 +1,5 @@
 //
-// TODO: Do not split the code in seperate header and cpp file!
+// TODO: Do not split the code in seperate include and cpp file!
 // template classes must have definition and implementation in a single file.
 //
 

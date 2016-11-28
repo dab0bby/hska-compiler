@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "../header/vector.h"
+#include "../include/vector.h"
 
 
 using namespace std;

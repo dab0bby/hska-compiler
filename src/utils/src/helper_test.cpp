@@ -2,7 +2,7 @@
 // Created by timo on 24.11.15.
 //
 
-#include "../header/Helper.h"
+#include "../include/Helper.h"
 
 int main()
 {

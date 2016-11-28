@@ -11,7 +11,7 @@
 #include <iostream>
 
 #include "../include/Buffer.h"
-#include "../../utils/header/colormod.h"
+#include "../../utils/include/colormod.h"
 
 
 Color::Modifier red(Color::FG_RED);
