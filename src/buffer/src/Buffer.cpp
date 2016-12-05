@@ -10,6 +10,7 @@
 
 
 #include <iostream>
+#include <cstring>
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -82,7 +83,7 @@ void Buffer::_openFile(const char* filePath)
     this->_fileHandle = open(filePath, O_RDONLY);
 
     if (this->_fileHandle == -1)
-        std::cerr << "Error opening file: '" << filePath << "'\n\t" << strerror(errno) << std::endl;
+        std::cerr << "Error opening file: '" << filePath << "'\n\t" << std::strerror(errno) << std::endl;
 }
 
 
