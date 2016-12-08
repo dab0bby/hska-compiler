@@ -28,10 +28,6 @@
     <ClCompile Include="..\src\state-machine\src\Transition.cpp">
       <Filter>state-machine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\scanner\src\Token.cpp">
-      <Filter>scanner</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\state-machine\src\LanguageParser.cpp">
       <Filter>state-machine</Filter>
     </ClCompile>
@@ -40,35 +36,32 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\utils\header\colormod.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\utils\header\Helper.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\utils\header\vector.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\state-machine\headers\State.h">
-      <Filter>state-machine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\state-machine\headers\StateMachine.h">
-      <Filter>state-machine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\state-machine\headers\Transition.h">
-      <Filter>state-machine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\state-machine\headers\Transitions.h">
-      <Filter>state-machine</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\scanner\include\Token.h">
       <Filter>scanner</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\state-machine\headers\Condition.h">
+    <ClInclude Include="..\src\state-machine\include\LanguageParser.h">
       <Filter>state-machine</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\state-machine\headers\LanguageParser.h">
+    <ClInclude Include="..\src\state-machine\include\Condition.h">
       <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\include\State.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\include\StateMachine.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\include\Transition.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\include\colormod.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\include\Helper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\include\vector.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

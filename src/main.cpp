@@ -1,5 +1,5 @@
-#include "symbol-table/headers/SymbolTable.h"
-#include "scanner/headers/Scanner.h"
+#include "symbol-table/include/SymbolTable.h"
+#include "scanner/include/Scanner.h"
 
 #include <iostream>
 

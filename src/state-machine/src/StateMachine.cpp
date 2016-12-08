@@ -46,6 +46,11 @@ bool StateMachine::isFinal() const
     return _states[_currentState]->isFinalState();
 }
 
+bool StateMachine::isInInitialState() const
+{
+    return _currentState == _initialState;
+}
+
 int StateMachine::getCurrentToken() const
 {
     return _states[_currentState]->token;
