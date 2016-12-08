@@ -19,11 +19,15 @@ public:
     ~LanguageParser();
 
     void reset();
-    Token::TokenType parse(char input);
-    Token::TokenType forecast(char input) const;
-    bool needsReset() const;
+    bool parse(char input);
+    void finalize();
+    bool detectionCompleted() const;
+    Token::TokenType getToken() const;
 
 private:    
+
+    bool _createError();
+
     StateMachine* _sm;
     vector<State*> _states;
 
@@ -34,6 +38,11 @@ private:
     MultiCondition* _letter = new MultiCondition(_lowerCase, _upperCase);
 
     bool _didForward = false;
+    bool _smDidReset = false;
+    bool _smError = false;
+    int _lastToken = Token::NONE;
+    int _currentToken = Token::NONE;
+    int _detectedToken = Token::NONE;
 };
 
 #endif //HSKA_COMPILER_LANGUAGEPARSER_H

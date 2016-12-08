@@ -1,14 +1,15 @@
 
 #include "../include/LanguageParser.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
 
 int main ( int argc, char* argv[] )
 {
-    char* testText =
-        ":* Comment *: "
+    string testText =
+        ":* Comment *:"
         ": * Invalid Comment *: "
         "X := 3 + 4; "
         "Z := 3 + 4; "
@@ -23,25 +24,43 @@ int main ( int argc, char* argv[] )
     
     int i = 0;
     char c;
-    int lastToken = Token::NONE;
-
-    while((c = testText[i++]) != '\0')
+    int start = 0;
+    int size = 0;
+        
+    do 
     {
-        auto token = lp.parse(c);
-        bool suppressCout = false;
+        auto valid = true;
+        c = testText[i];
 
-        if (lp.needsReset())
+        if (c == '\0')
+            lp.finalize();
+        else
+            valid = lp.parse(c);
+
+        if (valid)
         {
-            lp.reset();
-            if ((suppressCout = token == Token::ERROR && lastToken != Token::ERROR))
-                i--;
+            size++;
+            auto token = lp.getToken();
+
+            if (lp.detectionCompleted())
+            {
+                cout << "found " << Token::getTokenName(token) << " at " << start << " for " << size << " \"" << testText.substr(start, size) << "\"" << endl;             
+                start = i;
+                size = 0;
+            }
+            else if (token == Token::IGNORE)
+            {
+                start = i; 
+                size = 0;
+            }
+        }
+        else 
+        {
+            cout << "error at " << i - 1 << " \"" << testText[i - 1] << "\"" << endl;
         }
 
-        if (!suppressCout)
-            cout << i << " - " << c << " - " << Token::getTokenName(token) << endl;   
-
-        lastToken = token;
-    }
+        i++;
+    } while (c != '\0');
 
     cout << "finished";
     getchar();

@@ -19,6 +19,7 @@ public:
     void reset();
     bool canForward() const;  
     bool isFinal() const;
+    bool isInInitialState() const;
     int getCurrentToken() const;
     
 private:

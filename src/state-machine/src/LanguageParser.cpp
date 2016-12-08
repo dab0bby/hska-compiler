@@ -91,25 +91,63 @@ void LanguageParser::reset()
     _sm->reset();
 }
 
-Token::TokenType LanguageParser::parse(char input)
+bool LanguageParser::parse(char input)
 {
-    if ((_didForward = _sm->forward(input)))    
-        return static_cast<Token::TokenType>(_sm->getCurrentToken());    
+    _smError = false;
+    _smDidReset = false;
+    _lastToken = _currentToken;
+    _detectedToken = Token::NONE;
+
+    _didForward = _sm->forward(input);
+
+    // sm couldn't proceed
+    if (!_didForward)
+    {
+        _smDidReset = true;
+        _detectedToken = _lastToken;
+
+        // sm is already in initial state -> char unaccaptable
+        if (_sm->isInInitialState())
+            return _createError();
+        
+        // reset sm and try again
+        _sm->reset();
+        _didForward = _sm->forward(input);
+
+        // sm couldn't proceed again -> char unaccaptable
+        if (!_didForward)
+            return _createError();
+    }
+        
+    _currentToken = _sm->getCurrentToken();
     
-    return Token::ERROR;
+    if (_lastToken == Token::IGNORE)
+        _detectedToken = _lastToken;
+
+    return true;
 }
 
-Token::TokenType LanguageParser::forecast(char input) const
+void LanguageParser::finalize()
 {
-    int token;
-    if (_sm->forecast(input, token))    
-        return static_cast<Token::TokenType>(token);    
-
-    return Token::ERROR;
+    parse(';');
 }
 
-bool LanguageParser::needsReset() const
+bool LanguageParser::detectionCompleted() const
 {
-    return !_didForward || _sm->getCurrentToken() == Token::ERROR /*|| !_sm->canForward()*/ ;
+    return !_smError && _smDidReset;
 }
+
+Token::TokenType LanguageParser::getToken() const
+{
+    return static_cast<Token::TokenType>(_detectedToken);
+}
+
+bool LanguageParser::_createError()
+{
+    _smError = true;
+    _currentToken = Token::NONE;
+    _detectedToken = Token::ERROR;
+    return false;
+}
+
 

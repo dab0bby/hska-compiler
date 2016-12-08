@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\src\scanner\src\Token.cpp" />
     <ClCompile Include="..\src\state-machine\src\LanguageParser.cpp" />
     <ClCompile Include="..\src\state-machine\src\State.cpp" />
     <ClCompile Include="..\src\state-machine\src\StateMachine.cpp" />
@@ -30,15 +28,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\scanner\include\Token.h" />
-    <ClInclude Include="..\src\state-machine\headers\Condition.h" />
-    <ClInclude Include="..\src\state-machine\headers\LanguageParser.h" />
-    <ClInclude Include="..\src\state-machine\headers\State.h" />
-    <ClInclude Include="..\src\state-machine\headers\StateMachine.h" />
-    <ClInclude Include="..\src\state-machine\headers\Transition.h" />
-    <ClInclude Include="..\src\state-machine\headers\Transitions.h" />
-    <ClInclude Include="..\src\utils\header\colormod.h" />
-    <ClInclude Include="..\src\utils\header\Helper.h" />
-    <ClInclude Include="..\src\utils\header\vector.h" />
+    <ClInclude Include="..\src\state-machine\include\Condition.h" />
+    <ClInclude Include="..\src\state-machine\include\LanguageParser.h" />
+    <ClInclude Include="..\src\state-machine\include\State.h" />
+    <ClInclude Include="..\src\state-machine\include\StateMachine.h" />
+    <ClInclude Include="..\src\state-machine\include\Transition.h" />
+    <ClInclude Include="..\src\utils\include\colormod.h" />
+    <ClInclude Include="..\src\utils\include\Helper.h" />
+    <ClInclude Include="..\src\utils\include\vector.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\test-files\test_01.txt">
