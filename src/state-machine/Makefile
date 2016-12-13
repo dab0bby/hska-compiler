@@ -1,23 +1,26 @@
 # Compiler
 CC     = g++
 DEBUG  = -g
-CFLAGS = -Wall -c $(DEBUG)
-LFLAGS = -Wall $(DEBUG)
+CFLAGS = -Wall -c $(DEBUG) -std=c++11 -O3
+LFLAGS = -Wall $(DEBUG) -std=c++11 -O3
 
 # Sources
-HEADER_DIR = headers
+HEADER_DIR = include
 SOURCE_DIR = src
 DEBUG_DIR  = debug
 
 # Target
-BUILD_DIR  = build
+BUILD_DIR  = bin
 
 # List of targets
 TARGETS = $(BUILD_DIR)/StateMachine.o \
+	$(BUILD_DIR)/LanguageParser.o \
+	$(BUILD_DIR)/State.o \
+	$(BUILD_DIR)/Transition.o
 	# add more here
 	# last without escape sequence
 
-EXECUTABLE = StateMachine
+EXECUTABLE = state-machine
 
 
 # Builds targets
@@ -29,7 +32,7 @@ $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(HEADER_DIR)/%.h
 
 
 # Builds StateMachine_Test object files.
-state-machine-test: $(HEADER_DIR)/StateMachine.h $(SOURCE_DIR)/StateMachine_Test.cpp
+state-machine-test: $(HEADER_DIR)/LanguageParser.h $(SOURCE_DIR)/StateMachine_Test.cpp
 	@echo 'Building StateMachine Test ...'
 	$(CC) $(CFLAGS) $(SOURCE_DIR)/StateMachine_Test.cpp -o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o
 
@@ -37,11 +40,11 @@ state-machine-test: $(HEADER_DIR)/StateMachine.h $(SOURCE_DIR)/StateMachine_Test
 # Builds StateMachine_Test executable.
 state-machine-test-executable: clean state-machine state-machine-test
 	@echo 'Building StateMachine Test Executable ...'
-	$(CC) $(LFLAGS) $(BUILD_DIR)/$(EXECUTABLE).o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
+	$(CC) $(LFLAGS) $(TARGETS) $(DEBUG_DIR)/$(EXECUTABLE)_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
 
 
 # Cleaning up debug/ and build/ directory
 clean:
 	@echo 'Cleaning up StateMachine directory ...'
-	rm -f build/*
-	rm -f debug/*
+	rm -rf $(BUILD_DIR) && mkdir $(BUILD_DIR)
+	rm -rf $(DEBUG_DIR) && mkdir $(DEBUG_DIR)

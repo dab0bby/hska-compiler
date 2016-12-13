@@ -1,8 +1,8 @@
 # Compiler
 CC     = g++
 DEBUG  = -g
-CFLAGS = -Wall -c $(DEBUG) -std=c++11
-LFLAGS = -Wall $(DEBUG) -std=c++11
+CFLAGS = -Wall -c $(DEBUG) -std=c++11 -O3
+LFLAGS = -Wall $(DEBUG) -std=c++11 -O3
 
 # Sources
 HEADER_DIR = include
@@ -37,7 +37,7 @@ buffer-test: $(HEADER_DIR)/Buffer.h $(SOURCE_DIR)/Buffer_Test.cpp
 # Build test executable
 buffer-test-executable: clean buffer buffer-test
 	@echo 'Building Buffer Test Executable ...'
-	$(CC) $(LFLAGS) $(BUILD_DIR)/Buffer.o $(DEBUG_DIR)/Buffer_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
+	$(CC) $(LFLAGS) $(TARGETS) $(DEBUG_DIR)/Buffer_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
 
 
 # Cleaning up debug/ and bin/ directory
