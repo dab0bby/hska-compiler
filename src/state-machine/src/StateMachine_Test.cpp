@@ -16,18 +16,21 @@ int main ( int argc, char* argv[] )
         "X = Z; "
         "Resultat := X : Z; "
         "WTF =:= IsThat; "
-        "Y := X && Z";
-        
+        "Y := X && Z if If IF iff "
+        "while "
+        "WhiLE "
+        "whileif";
+
     cout << "Testing state-machine with input: " << endl << testText << endl << endl;
 
     LanguageParser lp;
-    
+
     int i = 0;
     char c;
     int start = 0;
     int size = 0;
-        
-    do 
+
+    do
     {
         auto valid = true;
         c = testText[i];
@@ -44,17 +47,17 @@ int main ( int argc, char* argv[] )
 
             if (lp.detectionCompleted())
             {
-                cout << "found " << Token::getTokenName(token) << " at " << start << " for " << size << " \"" << testText.substr(start, size) << "\"" << endl;             
+                cout << "found " << Token::getTokenName(token) << " at " << start << " for " << size << " \"" << testText.substr(start, size) << "\"" << endl;
                 start = i;
                 size = 0;
             }
             else if (token == Token::IGNORE)
             {
-                start = i; 
+                start = i;
                 size = 0;
             }
         }
-        else 
+        else
         {
             cout << "error at " << i - 1 << " \"" << testText[i - 1] << "\"" << endl;
         }
