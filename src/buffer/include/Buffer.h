@@ -30,11 +30,11 @@ class Buffer
         char nextChar();
 
         /**
-         * Returns the previous char
+         * Return the current char.
          *
          * @return
          */
-        char getPreviousChar() const;
+        char currentChar() const;
 
         /**
          * Returns current Line
@@ -69,5 +69,6 @@ class Buffer
         void _closeFile();
 
 };
+
 
 #endif /* BUFFER_H_ */

@@ -39,6 +39,12 @@ Buffer::Buffer(const char* filePath) :
 }
 
 
+char Buffer::currentChar() const
+{
+    return this->_previousChar;
+}
+
+
 char Buffer::nextChar()
 {
     this->_positionOffset++;
@@ -57,12 +63,6 @@ char Buffer::nextChar()
     this->_previousChar = this->_currentChar;
 
     return this->_currentChar;
-}
-
-
-char Buffer::getPreviousChar() const
-{
-    return _previousChar;
 }
 
 
@@ -102,6 +102,9 @@ void Buffer::_readNextChunk()
     char* temp = this->_previousBuffer;
     this->_previousBuffer = _currentBuffer;
     this->_currentBuffer = temp;
+
+    // Clear current buffer
+    memset(this->_currentBuffer, 0, HSKA_BUFFER_SIZE);
 
     // Read data from file
     ssize_t size = read(this->_fileHandle, this->_currentBuffer, HSKA_BUFFER_SIZE);
