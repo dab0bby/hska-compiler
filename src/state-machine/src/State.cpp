@@ -11,8 +11,8 @@ State::State() : token(0), _isFinal(false)
 {
 }
 
-State::State(bool isFinal) : _isFinal(isFinal), token(0)
-{    
+State::State(bool isFinal) : token(0), _isFinal(isFinal)
+{
 }
 
 State::State(bool isFinal, int token) : State(isFinal)
@@ -65,7 +65,7 @@ void State::addTransition(const Transition* t)
 void State::removeTransition(Transition const*  t)
 {
     //_transitions.remove(const_cast<Transition* const&>(t));
-    
+
 }
 
 bool State::accepts(char input, int& next) const
