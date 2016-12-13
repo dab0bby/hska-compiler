@@ -39,15 +39,16 @@ int main(int argc, char** argv)
     while (true)
     {
         char c = buffer.nextChar();
+
         if (c == 0)
         {
             std::cout << "EOF reached" << std::endl;
             break;
         }
-//        else if (c == '\n')
-//            continue;
+        else if (c == '\n')
+           continue;
         else
-            std::cout << buffer.getLineNum() << ":" << buffer.getColumnNum() << "  :  "  << c << std::endl;
+            std::cout << buffer.getLineNum() << ":" << buffer.getColumnNum() << "  :  " << c << '\n';
     }
 
     return EXIT_SUCCESS;
