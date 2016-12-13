@@ -13,7 +13,7 @@ class Token
         enum TokenType
         {
             NONE,
-            EOF,    // End of file token
+            EOF_TOKEN,    // End of file token
 
             PLUS,
             MINUS,
@@ -76,7 +76,7 @@ class Token
             const static char* tokenNames[] =
             {
                 "NONE",
-                "EOF",
+                "EOF_TOKEN",
 
                 "PLUS",
                 "MINUS",
