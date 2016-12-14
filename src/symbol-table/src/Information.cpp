@@ -8,9 +8,9 @@
 
 
 Information::Information(Token::TokenType type, char const* lexem) : type(type) {
-    this->lexem = new char[sizeof (lexem)];
-    strncpy(this->lexem, lexem, sizeof(this->lexem));
-
+    auto size = sizeof(lexem);
+    this->lexem = new char[sizeof(size)];
+    strncpy(this->lexem, lexem, sizeof(size));
 }
 
 
