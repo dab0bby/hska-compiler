@@ -41,7 +41,7 @@ symb-table-test: $(HEADER_DIR)/SymbolTable.h $(SOURCE_DIR)/SymbolTable_Test.cpp
 # Builds targets with test executable
 symb-table-test-executable: clean symb-table symb-table-test
 	@echo 'Building SymbolTable Test Executable ...'
-	$(CC) $(LFLAGS) $(TARGETS) $(DEBUG_DIR)/SymbolTable_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
+	$(CC) $(LFLAGS) $(TARGETS) $(DEBUG_DIR)/$(EXECUTABLE)_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
 
 
 # Cleaning up debug/ and build/ directory
