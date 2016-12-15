@@ -6,12 +6,11 @@
 #include "../include/Token.h"
 
 
-Token::Token(TokenType type, const int &line, const int &column)  :
+Token::Token(TokenType type, const int &line, const int &column) :
     _type(type),
     _line(line),
     _column(column)
 {
-
 }
 
 

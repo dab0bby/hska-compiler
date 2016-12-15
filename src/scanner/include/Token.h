@@ -7,20 +7,22 @@
 #define TOKEN_H
 
 
+class Information; // Forward declaration
+
+
 class Token
 {
     public:
         enum TokenType
         {
             NONE,
+            ERROR,
             EOF_TOKEN,    // End of file token
 
             PLUS,
             MINUS,
             STAR,
             COLON,
-            IF,
-            WHILE,
             INTEGER,
             IDENTIFIER,
             SEMICOLON,
@@ -38,13 +40,15 @@ class Token
             CURLY_BRACKET_OPEN,
             CURLY_BRACKET_CLOSE,
             IGNORE,                     // white spaces and comments
-            ERROR,
 
-            STATE_TBD,      // special state (no valid token found right now)
-            STATE_FAILED    // special state (no valid token can be found any further)
+            // Keywords
+            IF,
+            WHILE
         };
 
         Token(TokenType type, const int& line, const int& column);
+        Token(TokenType type, const int& line, const int& column, const int& value);
+        Token(TokenType type, const int& line, const int& column, Information* information);
         ~Token();
 
         /**
@@ -52,6 +56,8 @@ class Token
          * @return
          */
         TokenType getType() const { return _type; }
+
+        const char * getTypeStr() const { return Token::getTokenName(this->_type); }
 
         /**
          * Returns line number where token was found.
@@ -76,14 +82,13 @@ class Token
             const static char* tokenNames[] =
             {
                 "NONE",
+                "ERROR",
                 "EOF_TOKEN",
 
                 "PLUS",
                 "MINUS",
                 "STAR",
                 "COLON",
-                "IF",
-                "WHILE",
                 "INTEGER",
                 "IDENTIFIER",
                 "SEMICOLON",
@@ -101,10 +106,10 @@ class Token
                 "CURLY_BRACKET_OPEN",
                 "CURLY_BRACKET_CLOSE",
                 "IGNORE",                     // white spaces and comments
-                "ERROR",
 
-                "STATE_TBD",      // special state (no valid token found right now)
-                "STATE_FAILED"    // special state (no valid token can be found any further)
+                // Keywords
+                "IF",
+                "WHILE"
             };
 
             return tokenNames[type];
@@ -114,6 +119,9 @@ class Token
         TokenType _type;
         const int _line;
         const int _column;
+
+        Information* _information{ nullptr };
+        int          _value{ 0 };
 
 };
 
