@@ -17,9 +17,11 @@ int main ( int argc, char* argv[] )
         "Resultat := X : Z; "
         "WTF =:= IsThat; "
         "Y := X && Z if If IF iff "
-        "while "
-        "WhiLE "
-        "whileif";
+        "while " // WHILE
+        "WhiLE? " // IDENTIFIER ERROR
+        "whileif " // IDENTIFIER
+        "? % & " // ERROR ERROR ERROR
+        "Test&vier"; // IDENTIFIER ERROR IDENTIFIER
 
     cout << "Testing state-machine with input: " << endl << testText << endl << endl;
 
@@ -59,7 +61,7 @@ int main ( int argc, char* argv[] )
         }
         else
         {
-            cout << "error at " << i - 1 << " \"" << testText[i - 1] << "\"" << endl;
+            cout << "error at " << i << " \"" << testText[i] << "\"" << endl;
         }
 
         i++;
