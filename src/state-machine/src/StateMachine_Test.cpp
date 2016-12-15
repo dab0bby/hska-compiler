@@ -9,7 +9,7 @@ using namespace std;
 int main ( int argc, char* argv[] )
 {
     string testText =
-        ":* Comment *:"
+        ":* & % Comment § *:"
         ": * Invalid Comment *: "
         "X := 3 + 4; "
         "Z := 3 + 4; "
@@ -18,6 +18,7 @@ int main ( int argc, char* argv[] )
         "WTF =:= IsThat; "
         "Y := X && Z if If IF iff "
         "while " // WHILE
+        "while% " // WHILE ERROR
         "WhiLE? " // IDENTIFIER ERROR
         "whileif " // IDENTIFIER
         "? % & " // ERROR ERROR ERROR
