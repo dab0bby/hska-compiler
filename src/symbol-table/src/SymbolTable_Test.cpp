@@ -49,7 +49,6 @@ int main( int argc, char **argv )
     Information* info4 = symbolTable->insert("test3", Token::TokenType::IDENTIFIER);
     comp((char *) "Test 4: Table contains 3 entries", symbolTable->getNumEntries(), 3, true);
 
-
     int numEntriesBefore = symbolTable->getNumEntries();
     char buffer[6];
     for(int i = 0; i < 10000; i++) {
@@ -59,6 +58,13 @@ int main( int argc, char **argv )
     int numEntriesAfter = symbolTable->getNumEntries();
     comp((char *) "Test 5: 10.000 new entries in SymbolTable", numEntriesAfter - numEntriesBefore, 10000, true);
     //symbolTable->dumpSymbolDistribution();
+
+    // Do some cleanup
+    delete info1;
+    delete info2;
+    delete info3;
+    delete info4;
+    delete symbolTable;
 
 
     cout << endl << endl;
@@ -87,6 +93,8 @@ int main( int argc, char **argv )
     }
     cout << "10.000 elements test:" << endl << green << "\t [OK]" << def << endl; //At least the app didn't crash after 10k inserts
 
+    // Cleanup
+    delete stringTab;
 }
 
 /**
