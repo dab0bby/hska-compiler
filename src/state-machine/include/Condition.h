@@ -31,10 +31,10 @@ private:
 };
 
 
-class StringCondition : public Condition
+class AnyOfCondition : public Condition
 {
 public:
-    explicit StringCondition(const char* allowed) : _chars(allowed) {}
+    explicit AnyOfCondition(const char* allowed) : _chars(allowed) {}
 
 	bool accepts(char input) const override
 	{
@@ -58,6 +58,7 @@ public:
     ~NotCondition()
     {
         delete _condition;
+        _condition = nullptr;
     }
 
 	bool accepts(char input) const override
@@ -86,10 +87,10 @@ private:
 };
 
 
-class EpsilonCondition : public Condition
+class TrueCondition : public Condition
 {
 public:
-    EpsilonCondition() {}
+    TrueCondition() {}
 
     bool accepts(char input) const override
     {
@@ -98,25 +99,34 @@ public:
 };
 
 
-class MultiCondition : public Condition
+class OrCondition : public Condition
 {
 public:
-    MultiCondition(Condition* c) 
+    OrCondition(Condition* c) 
     {
         _conditions.push_back(c);
     } 
 
-    MultiCondition(Condition* c1,  Condition* c2)
+    OrCondition(Condition* c1,  Condition* c2)
     {
         _conditions.push_back(c1);
         _conditions.push_back(c2);
     }
 
-    MultiCondition(Condition* c1,  Condition* c2,  Condition* c3)
+    OrCondition(Condition* c1,  Condition* c2,  Condition* c3)
     {
         _conditions.push_back(c1);
         _conditions.push_back(c2);
         _conditions.push_back(c3);
+    }
+
+    ~OrCondition()
+    {
+        for (int i = 0; i < _conditions.size(); i++)
+        {
+            delete _conditions[i];
+            _conditions[i] = nullptr;
+        }
     }
 
     bool accepts(char input) const override
@@ -126,6 +136,49 @@ public:
                 return true;
 
         return false;
+    }
+
+private:
+    vector<Condition*> _conditions;
+};
+
+class AndCondition : public Condition
+{
+public:
+    AndCondition(Condition* c)
+    {
+        _conditions.push_back(c);
+    } 
+
+    AndCondition(Condition* c1,  Condition* c2)
+    {
+        _conditions.push_back(c1);
+        _conditions.push_back(c2);
+    }
+
+    AndCondition(Condition* c1,  Condition* c2,  Condition* c3)
+    {
+        _conditions.push_back(c1);
+        _conditions.push_back(c2);
+        _conditions.push_back(c3);
+    }
+
+    ~AndCondition()
+    {
+        for (int i = 0; i < _conditions.size(); i++)
+        {
+            delete _conditions[i];
+            _conditions[i] = nullptr;
+        }
+    }
+
+    bool accepts(char input) const override
+    {
+        for (int i = 0; i < _conditions.size(); i++)            
+            if (!_conditions[i]->accepts(input))
+                return false;
+
+        return true;
     }
 
 private:

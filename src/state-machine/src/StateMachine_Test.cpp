@@ -1,74 +1,57 @@
 
 #include "../include/LanguageParser.h"
-#include <iostream>
 #include <string>
+#include <fstream>
+#include <iostream>
+#include <chrono>
+#include <sstream>
 
 using namespace std;
 
-
 int main ( int argc, char* argv[] )
-{
-    string testText =
-        ":* & % Comment § *:"
-        ": * Invalid Comment *: "
-        "X := 3 + 4; "
-        "Z := 3 + 4; "
-        "X = Z; "
-        "Resultat := X : Z; "
-        "WTF =:= IsThat; "
-        "Y := X && Z if If IF iff "
-        "while " // WHILE
-        "while% " // WHILE ERROR
-        "WhiLE? " // IDENTIFIER ERROR
-        "whileif " // IDENTIFIER
-        "? % & " // ERROR ERROR ERROR
-        "Test&vier"; // IDENTIFIER ERROR IDENTIFIER
-
-    cout << "Testing state-machine with input: " << endl << testText << endl << endl;
-
+{    
+    auto path = "E:/Code/hska-compiler/test-files/scanner9.txt";
     LanguageParser lp;
 
-    int i = 0;
-    char c;
-    int start = 0;
-    int size = 0;
+    ifstream file(path);
+    stringstream fileContent;
+    string testString;
+    string str;
+    int token;
 
-    do
+    while (getline(file, str))    
+        fileContent << str << "\n";
+    
+    // add some null terminator
+    testString = fileContent.str() + '\0' + '\0' + '\0' + '\0';
+
+    auto benchmarkStart = std::chrono::high_resolution_clock::now();
+
+    cout << "testing state-machine with input file: " << path << endl << endl;
+    
+    for (int i = 0; i <= testString.size(); i++)
     {
-        auto valid = true;
-        c = testText[i];
+        auto c = testString[i];
+        
+        if (!lp.parse(c))
+            lp.parse(c);
 
-        if (c == '\0')
-            lp.finalize();
-        else
-            valid = lp.parse(c);
+        token = lp.getToken();
+                
+        cout << Token::getTokenName(token) << ", ";
 
-        if (valid)
-        {
-            size++;
-            auto token = lp.getToken();
+        if (token == Token::NEW_LINE)
+            cout << endl << endl;     
+    }
+   
+    auto benchmarkEnd = std::chrono::high_resolution_clock::now();
+    auto time = benchmarkEnd - benchmarkStart;
 
-            if (lp.detectionCompleted())
-            {
-                cout << "found " << Token::getTokenName(token) << " at " << start << " for " << size << " \"" << testText.substr(start, size) << "\"" << endl;
-                start = i;
-                size = 0;
-            }
-            else if (token == Token::IGNORE)
-            {
-                start = i;
-                size = 0;
-            }
-        }
-        else
-        {
-            cout << "error at " << i << " \"" << testText[i] << "\"" << endl;
-        }
+    cout << endl << endl << "finished in " << std::chrono::duration_cast<std::chrono::milliseconds>(time).count() << "ms" << endl;
 
-        i++;
-    } while (c != '\0');
-
-    cout << "finished";
+#ifdef _WIN32
     getchar();
+#endif
+
     return 0;
 }

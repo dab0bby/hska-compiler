@@ -10,12 +10,11 @@
 class StateMachine
 {
 public:
-    explicit StateMachine(vector<State*> states, int initialState);
-    //StateMachine(State& initialState, Token::TokenType token);
+    StateMachine(vector<State*> states, int initialState);
+    
     ~StateMachine();
     
     bool forward(char input);
-    bool forecast(char input, int& token) const;
     void reset();
     bool canForward() const;  
     bool isFinal() const;
