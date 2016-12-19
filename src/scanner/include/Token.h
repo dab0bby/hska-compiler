@@ -72,6 +72,22 @@ class Token
         int getColumn() const { return _column; }
 
         /**
+         * Returns value
+         */
+        int getValue() const { return _value; }
+
+        /**
+         * Returns lexem of this token
+         */
+        const char* getLexem() const;
+
+        /**
+         * Return information.
+         * Information is nullptr if no Information is present.
+         */
+        Information* getInformation() const { return _information; };
+
+        /**
          * Return TokenType string to given type
          *
          * @param type
