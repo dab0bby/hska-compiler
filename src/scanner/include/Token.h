@@ -15,7 +15,7 @@ class Token
     public:
         enum TokenType
         {
-            NONE,
+            DETECTING,
             ERROR,
             EOF_TOKEN,    // End of file token
 
@@ -40,6 +40,7 @@ class Token
             CURLY_BRACKET_OPEN,
             CURLY_BRACKET_CLOSE,
             IGNORE,                     // white spaces and comments
+            NEW_LINE,
 
             // Keywords
             IF,
@@ -81,7 +82,7 @@ class Token
         {
             const static char* tokenNames[] =
             {
-                "NONE",
+                "DETECTING",
                 "ERROR",
                 "EOF_TOKEN",
 
@@ -106,6 +107,7 @@ class Token
                 "CURLY_BRACKET_OPEN",
                 "CURLY_BRACKET_CLOSE",
                 "IGNORE",                     // white spaces and comments
+                "NEW_LINE",
 
                 // Keywords
                 "IF",

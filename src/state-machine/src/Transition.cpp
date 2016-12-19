@@ -16,6 +16,7 @@ Transition::Transition(int target, const Condition* condition) :
 Transition::~Transition()
 {
     delete _condition;
+    _condition = nullptr;
 }
 //
 //int Transition::getFirstState() const 

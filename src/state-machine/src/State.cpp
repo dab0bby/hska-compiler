@@ -31,8 +31,12 @@ State::State(int other, Condition* condition, bool isFinal) : State(isFinal)
 }
 
 State::~State()
-{
-   // delete _transitions;
+{    
+    for (int i = 0; i < _transitions.size(); i++)
+    {
+        delete _transitions[i];
+        _transitions[i] = nullptr;
+    }
 }
 
 Transition* State::connect(int other, const Condition* condition)
