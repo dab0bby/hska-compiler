@@ -50,7 +50,7 @@ private:
     bool _didForward = false;
     int _lastToken = Token::DETECTING;
     int _currentToken = Token::DETECTING;
-    int _setToken = Token::DETECTING;
+    int _setToken = Token::IGNORE;
     int _detectedToken = Token::DETECTING;
 };
 

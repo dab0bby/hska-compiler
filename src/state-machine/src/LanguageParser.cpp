@@ -8,7 +8,7 @@
 LanguageParser::LanguageParser()
 {
     /* 00 */ _states.push_back(new State(true, Token::IGNORE));
-    /* 01 */ _states.push_back(new State(false, Token::COLON));
+    /* 01 */ _states.push_back(new State(true, Token::COLON));
     /* 02 */ _states.push_back(new State(false, Token::IGNORE));
     /* 03 */ _states.push_back(new State(false, Token::IGNORE));
     /* 04 */ _states.push_back(new State(true, Token::IGNORE));

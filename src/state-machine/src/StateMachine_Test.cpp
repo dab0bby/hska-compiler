@@ -33,15 +33,26 @@ int main ( int argc, char* argv[] )
     {
         auto c = testString[i];
         
-        if (!lp.parse(c))
-            lp.parse(c);
+        bool parsed = lp.parse(c);
 
         token = lp.getToken();
-                
-        cout << Token::getTokenName(token) << ", ";
+           
+        if (token != Token::DETECTING && token != Token::IGNORE)
+            cout << Token::getTokenName(token) << ", ";
 
         if (token == Token::NEW_LINE)
             cout << endl << endl;     
+
+        if (!parsed)
+        {
+            token = lp.getToken();
+
+            if (token != Token::DETECTING && token != Token::IGNORE)
+                cout << Token::getTokenName(token) << ", ";
+
+            if (token == Token::NEW_LINE)
+                cout << endl << endl;
+        }
     }
    
     auto benchmarkEnd = std::chrono::high_resolution_clock::now();
