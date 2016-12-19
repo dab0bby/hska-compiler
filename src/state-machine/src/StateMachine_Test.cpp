@@ -10,7 +10,7 @@ using namespace std;
 
 int main ( int argc, char* argv[] )
 {    
-    auto path = "E:/Code/hska-compiler/test-files/scanner9.txt";
+    auto path = "E:/Code/hska-compiler/test-files/scanner1.txt";
     LanguageParser lp;
 
     ifstream file(path);
@@ -37,7 +37,7 @@ int main ( int argc, char* argv[] )
 
         token = lp.getToken();
            
-        if (token != Token::DETECTING && token != Token::IGNORE)
+    //    if (token != Token::DETECTING && token != Token::IGNORE)
             cout << Token::getTokenName(token) << ", ";
 
         if (token == Token::NEW_LINE)
@@ -45,6 +45,7 @@ int main ( int argc, char* argv[] )
 
         if (!parsed)
         {
+            lp.parse(c);
             token = lp.getToken();
 
             if (token != Token::DETECTING && token != Token::IGNORE)
