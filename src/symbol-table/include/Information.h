@@ -15,8 +15,8 @@ private:
 public:
     Information(Token::TokenType type, const char * lexem);
 
-    bool compareLex(const char* lexem);
-    const char* getName();
+    bool compareLex(const char* lexem) const;
+    const char* getName() const;
 
     Token::TokenType getType();
 };

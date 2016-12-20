@@ -15,12 +15,12 @@ Information::Information(Token::TokenType type, const char* lexem) : type(type)
 }
 
 
-bool Information::compareLex(char const * lexem) {
+bool Information::compareLex(char const * lexem) const {
     return strcmp(this->lexem, lexem) == 0;
 }
 
-const char * Information::getName() {
-    return (char const*)this->lexem;
+const char * Information::getName() const {
+    return this->lexem;
 }
 
 
