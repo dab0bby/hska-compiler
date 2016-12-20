@@ -11,7 +11,10 @@ Information::Information(Token::TokenType type, const char* lexem) : type(type)
 {
     auto size = strlen(lexem);
     this->lexem = new char[size];
-    strncpy((char*)this->lexem, lexem, size);
+    strncpy(this->lexem, lexem, size);
+
+    // Terminate lexem string
+    this->lexem[size] = '\0';
 }
 
 

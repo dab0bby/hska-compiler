@@ -10,7 +10,7 @@
 class Information {
 private:
     Token::TokenType type;
-    const char* lexem;
+    char* lexem;
 
 public:
     Information(Token::TokenType type, const char * lexem);
