@@ -1,10 +1,16 @@
-//
-// Created by tim on 04.11.15.
-//
-
-
 #ifndef TOKEN_H
 #define TOKEN_H
+
+
+/**
+ * @file     Token.h
+ * @author   Bob
+ * @date     20/12/2016
+ * @version  1.0
+ *
+ * @brief    ...
+ *
+ */
 
 
 class Information; // Forward declaration
@@ -48,7 +54,7 @@ class Token
         };
 
         Token(TokenType type, const int& line, const int& column);
-        Token(TokenType type, const int& line, const int& column, const int& value);
+        Token(TokenType type, const int& line, const int& column, const unsigned int& value);
         Token(TokenType type, const int& line, const int& column, Information* information);
         ~Token();
 
@@ -58,6 +64,9 @@ class Token
          */
         TokenType getType() const { return _type; }
 
+        /**
+         * Return TokenType string of this Token
+         */
         const char * getTypeStr() const { return Token::getTokenName(this->_type); }
 
         /**
@@ -75,7 +84,7 @@ class Token
         /**
          * Returns value
          */
-        int getValue() const { return _value; }
+        unsigned int getValue() const { return _value; }
 
         /**
          * Returns lexem of this token
@@ -138,8 +147,8 @@ class Token
         const int _line;
         const int _column;
 
-        Information* _information{ nullptr };
-        int          _value{ 0 };
+        Information*       _information{ nullptr };
+        const unsigned int _value;
 
 };
 
