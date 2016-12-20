@@ -10,13 +10,13 @@
 class Information {
 private:
     Token::TokenType type;
-    char* lexem;
+    const char* lexem;
 
 public:
-    Information(Token::TokenType type, char const * lexem);
+    Information(Token::TokenType type, const char * lexem);
 
-    bool compareLex(char const* lexem);
-    char const * getName();
+    bool compareLex(const char* lexem);
+    const char* getName();
 
     Token::TokenType getType();
 };
