@@ -17,7 +17,7 @@ LanguageParser::LanguageParser()
     /* 07 */ _states.push_back(new State(true, Token::MINUS));
     /* 08 */ _states.push_back(new State(true, Token::EQUAL));
     /* 09 */ _states.push_back(new State(false, Token::DETECTING));
-    /* 10 */ _states.push_back(new State(true, Token::UNKNOWN_BULLSHIT_OPERATOR));
+    /* 10 */ _states.push_back(new State(true, Token::EXPRESSION_EQUAL));
     /* 11 */ _states.push_back(new State(false, Token::DETECTING));
     /* 12 */ _states.push_back(new State(true, Token::AND));
     /* 13 */ _states.push_back(new State(true, Token::INTEGER));
