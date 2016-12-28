@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by timo on 05.11.15.
 //
 
@@ -19,9 +19,7 @@ public:
     State();
     State(const State& other);
     explicit State(bool isFinal);
-    State(bool isFinal, int token);
     State(int other, Condition* condition, bool isFinal);
-    State(int other, Condition* condition, bool isFinal, int token);
 
     ~State();
 
@@ -36,8 +34,7 @@ public:
     void removeTransition(const Transition* t);
     bool accepts(char input, int& next) const;
     bool hasTransitions() const;
-    int token;
-
+    
     static State empty;
 
 private:

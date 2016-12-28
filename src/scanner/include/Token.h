@@ -1,4 +1,4 @@
-#ifndef TOKEN_H
+﻿#ifndef TOKEN_H
 #define TOKEN_H
 
 
@@ -21,36 +21,36 @@ class Token
     public:
         enum TokenType
         {
-            DETECTING,
-            ERROR,
-            EOF_TOKEN,    // End of file token
+            DETECTING = 1 << 0,
+            ERROR = 1 << 1,
+            EOF_TOKEN = 1 << 2,    // End of file token
 
-            PLUS,
-            MINUS,
-            STAR,
-            COLON,
-            INTEGER,
-            IDENTIFIER,
-            SEMICOLON,
-            GREATER,
-            LESS,
-            EQUAL,
-            ASSIGN,
-            UNKNOWN_BULLSHIT_OPERATOR,
-            NOT,
-            AND,
-            BRACKET_OPEN,
-            BRACKET_CLOSE,
-            SQUARE_BRACKET_OPEN,
-            SQUARE_BRACKET_CLOSE,
-            CURLY_BRACKET_OPEN,
-            CURLY_BRACKET_CLOSE,
-            IGNORE,                     // white spaces and comments
-            NEW_LINE,
+            PLUS = 1 << 3,
+            MINUS = 1 << 4,
+            STAR = 1 << 5,
+            COLON = 1 << 6,
+            INTEGER = 1 << 7,
+            IDENTIFIER = 1 << 8,
+            SEMICOLON = 1 << 9,
+            GREATER = 1 << 10,
+            LESS = 1 << 11,
+            EQUAL = 1 << 12,
+            ASSIGN = 1 << 13,
+            EXPRESSION_EQUAL = 1 << 14,
+            NOT = 1 << 15,
+            AND = 1 << 16,
+            BRACKET_OPEN = 1 << 17,
+            BRACKET_CLOSE = 1 << 18,
+            SQUARE_BRACKET_OPEN = 1 << 19,
+            SQUARE_BRACKET_CLOSE = 1 << 20,
+            CURLY_BRACKET_OPEN = 1 << 21,
+            CURLY_BRACKET_CLOSE = 1 << 22,
+            IGNORE = 1 << 23,                     // white spaces and comments
+            NEW_LINE = 1 << 24,
 
             // Keywords
-            IF,
-            WHILE
+            IF = 1 << 25,
+            WHILE = 1 << 26
         };
 
         Token(TokenType type, const int& line, const int& column);
@@ -122,7 +122,7 @@ class Token
                 "LESS",
                 "EQUAL",
                 "ASSIGN",
-                "UNKNOWN_BULLSHIT_OPERATOR",
+                "EXPRESSION_EQUAL",
                 "NOT",
                 "AND",
                 "BRACKET_OPEN",
@@ -139,7 +139,13 @@ class Token
                 "WHILE"
             };
 
-            return tokenNames[type];
+            for(int i = 0; i <= 32; i++)
+            {
+                if (type == 1 << i)
+                    return tokenNames[i];
+            }
+                
+            return "<UNKNOWN>";
         }
 
     private:

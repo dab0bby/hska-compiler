@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by timo on 05.11.15.
 //
 
@@ -12,7 +12,7 @@ class State;
 class Transition
 {
 public:
-    Transition(const Transition& other) = default;
+    Transition(const Transition& other);
     Transition(/*int first,*/ int target, const Condition* condition);
     ~Transition();
 
@@ -20,7 +20,7 @@ public:
     int getTarget() const;
     Condition* getCondition() const;
     
-    bool accepts(char input);
+    bool accepts(char input) const;
 
 private:
    // int _first;

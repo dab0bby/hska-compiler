@@ -1,10 +1,17 @@
-//
+﻿//
 // Created by timo on 05.11.15.
 //
+#pragma once
 
 #include "../include/Transition.h"
 #include "../include/State.h"
 
+
+Transition::Transition(const Transition& other)
+{
+    _target = other._target;
+    _condition = other._condition->clone();
+}
 
 Transition::Transition(int target, const Condition* condition) :
     //_first(first),
@@ -34,7 +41,7 @@ Condition* Transition::getCondition() const
     return _condition;
 }
 
-bool Transition::accepts(char input)
+bool Transition::accepts(char input) const
 {
     return _condition->accepts(input);
 }

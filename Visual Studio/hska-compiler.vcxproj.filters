@@ -16,9 +16,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\state-machine\src\State.cpp">
-      <Filter>state-machine</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\state-machine\src\StateMachine.cpp">
       <Filter>state-machine</Filter>
     </ClCompile>
@@ -28,24 +25,21 @@
     <ClCompile Include="..\src\state-machine\src\Transition.cpp">
       <Filter>state-machine</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\state-machine\src\LanguageParser.cpp">
-      <Filter>state-machine</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\utils\src\vector_test.cpp">
       <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\state-machine\src\TokenScanner.cpp">
+      <Filter>state-machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\state-machine\src\TokenPosition.cpp">
+      <Filter>state-machine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\scanner\include\Token.h">
       <Filter>scanner</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\state-machine\include\LanguageParser.h">
-      <Filter>state-machine</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\state-machine\include\Condition.h">
-      <Filter>state-machine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\state-machine\include\State.h">
       <Filter>state-machine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\state-machine\include\StateMachine.h">
@@ -62,6 +56,12 @@
     </ClInclude>
     <ClInclude Include="..\src\utils\include\vector.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\include\TokenPosition.h">
+      <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\include\TokenScanner.h">
+      <Filter>state-machine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
