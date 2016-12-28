@@ -11,7 +11,7 @@ void TokenPosition::setNext(TokenPosition* next)
     _next = next;
 
     if (next != nullptr)
-        _next->_previous = this;
+        next->_previous = this;
 }
 
 TokenPosition* TokenPosition::getPrevious() const
@@ -24,7 +24,7 @@ void TokenPosition::setPrevious(TokenPosition* previous)
     _previous = previous;
     
     if (previous != nullptr)
-        _previous->_next = this;
+        previous->_next = this;
 }
 
 void TokenPosition::deleteAllPrevious(TokenPosition* token)
@@ -47,4 +47,23 @@ void TokenPosition::deleteAllNext(TokenPosition* token)
         t = t->getNext();
         delete tmp;
     }
+}
+
+void TokenPosition::offsetAll(TokenPosition* token, int offset)
+{
+    jumpToFirst(token);    
+    for (; token != nullptr; token = token->getNext())
+        token->begin += offset;
+}
+
+void TokenPosition::jumpToFirst(TokenPosition*& token)
+{
+    while (token->getPrevious() != nullptr)
+        token = token->getPrevious();
+}
+
+void TokenPosition::jumpToLast(TokenPosition*& token)
+{
+    while (token->getNext() != nullptr)
+        token = token->getNext();
 }

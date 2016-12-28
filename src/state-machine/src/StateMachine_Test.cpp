@@ -8,6 +8,8 @@
 #include "../include/StateMachine.h"
 #include "../include/TokenScanner.h"
 
+#define BENCHMARK 1
+
 using namespace std;
 
 void testStateMachine()
@@ -43,55 +45,84 @@ void testStateMachine()
 
 void testTokenScanner(string text)
 {
-    TokenScanner scanner;
-    for (int i = 0; i < text.size(); i++)    
-        scanner.consume(text[i]);
-    
     int line = 1;
     int offset = -1; 
-    cout << "line " << line << ": ";
-    
-    for (auto t = scanner.getTokens(); t != nullptr; t = t->getNext())
+
+    TokenScanner scanner;
+    for (int i = 0; i < text.size(); i++)
     {
-        cout << Token::getTokenName(t->token) << " (" << t->position - offset << ", " << t->size << "), ";
-        
-        if (t->token == Token::NEW_LINE)
+        auto newTokens = scanner.consume(text[i]);
+
+        if (newTokens)
         {
-            offset = t->position;
-            if (t->getNext() != nullptr)                
-                cout << endl << "line " << ++line << ": ";
+            auto token = scanner.getPendingTokens();            
+            while (token != nullptr)
+            {     
+                if (token->token == Token::NEW_LINE)
+                {
+#if !BENCHMARK                   
+                    cout << "line " << line << ", col " << token->begin - offset << ": " << Token::getTokenName(token->token) << " \"\\n\"" << endl;
+#endif
+                    line++;
+                    offset = token->begin;
+                }
+                else
+                {
+#if !BENCHMARK    
+                    cout << "line " << line << ", col " << token->begin - offset << ": " << Token::getTokenName(token->token) << " \""
+                        << text.substr(i - token->offset - token->size, token->size) << "\"" << endl;
+#endif
+                }
+
+                token = token->getNext(); 
+            }
         }
-    }
+    }    
 }
 
 int main ( int argc, char* argv[] )
 {
-    auto path = "E:/Code/hska-compiler/test-files/scanner1.txt";
+    string paths[] = 
+    { 
+        "E:/Code/hska-compiler/test-files/scanner1.txt",
+        "E:/Code/hska-compiler/test-files/scanner2.txt",
+        "E:/Code/hska-compiler/test-files/scanner3.txt",
+        "E:/Code/hska-compiler/test-files/scanner4.txt",
+        "E:/Code/hska-compiler/test-files/scanner5.txt",
+        "E:/Code/hska-compiler/test-files/scanner6.txt", // large
+        "E:/Code/hska-compiler/test-files/scanner7.txt",
+        "E:/Code/hska-compiler/test-files/scanner8.txt", // large
+        "E:/Code/hska-compiler/test-files/scanner9.txt",
+    };
     
-    ifstream file(path);
-    stringstream fileContent;
-    string testString;
-    string str;
+    for (auto path : paths) 
+    {
+        ifstream file(path);
+        stringstream fileContent;
+        string testString;
+        string str;
 
-    while (getline(file, str))
-        fileContent << str << "\n";
+        while (getline(file, str))
+            fileContent << str << "\n";
 
-    // add some null terminator
-    testString = fileContent.str() + '\0' + '\0' + '\0' + '\0';
+        // add some null terminator
+        testString = fileContent.str() + '\0';
 
-    auto benchmarkStart = std::chrono::high_resolution_clock::now();
+        auto benchmarkStart = std::chrono::high_resolution_clock::now();
 
-    cout << "testing state-machine with input file: " << path << endl << endl;
+        cout << "testing state-machine with input file: " << path << endl << endl;
 
-    testTokenScanner(testString);
+        testTokenScanner(testString);
 
-    auto benchmarkEnd = std::chrono::high_resolution_clock::now();
-    auto time = benchmarkEnd - benchmarkStart;
+        auto benchmarkEnd = std::chrono::high_resolution_clock::now();
+        auto time = benchmarkEnd - benchmarkStart;
 
-    cout << endl << endl << "finished in " << std::chrono::duration_cast<std::chrono::microseconds>(time).count() / 1000.0 << "ms" << endl;
+        cout << endl  << "finished in " << std::chrono::duration_cast<std::chrono::microseconds>(time).count() / 1000.0 << "ms" << endl << endl << endl;
+    }
+      
 
 #ifdef _WIN32
-    getchar();
+    system("Pause");
 #endif
 
     return 0;
