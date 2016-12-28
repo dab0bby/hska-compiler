@@ -4,8 +4,8 @@
 
 /**
  * @file     Buffer.h
- * @author   Gennadi Eirich
- * @date     11/11/15
+ * @author   Bob
+ * @date     20/12/2016
  * @version  1.0
  *
  * @brief    ...
@@ -48,6 +48,11 @@ class Buffer
          */
         unsigned int getColumnNum() const;
 
+        /**
+         * Return a string from of given size.
+         */
+        const char* subStr(const unsigned int size) const;
+
     private:
         char _currentChar;
         char _previousChar;
@@ -57,7 +62,7 @@ class Buffer
 
         int _fileHandle;
 
-        int _positionOffset;
+        int          _positionOffset;
         unsigned int _filePositionOffset;
         unsigned int _currentLineNum;
         unsigned int _currentColumnNum;

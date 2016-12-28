@@ -13,10 +13,10 @@ private:
     char* lexem;
 
 public:
-    Information(Token::TokenType type, char const * lexem);
+    Information(Token::TokenType type, const char * lexem);
 
-    bool compareLex(char const* lexem);
-    char const * getName();
+    bool compareLex(const char* lexem) const;
+    const char* getName() const;
 
     Token::TokenType getType();
 };

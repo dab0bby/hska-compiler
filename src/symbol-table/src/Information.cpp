@@ -7,19 +7,23 @@
 #include <cstring>
 
 
-Information::Information(Token::TokenType type, char const* lexem) : type(type) {
-    auto size = sizeof(lexem);
-    this->lexem = new char[sizeof(size)];
-    strncpy(this->lexem, lexem, sizeof(size));
+Information::Information(Token::TokenType type, const char* lexem) : type(type)
+{
+    auto size = strlen(lexem);
+    this->lexem = new char[size];
+    strncpy(this->lexem, lexem, size);
+
+    // Terminate lexem string
+    this->lexem[size] = '\0';
 }
 
 
-bool Information::compareLex(char const * lexem) {
+bool Information::compareLex(char const * lexem) const {
     return strcmp(this->lexem, lexem) == 0;
 }
 
-char const *Information::getName() {
-    return (char const*)this->lexem;
+const char * Information::getName() const {
+    return this->lexem;
 }
 
 

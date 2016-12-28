@@ -19,19 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\state-machine\src\LanguageParser.cpp" />
-    <ClCompile Include="..\src\state-machine\src\State.cpp" />
     <ClCompile Include="..\src\state-machine\src\StateMachine.cpp" />
     <ClCompile Include="..\src\state-machine\src\StateMachine_Test.cpp" />
+    <ClCompile Include="..\src\state-machine\src\TokenPosition.cpp" />
+    <ClCompile Include="..\src\state-machine\src\TokenScanner.cpp" />
     <ClCompile Include="..\src\state-machine\src\Transition.cpp" />
     <ClCompile Include="..\src\utils\src\vector_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\scanner\include\Token.h" />
     <ClInclude Include="..\src\state-machine\include\Condition.h" />
-    <ClInclude Include="..\src\state-machine\include\LanguageParser.h" />
-    <ClInclude Include="..\src\state-machine\include\State.h" />
     <ClInclude Include="..\src\state-machine\include\StateMachine.h" />
+    <ClInclude Include="..\src\state-machine\include\TokenPosition.h" />
+    <ClInclude Include="..\src\state-machine\include\TokenScanner.h" />
     <ClInclude Include="..\src\state-machine\include\Transition.h" />
     <ClInclude Include="..\src\utils\include\colormod.h" />
     <ClInclude Include="..\src\utils\include\Helper.h" />

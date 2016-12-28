@@ -1,7 +1,7 @@
 /**
  * @file     Buffer.cpp
- * @author   Gennadi Eirich
- * @date     11/11/15
+ * @author   Bob
+ * @date     20/12/2016
  * @version  1.0
  *
  * @brief    ...
@@ -78,6 +78,32 @@ unsigned int Buffer::getColumnNum() const
 }
 
 
+const char* Buffer::subStr(const unsigned int size) const
+{
+    char* str = new char[size];
+
+    // Get start position
+    int start = (this->_positionOffset % HSKA_BUFFER_SIZE) - size;
+
+    if (start >= 0) // Current buffer
+        strncpy(str, this->_currentBuffer + start, static_cast<size_t>(size));
+    else // With previous buffer
+    {
+        // Previous buffer
+        int prevBufferStart = HSKA_BUFFER_SIZE + start;
+        strncpy(str, this->_previousBuffer + prevBufferStart, static_cast<size_t>(abs(start)));
+
+        // Current buffer
+        strncpy(str + abs(start), this->_currentBuffer, static_cast<size_t>(start + size));
+    }
+
+    // Add terminator to string
+    str[size] = '\0';
+
+    return str;
+}
+
+
 void Buffer::_openFile(const char* filePath)
 {
     this->_fileHandle = open(filePath, O_RDONLY);
@@ -113,7 +139,7 @@ void Buffer::_readNextChunk()
     {
         this->_filePositionOffset += size;
 
-        // Check if end of file is reached
+        // Check if endOfFile is reached
         if (size < HSKA_BUFFER_SIZE)
             this->_isEof = true;
     }
@@ -158,4 +184,3 @@ Buffer::~Buffer()
     free(_previousBuffer);
     free(_currentBuffer);
 }
-
