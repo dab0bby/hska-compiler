@@ -32,7 +32,7 @@ $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(HEADER_DIR)/%.h
 
 
 # Builds StateMachine_Test object files.
-state-machine-test: $(HEADER_DIR)/LanguageParser.h $(SOURCE_DIR)/StateMachine_Test.cpp
+state-machine-test: $(SOURCE_DIR)/StateMachine_Test.cpp
 	@echo 'Building StateMachine Test ...'
 	$(CC) $(CFLAGS) $(SOURCE_DIR)/StateMachine_Test.cpp -o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o
 
