@@ -5,7 +5,7 @@
 /**
  * @file     Token.h
  * @author   Bob
- * @date     20/12/2016
+ * @date     29/12/2016
  * @version  1.0
  *
  * @brief    ...
@@ -56,6 +56,7 @@ class Token
         Token(TokenType type, const int& line, const int& column);
         Token(TokenType type, const int& line, const int& column, const unsigned int& value);
         Token(TokenType type, const int& line, const int& column, Information* information);
+        Token(TokenType type, const int& line, const int& column, const char* errorToken);
         ~Token();
 
         /**
@@ -90,6 +91,11 @@ class Token
          * Returns lexem of this token
          */
         const char* getLexem() const;
+
+        /**
+         * Returns the error token
+         */
+        const char* getErrorToken() const;
 
         /**
          * Return information.
@@ -144,7 +150,7 @@ class Token
                 if (type == 1 << i)
                     return tokenNames[i];
             }
-                
+
             return "<UNKNOWN>";
         }
 
@@ -155,6 +161,7 @@ class Token
 
         Information*       _information{ nullptr };
         const unsigned int _value;
+        const char*        _errorToken;
 
 };
 

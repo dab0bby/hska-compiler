@@ -1,7 +1,7 @@
 /**
  * @file     Token.cpp
  * @author   Bob
- * @date     20/12/2016
+ * @date     29/12/2016
  * @version  1.0
  *
  * @brief    ...
@@ -17,7 +17,8 @@ Token::Token(TokenType type, const int &line, const int &column) :
     _type(type),
     _line(line),
     _column(column),
-    _value(0)
+    _value(0),
+    _errorToken(nullptr)
 {
 }
 
@@ -26,7 +27,8 @@ Token::Token(TokenType type, const int& line, const int& column, const unsigned 
     _type(type),
     _line(line),
     _column(column),
-    _value(value)
+    _value(value),
+    _errorToken(nullptr)
 {
 }
 
@@ -36,7 +38,18 @@ Token::Token(TokenType type, const int& line, const int& column, Information* in
     _line(line),
     _column(column),
     _information(information),
-    _value(0)
+    _value(0),
+    _errorToken(nullptr)
+{
+}
+
+
+Token::Token(TokenType type, const int& line, const int& column, const char* errorToken) :
+    _type(type),
+    _line(line),
+    _column(column),
+    _value(0),
+    _errorToken(errorToken)
 {
 }
 
@@ -50,6 +63,18 @@ const char* Token::getLexem() const
 }
 
 
+const char* Token::getErrorToken() const
+{
+    if (this->_errorToken == nullptr)
+        return "No Error Token";
+
+    return this->_errorToken;
+}
+
+
 Token::~Token()
 {
+    // Delete error token
+    if (this->_errorToken != nullptr)
+        delete[] this->_errorToken;
 }
