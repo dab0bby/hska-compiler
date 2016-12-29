@@ -1,7 +1,7 @@
 /**
  * @file     Scanner_Test.cpp
- * @author   Gennadi Eirich
- * @date     15/12/2016
+ * @author   Bob
+ * @date     30/12/2016
  * @version  1.0
  *
  * @brief    ...
