@@ -34,13 +34,13 @@ $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(HEADER_DIR)/%.h
 # Builds StateMachine_Test object files.
 state-machine-test: $(SOURCE_DIR)/StateMachine_Test.cpp
 	@echo 'Building StateMachine Test ...'
-	$(CC) $(CFLAGS) $(SOURCE_DIR)/StateMachine_Test.cpp -o $(DEBUG_DIR)/$(EXECUTABLE)_Test.o
+	$(CC) $(CFLAGS) $(SOURCE_DIR)/StateMachine_Test.cpp -o $(DEBUG_DIR)/$(EXECUTABLE)Test.o
 
 
 # Builds StateMachine_Test executable.
 state-machine-test-executable: clean state-machine state-machine-test
 	@echo 'Building StateMachine Test Executable ...'
-	$(CC) $(LFLAGS) $(TARGETS) $(DEBUG_DIR)/$(EXECUTABLE)_Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_Test
+	$(CC) $(LFLAGS) $(TARGETS) $(DEBUG_DIR)/$(EXECUTABLE)Test.o -o $(DEBUG_DIR)/$(EXECUTABLE)_test
 
 
 # Cleaning up debug/ and build/ directory
