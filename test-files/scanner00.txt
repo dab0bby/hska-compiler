@@ -1,0 +1,25 @@
+:=
+
+?%&$"/'
+
+
+test00 test tes te t      testest
+
+1234 200000000000000000000000000000
+
+?y := 7 = := X : (X - 4);
+
+?%&$"/'
+
+1234 :
+
+dies ist ein :* 111 aaaa +- 1234.0 mod *: Kommentar
+
+1234
+
+X:=3+4;
+:* eine einfache & % $ Aufgabe !! *: identifierbehindComment 1234 integerAtColumn 56
+?y := 7 = := X : (X - 4);
+Z := ((3 + 4 - 6); =:=
+Test&vier
+Resultat & := : X y % TestLastTokenBeforEndofFile +
