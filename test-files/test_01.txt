@@ -1,5 +1,5 @@
 X:=3+4;
-:* eine einfache Aufgabe !! *:
+:* eine einfache Aufgabe !! *: identifierbehindComment 1234 integerAtColumn 56
 ?y := 7 = := X : (X - 4);
-Z := ((3 + 4 - 6);
-Resultat := : X y %
+Z := ((3 + 4 - 6); =:=
+Resultat := : X y % TestLastTokenBeforEndofFile +

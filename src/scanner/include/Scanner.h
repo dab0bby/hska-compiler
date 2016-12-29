@@ -5,7 +5,7 @@
 /**
  * @file     Scanner.h
  * @author   Gennadi Eirich
- * @date     11/11/15
+ * @date     30/12/2016
  * @version  1.0
  *
  * @brief    ...
@@ -13,19 +13,38 @@
  */
 
 
-#include "../../symbol-table/headers/SymbolTable.h"
+#include "../../buffer/include/Buffer.h"
+#include "../../symbol-table/include/SymbolTable.h"
+#include "../../state-machine/include/TokenScanner.h"
+#include "../../state-machine/include/TokenPosition.h"
+#include "../include/Token.h"
 
 
 class Scanner
 {
     public:
-        Scanner(char*, SymbolTable* symbolTable);
-        virtual ~Scanner();
+        Scanner(Buffer* buffer, SymbolTable* symbolTable, TokenScanner* tokenScanner);
+        ~Scanner();
 
-        void nextToken();
+        /**
+         *  Returns next Token
+         */
+        Token* nextToken();
 
     private:
+        Buffer*        _buffer;
+        SymbolTable*   _symbolTable;
+        TokenScanner*  _tokenScanner;
+        TokenPosition* _pendingTokens{ nullptr };
+
+        int  _getTokenBegin(const int& size, const int& offsete) const;
+
+        Token* _createIdentifier(const int& size, const int& offset) const;
+        Token* _createInteger(const int& size, const int& offset) const;
+        Token* _createError(const int& size, const int& offset) const;
+        void   _checkForPendingToken(TokenPosition* tokens);
 
 };
+
 
 #endif /* SCANNER_H_ */
