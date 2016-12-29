@@ -11,6 +11,9 @@ class Condition;
 class Transition
 {
 public:
+#if defined (__clang__)
+    Transition() {};
+#endif
     Transition(const Transition& other);
     Transition(int target, const Condition* condition);
     ~Transition();
