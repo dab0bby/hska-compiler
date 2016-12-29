@@ -15,3 +15,7 @@ charset = utf-8
 [*.{cpp, hpp, c, h}]
 indent_style = space
 indent_size = 4
+
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
