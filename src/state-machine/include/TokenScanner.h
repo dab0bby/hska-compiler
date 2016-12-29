@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "TokenPosition.h"
 #include "StateMachine.h"
 #include <string>
@@ -28,13 +28,13 @@ private:
     static const int SM_IDFR = 6;
     static const int SM_LF = 21;
     static const int SM_IGN_NO_COMMENT = 0;
-    
+
     int _position = 0;
     StateMachine** _sms;
     TokenPosition* _startToken = nullptr;
     TokenPosition* _lastToken = nullptr;
     TokenPosition* _pendingToken = nullptr;
     int _filter =  ~(Token::IGNORE | Token::DETECTING);
-    int _lastTokenEnd = 0;    
+    int _lastTokenEnd = 0;
     int _lastOutputEnd = 0;
 };

@@ -1,4 +1,4 @@
-﻿#ifndef CONDITION_H
+#ifndef CONDITION_H
 #define CONDITION_H
 
 

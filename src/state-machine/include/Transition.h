@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by timo on 05.11.15.
 //
 
@@ -18,13 +18,13 @@ public:
     //int getFirstState() const;
     int getTarget() const;
     Condition* getCondition() const;
-    
+
     bool accepts(char input) const;
 
 private:
    // int _first;
     int _target;
-    Condition* _condition;    
+    Condition* _condition;
 };
 
 #endif //HSKA_COMPILER_TRANSITION_H

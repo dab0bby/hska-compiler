@@ -1,4 +1,4 @@
-﻿
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -20,12 +20,12 @@ void testStateMachine()
         Transition(2, new CharRangeCondition('0', '9')),
         Transition(3, new CharRangeCondition('A', 'Z')) }, 3);
 
-    sm.setTransitions(1, new Transition[1]{ Transition(4, new CharRangeCondition('0', '9')) }, 1);    
+    sm.setTransitions(1, new Transition[1]{ Transition(4, new CharRangeCondition('0', '9')) }, 1);
     sm.setTransitions(2, new Transition[1]{ Transition(5, new CharRangeCondition('a', 'z')) }, 1);
     sm.setTransitions(3, new Transition[1]{ Transition(5, new CharRangeCondition('0', '9')) }, 1);
 
     string test[] = { "a9", "8s", "C7", "79", "er", "aC"};
-    
+
     bool ok = true;
 
     for (int i = 0; i < 6; i++)
@@ -35,8 +35,8 @@ void testStateMachine()
             char c = test[i][j];
             sm.process(c);
         }
-            
-        ok &= i < 3 ? sm.isInFinalState() : !sm.isInFinalState();    
+
+        ok &= i < 3 ? sm.isInFinalState() : !sm.isInFinalState();
         sm.reset();
     }
 
@@ -46,7 +46,7 @@ void testStateMachine()
 void testTokenScanner(string text)
 {
     int line = 1;
-    int offset = -1; 
+    int offset = -1;
 
     TokenScanner scanner;
     for (int i = 0; i < text.size(); i++)
@@ -55,12 +55,12 @@ void testTokenScanner(string text)
 
         if (newTokens)
         {
-            auto token = scanner.getPendingTokens();            
+            auto token = scanner.getPendingTokens();
             while (token != nullptr)
-            {     
+            {
                 if (token->token == Token::NEW_LINE)
                 {
-#if !BENCHMARK                   
+#if !BENCHMARK
                     cout << "line " << line << ", col " << token->begin - offset << ": " << Token::getTokenName(token->token) << " \"\\n\"" << endl;
 #endif
                     line++;
@@ -68,22 +68,22 @@ void testTokenScanner(string text)
                 }
                 else
                 {
-#if !BENCHMARK    
+#if !BENCHMARK
                     cout << "line " << line << ", col " << token->begin - offset << ": " << Token::getTokenName(token->token) << " \""
                         << text.substr(i - token->offset - token->size, token->size) << "\"" << endl;
 #endif
                 }
 
-                token = token->getNext(); 
+                token = token->getNext();
             }
         }
-    }    
+    }
 }
 
 int main ( int argc, char* argv[] )
 {
-    string paths[] = 
-    { 
+    string paths[] =
+    {
         "E:/Code/hska-compiler/test-files/scanner1.txt",
         "E:/Code/hska-compiler/test-files/scanner2.txt",
         "E:/Code/hska-compiler/test-files/scanner3.txt",
@@ -94,8 +94,8 @@ int main ( int argc, char* argv[] )
         "E:/Code/hska-compiler/test-files/scanner8.txt", // large
         "E:/Code/hska-compiler/test-files/scanner9.txt",
     };
-    
-    for (auto path : paths) 
+
+    for (auto path : paths)
     {
         ifstream file(path);
         stringstream fileContent;
@@ -119,7 +119,7 @@ int main ( int argc, char* argv[] )
 
         cout << endl  << "finished in " << std::chrono::duration_cast<std::chrono::microseconds>(time).count() / 1000.0 << "ms" << endl << endl << endl;
     }
-      
+
 
 #ifdef _WIN32
     system("Pause");

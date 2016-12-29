@@ -1,4 +1,4 @@
-﻿/**
+/**
  * StateMachine.h
  */
 
@@ -11,10 +11,10 @@
 class StateMachine
 {
 public:
-    StateMachine(int stateCount, int initialState, int finalState, Token::TokenType token);    
-    StateMachine(int stateCount, int initialState, int* finalStates, int finalStatesCount, Token::TokenType token);    
+    StateMachine(int stateCount, int initialState, int finalState, Token::TokenType token);
+    StateMachine(int stateCount, int initialState, int* finalStates, int finalStatesCount, Token::TokenType token);
     ~StateMachine();
-    
+
     bool process(char input);
     void reset();
     void reset(int startPosition);
@@ -22,7 +22,7 @@ public:
     void setTransitions(int state, Transition* transitions, int count) const;
     void getTransitions(int state, Transition*& transitions, int& count) const;
 
-    bool canProcess() const;  
+    bool canProcess() const;
     bool isInFinalState() const;
     bool isInInitialState() const;
     Token::TokenType getToken() const;
@@ -33,7 +33,7 @@ public:
 
     int startPosition = 0;
     int processed = 0;
-    
+
 private:
     int _initialState;
     int _currentState = 0;

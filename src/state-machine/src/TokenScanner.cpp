@@ -1,4 +1,4 @@
-﻿#include "../include/TokenScanner.h"
+#include "../include/TokenScanner.h"
 #include "../include/Condition.h"
 
 TokenScanner::TokenScanner()
@@ -46,8 +46,8 @@ TokenScanner::TokenScanner()
     _sms[SM_IDFR] = StateMachine::createAtomic(Token::IDENTIFIER);
     _sms[SM_IDFR]->setTransitions(0, new Transition[1]{ Transition(1, Condition::createAlphabet()) }, 1);
     _sms[SM_IDFR]->setTransitions(1, new Transition[1]{ Transition(1, Condition::createAlphanumerical()) }, 1);
-    
-    // state machine for := 
+
+    // state machine for :=
     _sms[11] = new StateMachine(3, 0, 2, Token::ASSIGN);
     _sms[11]->setTransitions(0, Transition(1, new CharCondition(':')));
     _sms[11]->setTransitions(1, Transition(2, new CharCondition('=')));
@@ -77,10 +77,10 @@ TokenScanner::~TokenScanner()
 }
 
 bool TokenScanner::consume(char c)
-{   
+{
     bool anyProgress = false;
     bool skip = false;
-    
+
     for (int i = 0; i < SM_CNT; i++)
     {
         if (skip && i != SM_LF)
@@ -90,15 +90,15 @@ bool TokenScanner::consume(char c)
         }
 
         auto valid = _sms[i]->process(c);
-                
+
         if (valid)
         {
             if (_sms[i]->isInFinalState())
-                _appendToken(new TokenPosition(_sms[i]->getToken(), _sms[i]->startPosition, _sms[i]->processed));            
+                _appendToken(new TokenPosition(_sms[i]->getToken(), _sms[i]->startPosition, _sms[i]->processed));
         }
-        else 
+        else
         {
-            _sms[i]->reset(_position);            
+            _sms[i]->reset(_position);
             valid = _sms[i]->process(c);
 
             if (valid)
@@ -158,7 +158,7 @@ TokenPosition* TokenScanner::getPendingTokens()
     if (_startToken == nullptr)
         return nullptr;
 
-    auto tmp = _startToken;   
+    auto tmp = _startToken;
     _applyOffset(tmp, _position - 1);
     _startToken = nullptr;
     _lastToken = nullptr;
@@ -168,17 +168,17 @@ TokenPosition* TokenScanner::getPendingTokens()
 void TokenScanner::_appendToken(TokenPosition* token)
 {
     // make an error if unresolved spaces are between tokens
-    if (_lastTokenEnd < token->begin)    
+    if (_lastTokenEnd < token->begin)
         _appendToken(new TokenPosition(Token::ERROR, _lastTokenEnd, token->begin - _lastTokenEnd));
-            
+
     bool accept = _filter & token->token;
-    
+
     // initial call
     if (_pendingToken == nullptr)
     {
         if (accept)
             _pendingToken = token;
-       
+
         _lastTokenEnd = token->begin + token->size;
         return;
     }
@@ -186,7 +186,7 @@ void TokenScanner::_appendToken(TokenPosition* token)
     // last token is larger then the new token or the new token begins before the last token
     if (_pendingToken->begin < token->begin && _pendingToken->begin + _pendingToken->size >  token->begin + token->size || token->begin < _lastOutputEnd)
         return;
-    
+
     // move end position of last token
     if (token->begin + token->size > _lastTokenEnd)
         _lastTokenEnd = token->begin + token->size;
@@ -199,26 +199,26 @@ void TokenScanner::_appendToken(TokenPosition* token)
         auto end = t->begin + t->size;
         if (end <= token->begin)
             break;
-        
+
         auto tmp = t->getPrevious();
-                
+
         delete t;
         t = tmp;
-    } 
-    
+    }
+
     if (!accept)
     {
         if (t != nullptr)
             t->setNext(nullptr);
-        
+
         _pendingToken = t;
-        delete token;        
+        delete token;
         return;
     }
-    
+
     if (t != nullptr)
         t->setNext(token);
-    
+
     _pendingToken = token;
 }
 
@@ -248,16 +248,16 @@ void TokenScanner::_mergePendingToken(bool skippedLast)
         _lastOutputEnd = _lastToken->begin + _lastToken->size;
         return;
     }
-        
+
     // : := and =:=
     if (_pendingToken->token == Token::COLON || _pendingToken->token == Token::EQUAL || _pendingToken->token == Token::AND && _pendingToken->size < 2)
         return;
 
     // pending Identifier and Integers
-    if (_pendingToken->token == Token::IDENTIFIER && _sms[SM_IDFR]->isInFinalState() || 
-        _pendingToken->token == Token::INTEGER && _sms[SM_INT]->isInFinalState())    
+    if (_pendingToken->token == Token::IDENTIFIER && _sms[SM_IDFR]->isInFinalState() ||
+        _pendingToken->token == Token::INTEGER && _sms[SM_INT]->isInFinalState())
         return;
-    
+
     // Identifier and Intergers
     if (first->token == Token::IDENTIFIER && _sms[SM_IDFR]->isInInitialState() ||
         first->token == Token::INTEGER && _sms[SM_INT]->isInInitialState())
@@ -308,7 +308,7 @@ void TokenScanner::_applyOffset(TokenPosition* token, int position)
     TokenPosition::jumpToFirst(token);
 
     while (token != nullptr)
-    {        
+    {
         token->offset = position - token->begin - token->size;
         token = token->getNext();
     }
@@ -334,15 +334,15 @@ bool TokenScanner::_contains(TokenPosition* token, Token::TokenType type)
  * void TokenScanner::_appendToken(TokenPosition* token)
 {
     // make an error if unresolved spaces are between tokens
-    if (_lastTokenEnd < token->begin)    
+    if (_lastTokenEnd < token->begin)
         _appendToken(new TokenPosition(Token::ERROR, _lastTokenEnd, token->begin - _lastTokenEnd));
-    
+
     // move end position of last token
     if (token->begin + token->size > _lastTokenEnd)
         _lastTokenEnd = token->begin + token->size;
-        
+
     bool accept = _filter & token->token;
-    
+
     // initial call
     if (_lastToken == nullptr)
     {
@@ -361,33 +361,33 @@ bool TokenScanner::_contains(TokenPosition* token, Token::TokenType type)
     while (t != nullptr)
     {
         if (t->getPrevious() == token)
-            return;        
+            return;
 
         auto end = t->begin + t->size;
         if (end <= token->begin)
             break;
-        
+
         auto tmp = t->getPrevious();
-                
+
         delete t;
         t = tmp;
-    } 
-    
+    }
+
     if (!accept)
     {
         if (t != nullptr)
             t->setNext(nullptr);
-        
+
         _lastToken = t;
         delete token;
         return;
     }
-    
+
     if (t != nullptr)
         t->setNext(token);
     else
         _startToken = token;
-    
+
     _lastToken = token;
 }
  */

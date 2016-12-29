@@ -1,4 +1,4 @@
-﻿/**
+/**
  * StateMachine.cpp
  */
 
@@ -29,7 +29,7 @@ StateMachine::~StateMachine()
             delete[] _transitions[i];
 
     delete[] _transitions;
-    delete[] _transitionCounts;    
+    delete[] _transitionCounts;
     delete[] _finalStates;
 }
 
