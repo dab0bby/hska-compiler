@@ -6,14 +6,13 @@
 #define HSKA_COMPILER_TRANSITION_H
 
 class Condition;
-class State;
 
 // The base class for the different transitions. A Transition connects two states of a state machine.
 class Transition
 {
 public:
     Transition(const Transition& other);
-    Transition(/*int first,*/ int target, const Condition* condition);
+    Transition(int target, const Condition* condition);
     ~Transition();
 
     //int getFirstState() const;
