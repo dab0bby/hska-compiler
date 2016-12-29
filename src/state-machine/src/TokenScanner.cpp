@@ -184,7 +184,7 @@ void TokenScanner::_appendToken(TokenPosition* token)
     }
 
     // last token is larger then the new token or the new token begins before the last token
-    if (_pendingToken->begin < token->begin && _pendingToken->begin + _pendingToken->size >  token->begin + token->size || token->begin < _lastOutputEnd)
+    if ((_pendingToken->begin < token->begin && _pendingToken->begin + _pendingToken->size > token->begin + token->size) || (token->begin < _lastOutputEnd))
         return;
 
     // move end position of last token
@@ -250,17 +250,17 @@ void TokenScanner::_mergePendingToken(bool skippedLast)
     }
 
     // : := and =:=
-    if (_pendingToken->token == Token::COLON || _pendingToken->token == Token::EQUAL || _pendingToken->token == Token::AND && _pendingToken->size < 2)
+    if (_pendingToken->token == Token::COLON || _pendingToken->token == Token::EQUAL || (_pendingToken->token == Token::AND && _pendingToken->size < 2))
         return;
 
     // pending Identifier and Integers
-    if (_pendingToken->token == Token::IDENTIFIER && _sms[SM_IDFR]->isInFinalState() ||
-        _pendingToken->token == Token::INTEGER && _sms[SM_INT]->isInFinalState())
+    if ((_pendingToken->token == Token::IDENTIFIER && _sms[SM_IDFR]->isInFinalState()) ||
+        (_pendingToken->token == Token::INTEGER && _sms[SM_INT]->isInFinalState()))
         return;
 
     // Identifier and Intergers
-    if (first->token == Token::IDENTIFIER && _sms[SM_IDFR]->isInInitialState() ||
-        first->token == Token::INTEGER && _sms[SM_INT]->isInInitialState())
+    if ((first->token == Token::IDENTIFIER && _sms[SM_IDFR]->isInInitialState()) ||
+        (first->token == Token::INTEGER && _sms[SM_INT]->isInInitialState()))
     {
         auto end = _pendingToken->token & _filter ? _pendingToken : _pendingToken->getPrevious();
 
