@@ -14,8 +14,8 @@ BUILD_DIR  = bin
 
 # List of targets
 TARGETS = $(BUILD_DIR)/StateMachine.o \
-	$(BUILD_DIR)/LanguageParser.o \
-	$(BUILD_DIR)/State.o \
+	$(BUILD_DIR)/TokenPosition.o \
+	$(BUILD_DIR)/TokenScanner.o \
 	$(BUILD_DIR)/Transition.o
 	# add more here
 	# last without escape sequence

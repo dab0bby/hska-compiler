@@ -1,12 +1,11 @@
 ﻿#ifndef CONDITION_H
 #define CONDITION_H
 
-using namespace std;
 
 class Condition
 {
 public:
-    
+
     virtual ~Condition() { }
 
     virtual bool accepts(char input) const = 0;

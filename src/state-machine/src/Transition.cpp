@@ -1,10 +1,10 @@
 ﻿//
 // Created by timo on 05.11.15.
 //
-#pragma once
+
 
 #include "../include/Transition.h"
-#include "../include/State.h"
+#include "../include/Condition.h"
 
 
 Transition::Transition(const Transition& other)
@@ -26,7 +26,7 @@ Transition::~Transition()
     _condition = nullptr;
 }
 //
-//int Transition::getFirstState() const 
+//int Transition::getFirstState() const
 //{
 //    return _first;
 //}
