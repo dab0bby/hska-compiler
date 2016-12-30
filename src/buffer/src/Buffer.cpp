@@ -10,6 +10,7 @@
 
 
 #include <iostream>
+#include <cstring>
 #include <unistd.h>
 #include <fcntl.h>
 
