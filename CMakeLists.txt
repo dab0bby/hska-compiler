@@ -34,7 +34,7 @@ set(SCANNER_SRC
     src/scanner/include/Scanner.h src/scanner/src/Scanner.cpp
     src/scanner/src/Token.cpp src/scanner/include/Token.h)
 
-add_executable(HsKA-Compiler src/main.cpp)
+add_executable(HsKA-Compiler src/main.cpp ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
 add_executable(buffer src/buffer/src/Buffer_Test.cpp ${BUFFER_SRC})
 add_executable(scanner src/scanner/src/Scanner_Test.cpp ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
 add_executable(state-machine src/state-machine/src/StateMachine_Test.cpp ${STATE_MACHINE_SRC})
