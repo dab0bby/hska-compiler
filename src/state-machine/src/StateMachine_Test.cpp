@@ -1,4 +1,4 @@
-
+﻿
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -8,7 +8,7 @@
 #include "../include/StateMachine.h"
 #include "../include/TokenScanner.h"
 
-#define BENCHMARK 1
+#define BENCHMARK 0
 
 using namespace std;
 
@@ -84,15 +84,16 @@ int main ( int argc, char* argv[] )
 {
     string paths[] =
     {
-        "E:/Code/hska-compiler/test-files/scanner1.txt",
-        "E:/Code/hska-compiler/test-files/scanner2.txt",
-        "E:/Code/hska-compiler/test-files/scanner3.txt",
-        "E:/Code/hska-compiler/test-files/scanner4.txt",
-        "E:/Code/hska-compiler/test-files/scanner5.txt",
-        "E:/Code/hska-compiler/test-files/scanner6.txt", // large
-        "E:/Code/hska-compiler/test-files/scanner7.txt",
-        "E:/Code/hska-compiler/test-files/scanner8.txt", // large
-        "E:/Code/hska-compiler/test-files/scanner9.txt",
+        "E:/Code/hska-compiler/test-files/scanner00.txt",
+        //"E:/Code/hska-compiler/test-files/scanner1.txt",
+        //"E:/Code/hska-compiler/test-files/scanner2.txt",
+        //"E:/Code/hska-compiler/test-files/scanner3.txt",
+        //"E:/Code/hska-compiler/test-files/scanner4.txt",
+        //"E:/Code/hska-compiler/test-files/scanner5.txt",
+        //"E:/Code/hska-compiler/test-files/scanner6.txt", // large
+        //"E:/Code/hska-compiler/test-files/scanner7.txt",
+        //"E:/Code/hska-compiler/test-files/scanner8.txt", // large
+        //"E:/Code/hska-compiler/test-files/scanner9.txt",
     };
 
     for (auto path : paths)

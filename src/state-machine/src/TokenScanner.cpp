@@ -1,4 +1,4 @@
-#include "../include/TokenScanner.h"
+﻿#include "../include/TokenScanner.h"
 #include "../include/Condition.h"
 
 TokenScanner::TokenScanner()
@@ -115,8 +115,12 @@ bool TokenScanner::consume(char c)
         if (valid && i == SM_IGN && _sms[SM_IGN]->isInFinalState())
             skip = true;
 
+
         anyProgress |= valid;
     }
+
+    if (_sms[SM_LF]->isInFinalState() && _sms[SM_IGN]->startPosition == _position)
+            _sms[SM_IGN]->startPosition++;
 
     if (!anyProgress)
         _appendToken(new TokenPosition(Token::ERROR, _position, 1));
@@ -328,66 +332,3 @@ bool TokenScanner::_contains(TokenPosition* token, Token::TokenType type)
 
     return false;
 }
-
-
-/*
- * void TokenScanner::_appendToken(TokenPosition* token)
-{
-    // make an error if unresolved spaces are between tokens
-    if (_lastTokenEnd < token->begin)
-        _appendToken(new TokenPosition(Token::ERROR, _lastTokenEnd, token->begin - _lastTokenEnd));
-
-    // move end position of last token
-    if (token->begin + token->size > _lastTokenEnd)
-        _lastTokenEnd = token->begin + token->size;
-
-    bool accept = _filter & token->token;
-
-    // initial call
-    if (_lastToken == nullptr)
-    {
-        _startToken = token;
-        _lastToken = _startToken;
-        return;
-    }
-
-    // last token is larger then the new token
-    if (_lastToken->begin < token->begin && _lastToken->begin + _lastToken->size > token->begin + token->size)
-        return;
-
-    auto t = _lastToken;
-
-    // delete Tokens that intersect with the new token (in terms of positioning)
-    while (t != nullptr)
-    {
-        if (t->getPrevious() == token)
-            return;
-
-        auto end = t->begin + t->size;
-        if (end <= token->begin)
-            break;
-
-        auto tmp = t->getPrevious();
-
-        delete t;
-        t = tmp;
-    }
-
-    if (!accept)
-    {
-        if (t != nullptr)
-            t->setNext(nullptr);
-
-        _lastToken = t;
-        delete token;
-        return;
-    }
-
-    if (t != nullptr)
-        t->setNext(token);
-    else
-        _startToken = token;
-
-    _lastToken = token;
-}
- */
