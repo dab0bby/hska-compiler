@@ -90,11 +90,18 @@ const char* Buffer::subStr(const unsigned int& size, const int& offset) const
     else // With previous buffer
     {
         // Previous buffer
-        int prevBufferStart = HSKA_BUFFER_SIZE + start;
-        strncpy(str, this->_previousBuffer + prevBufferStart, static_cast<size_t>(abs(start)));
+        {
+            int prevBufferStart = HSKA_BUFFER_SIZE + start;
+            size_t sizeToRead = static_cast<int>(start + size) > 0 ? abs(start) : size;
+            strncpy(str, this->_previousBuffer + prevBufferStart, sizeToRead); // Copy sizeToRead from previous buffer to string
+        }
 
         // Current buffer
-        strncpy(str + abs(start), this->_currentBuffer, static_cast<size_t>(start + size));
+        {
+            int sizeToRead = start + size;
+            if (sizeToRead > 0)
+                strncpy(str + abs(start), this->_currentBuffer, static_cast<size_t>(sizeToRead));
+        }
     }
 
     // Add terminator to string
