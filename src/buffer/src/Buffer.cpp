@@ -1,7 +1,7 @@
 /**
  * @file     Buffer.cpp
  * @author   Bob
- * @date     29/12/2016
+ * @date     30/12/2016
  * @version  1.0
  *
  * @brief    ...
@@ -83,7 +83,7 @@ const char* Buffer::subStr(const unsigned int& size, const int& offset) const
     char* str = new char[size];
 
     // Get start position
-    int start = (this->_positionOffset % HSKA_BUFFER_SIZE) - size - offset;
+    const int start = (this->_positionOffset % HSKA_BUFFER_SIZE) - size - offset;
 
     if (start >= 0) // Current buffer
         strncpy(str, this->_currentBuffer + start, static_cast<size_t>(size));
@@ -91,14 +91,14 @@ const char* Buffer::subStr(const unsigned int& size, const int& offset) const
     {
         // Previous buffer
         {
-            int prevBufferStart = HSKA_BUFFER_SIZE + start;
-            size_t sizeToRead = static_cast<int>(start + size) > 0 ? abs(start) : size;
+            const int prevBufferStart = HSKA_BUFFER_SIZE + start;
+            const size_t sizeToRead = static_cast<int>(start + size) > 0 ? static_cast<size_t>(abs(start)) : size;
             strncpy(str, this->_previousBuffer + prevBufferStart, sizeToRead); // Copy sizeToRead from previous buffer to string
         }
 
         // Current buffer
         {
-            int sizeToRead = start + size;
+            const int sizeToRead = start + size;
             if (sizeToRead > 0)
                 strncpy(str + abs(start), this->_currentBuffer, static_cast<size_t>(sizeToRead));
         }
