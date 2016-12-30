@@ -13,7 +13,7 @@
  */
 
 
-#define HSKA_BUFFER_SIZE 1024
+#define HSKA_BUFFER_SIZE 2048
 
 
 class Buffer
