@@ -41,7 +41,7 @@ Token* Scanner::nextToken()
     {
         if (this->_tokenScanner->consume(c))
         {
-            // Get tokens^
+            // Get tokens
             tokens = this->_tokenScanner->getPendingTokens();
 
             if (tokens != nullptr)
