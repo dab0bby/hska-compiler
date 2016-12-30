@@ -113,7 +113,11 @@ const char* Buffer::subStr(const unsigned int& size, const int& offset) const
 
 void Buffer::_openFile(const char* filePath)
 {
+#if defined (__linux__)
+    this->_fileHandle = open(filePath, O_RDONLY | O_DIRECT);
+#else
     this->_fileHandle = open(filePath, O_RDONLY);
+#endif // __linux__
 
     if (this->_fileHandle == -1)
         std::cerr << "Error opening file: '" << filePath << "'\n\t" << std::strerror(errno) << std::endl;
