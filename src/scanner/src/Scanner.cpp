@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <errno.h>
 #include <iostream>
+#include <cstring>
 
 #include "../include/Scanner.h"
 
