@@ -3,6 +3,14 @@
 ### IB 321 - Systemnahes Programmieren
 
 
+## How to use scanner
+```
+$ make
+$ cd bin/
+$ ./HsKA-Scanner ../test-files/scanner00.txt out.txt
+```
+
+
 ## Building project with `Makefile`:
 Build the hska-compiler:  
 `make`
