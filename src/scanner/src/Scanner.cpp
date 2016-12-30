@@ -116,11 +116,12 @@ Token* Scanner::_createInteger(const int& size, const int& offset) const
     // Check for errors
     if (errno == ERANGE)
     {
-        std::cerr << "Number out of range: " << str << std::endl;
         errno = 0;
-
-        delete str;
-        return new Token(Token::TokenType::ERROR, this->_buffer->getLineNum(), begin);
+        delete str; // Delete string
+        const char* text = "Number out of range";
+        char* msg = new char[strlen(text)]; // Don't delete this. Token handles it
+        strcpy(msg, text);
+        return new Token(Token::TokenType::ERROR, this->_buffer->getLineNum(), begin, msg);
     }
 
     delete str;
