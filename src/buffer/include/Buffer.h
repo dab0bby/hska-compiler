@@ -5,7 +5,7 @@
 /**
  * @file     Buffer.h
  * @author   Bob
- * @date     20/12/2016
+ * @date     29/12/2016
  * @version  1.0
  *
  * @brief    ...
@@ -51,7 +51,7 @@ class Buffer
         /**
          * Return a string from of given size.
          */
-        const char* subStr(const unsigned int size) const;
+        const char* subStr(const unsigned int& size, const int& offset) const;
 
     private:
         char _currentChar;

@@ -1,7 +1,7 @@
 /**
  * @file     Buffer.cpp
  * @author   Bob
- * @date     20/12/2016
+ * @date     29/12/2016
  * @version  1.0
  *
  * @brief    ...
@@ -78,12 +78,12 @@ unsigned int Buffer::getColumnNum() const
 }
 
 
-const char* Buffer::subStr(const unsigned int size) const
+const char* Buffer::subStr(const unsigned int& size, const int& offset) const
 {
     char* str = new char[size];
 
     // Get start position
-    int start = (this->_positionOffset % HSKA_BUFFER_SIZE) - size;
+    int start = (this->_positionOffset % HSKA_BUFFER_SIZE) - size - offset;
 
     if (start >= 0) // Current buffer
         strncpy(str, this->_currentBuffer + start, static_cast<size_t>(size));

@@ -2,7 +2,6 @@
 
 ### IB 321 - Systemnahes Programmieren
 
-#### `CMake` for 'CLion' only.
 
 ## Building project with `Makefile`:
 Build the hska-compiler:  
