@@ -6,6 +6,7 @@
 #include "../include/SymbolTableEntry.h"
 
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
@@ -22,7 +23,18 @@ SymbolTable::SymbolTable()
 
 SymbolTable::~SymbolTable()
 {
+    for(int i=0; i < TABLE_SIZE; i++) {
+        if(this->symTabEntries[i] != nullptr) {
+            SymbolTableEntry* entry = this->symTabEntries[i];
+            while(entry != nullptr) {
+                SymbolTableEntry* current = entry;
+                entry = entry->getNext();
+                delete current;
+            }
+        }
+    }
 
+    delete stringTab;
 }
 
 /**
@@ -53,22 +65,25 @@ void SymbolTable::initSymbols() {
  *
  */
 Information* SymbolTable::insert(char const *lexem, Token::TokenType type) {
+    // 0. Copy Lexem in StringTable
     // 1. Check if lexem is already in SymTab
     // 2. If not insert and return Information
     // 3. If yes, get Information and return
 
-    unsigned int hash = this->hash(lexem);
+    const char * internalLexem = stringTab->insert(lexem, strlen(lexem));
+
+    unsigned int hash = this->hash(internalLexem);
 
 
     if(symTabEntries[hash] == nullptr) {
-        Information* info = new Information(type, lexem);
+        Information* info = new Information(type, internalLexem);
         symTabEntries[hash] = new SymbolTableEntry(info);
         numEntries++;
         return info;
     } else {
         SymbolTableEntry* currentEntry = symTabEntries[hash];
         do {
-            if(currentEntry->getInformation()->compareLex(lexem)) {
+            if(currentEntry->getInformation()->compareLex(internalLexem)) {
                 return currentEntry->getInformation();
             } else {
                 if (currentEntry->getNext() != nullptr) {
@@ -78,7 +93,7 @@ Information* SymbolTable::insert(char const *lexem, Token::TokenType type) {
         } while(currentEntry->getNext() != nullptr);
 
         //No lexem found
-        Information* info = new Information(type, lexem);
+        Information* info = new Information(type, internalLexem);
         currentEntry->setNext(new SymbolTableEntry(info));
         numEntries++;
         return info;

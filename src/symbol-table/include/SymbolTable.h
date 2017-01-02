@@ -23,7 +23,7 @@ private:
 
 public:
     SymbolTable();
-    virtual ~SymbolTable();
+    ~SymbolTable();
 
     void initSymbols();
 

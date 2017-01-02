@@ -13,6 +13,7 @@ private:
     StringTabEntry* next = nullptr;
 public:
     StringTabEntry();
+    ~StringTabEntry();
     char * getVector() const;
     StringTabEntry* getNext() const;
     void setNext(StringTabEntry* next);

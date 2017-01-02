@@ -8,6 +8,11 @@ SymbolTableEntry::SymbolTableEntry(Information *information) : information(infor
 
 }
 
+SymbolTableEntry::~SymbolTableEntry() {
+    delete information;
+}
+
+
 void SymbolTableEntry::setNext(SymbolTableEntry *next) {
     this->next = next;
 }
@@ -19,3 +24,4 @@ SymbolTableEntry *SymbolTableEntry::getNext() const {
 Information *SymbolTableEntry::getInformation() const {
     return this->information;
 }
+

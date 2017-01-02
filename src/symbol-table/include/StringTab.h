@@ -18,7 +18,8 @@ private:
 
 public:
     StringTab();
-    char* insert(char const *lexem, int size);
+    ~StringTab();
+    const char * insert(char const *lexem, int size);
 };
 
 

@@ -9,14 +9,20 @@
 
 Information::Information(Token::TokenType type, const char* lexem) : type(type)
 {
-    auto size = strlen(lexem);
+    this->lexem = lexem;
+
+    //Not needed, lexem has been copied into StringTable by SymbolTable
+    /*auto size = strlen(lexem);
     this->lexem = new char[size];
     strncpy(this->lexem, lexem, size);
 
     // Terminate lexem string
-    this->lexem[size] = '\0';
+    this->lexem[size] = '\0';*/
 }
 
+Information::~Information() {
+
+}
 
 bool Information::compareLex(char const * lexem) const {
     return strcmp(this->lexem, lexem) == 0;
@@ -30,4 +36,6 @@ const char * Information::getName() const {
 Token::TokenType Information::getType() {
     return this->type;
 }
+
+
 

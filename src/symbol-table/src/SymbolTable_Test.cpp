@@ -3,8 +3,6 @@
 
 #include <iostream>
 #include <cstring>
-#include <stdio.h>
-#include <stdlib.h>
 #include "../../utils/include/colormod.h"
 
 using namespace std;
@@ -13,8 +11,8 @@ Color::Modifier red(Color::FG_RED);
 Color::Modifier green(Color::FG_GREEN);
 Color::Modifier def(Color::FG_DEFAULT);
 
-void comp(char * msg, char * str1, char * str2, bool expected);
-void comp(char * msg, unsigned int result,unsigned int expectedValue, bool expected);
+void comp(char * msg, char * str1, const char * str2, bool expected);
+void comp(char * msg, int result,int expectedValue, bool expected);
 void comp(char * msg, Information * info1, Information * info2, bool expected);
 
 
@@ -60,10 +58,6 @@ int main( int argc, char **argv )
     //symbolTable->dumpSymbolDistribution();
 
     // Do some cleanup
-    delete info1;
-    delete info2;
-    delete info3;
-    delete info4;
     delete symbolTable;
 
 
@@ -77,15 +71,15 @@ int main( int argc, char **argv )
     StringTab* stringTab = new StringTab();
 
     char c1[] = "tim";
-    char* str1 = stringTab->insert(c1, 3);
+    const char* str1 = stringTab->insert(c1, 3);
     comp((char *) "Test 1", c1, str1, true);
 
     char c2[] = "essig";
-    char* str2 = stringTab->insert(c2, 5);
+    const char* str2 = stringTab->insert(c2, 5);
     comp((char *) "Test 2", c2, str2, true);
 
     char c3[] = "essig12";
-    char* str3 = stringTab->insert(c3, 5); // Wrong size, returned string should be trimmed by two characters
+    const char* str3 = stringTab->insert(c3, 5); // Wrong size, returned string should be trimmed by two characters
     comp((char *) "Test 3", c3, str3, false);
 
     for(int i=0; i < 10000; i++) {
@@ -103,7 +97,7 @@ int main( int argc, char **argv )
  * @param str1
  * @param str2
  */
-void comp(char * msg, char * str1, char * str2, bool expected) {
+void comp(char * msg, char * str1, const char * str2, bool expected) {
     bool result = strcmp(str1, str2) == 0 && str1 != str2;
 
     if(result == expected) {
@@ -120,7 +114,7 @@ void comp(char * msg, char * str1, char * str2, bool expected) {
  * @param expectedValue
  * @param expected
  */
-void comp(char * msg, unsigned int result, unsigned int expectedValue, bool expected) {
+void comp(char * msg, int result, int expectedValue, bool expected) {
 
     if((result == expectedValue) == expected) {
         cout << msg << ": " << endl << green << "\t [OK]" << def << endl;

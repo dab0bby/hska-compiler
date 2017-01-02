@@ -9,6 +9,11 @@ StringTabEntry::StringTabEntry() {
     vector = (char*) malloc( DEFAULT_SIZE * sizeof(char));
 }
 
+StringTabEntry::~StringTabEntry() {
+    delete[] vector;
+}
+
+
 char* StringTabEntry::getVector() const {
     return vector;
 }
@@ -22,3 +27,5 @@ StringTabEntry* StringTabEntry::getNext() const {
 void StringTabEntry::setNext(StringTabEntry* next) {
     this->next = next;
 }
+
+

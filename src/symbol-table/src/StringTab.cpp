@@ -14,13 +14,22 @@ StringTab::StringTab() {
 }
 
 
+StringTab::~StringTab() {
+    StringTabEntry* current = first;
+    while(current != nullptr) {
+        StringTabEntry* next = current->getNext();
+        delete current;
+        current = next;
+    }
+}
+
 /**
  * Insert the given lexem into the StringTab, returns a pointer to the stored string
  * @param lexem
  * @param size
  * @return
  */
-char* StringTab::insert(char const *lexem, int size) {
+const char* StringTab::insert(char const *lexem, int size) {
     char* tmp = this->freeP;
     if (size < this->freeSpace) {
         memcpy(this->freeP, lexem, size + 1);
@@ -47,3 +56,5 @@ char* StringTab::insert(char const *lexem, int size) {
 
     return tmp;
 }
+
+

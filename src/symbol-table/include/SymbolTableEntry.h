@@ -16,6 +16,7 @@ private:
 
 public:
     SymbolTableEntry(Information * information);
+    ~SymbolTableEntry();
 
     void setNext(SymbolTableEntry* next);
     SymbolTableEntry* getNext() const;
