@@ -18,7 +18,7 @@
 	basicstyle=\ttfamily,
 	keywordstyle=\color{blue}\ttfamily,
 	stringstyle=\color{red}\ttfamily,
-	commentstyle=\color{green}\ttfamily,
+	commentstyle=\color{magenta}\ttfamily,
 	morecomment=[l][\color{magenta}]{\#}
 }
 
@@ -88,6 +88,49 @@ ssize_t size = read(_fileHandle, _currentBuffer,
     
     
     \section{Symboltabelle}
+	Die Aufgabe der Symboltabelle ist es, die gefundenen \emph{Identifier} zu verwalten. In ihr werden die gefundenen \emph{Identifier} in einer HashMap abgelegt und lassen sich schnell wieder finden. Dies ist entscheidend für die Performance des Compilers. \\
+	Die Architektur der Symboltabelle ist im folgenden Diagramm dargestellt.
+	
+    \begin{center}
+    	\includegraphics[width=0.8\textwidth]{./images/symtable_class.png}
+    \end{center}
+    
+	Die Hauptkomponente ist die Klasse SymbolTable, diese bietet eine Funktion \emph{Information* insert(const char* lexem, TokenType type)}. Diese Funktion wird vom Scanner jedes mal aufgerufen, wenn er einen neuen \emph{Identifier} findet. Die SymbolTable erzeugt aus dem übergebenen \emph{lexem} den dazu gehörigen Hash und schaut in der Hash-Tabelle nach, ob bereits ein oder mehrere Einträge existieren. Ist dies der Fall, muss kein neuer Eintrag(SymbolTableEntry) angelegt werden und es wird der Zeiger auf das entsprechende \emph{Information}-Objekt zurück gegeben.\\
+	
+	Wird in der Hash-Tabelle jedoch kein passender Eintrag gefunden, so wird zunächst das Lexem in der StringTable gespeichert(diese erweitert ihren genutzten Speicherplatz bei Bedarf selbst). Für das nun in der StringTable verwaltete Lexem wird nun ein \emph{Information}-Objekt erzeugt, welchem ebenfalls der angegeben TokenType übergeben wird. Es ist damit für den Scanner irrelevant, ob der \emph{Identifier}, welchen er in der SymbolTabelle ablegen möchte, zum ersten oder zum wiederholten mal gefunden wurde.\\
+	Der vom Scanner daraufhin erzeugte Token, enthält nun einen Zeiger auf das \emph{Information}-Objekt.
+    
+    \begin{center}
+    	\includegraphics[width=0.8\textwidth]{./images/symtable_seq.png}
+    \end{center}    
+    
+    \subsection*{Verteilung der HashKeys}
+    Das Ziel einer guten HashFunktion ist es, dass die HashKeys möglichst gleichmäßig verteilt werden, um die Anzahl der Kollisionen und damit die Anzahl der nötigen genauen String-Vergleiche möglichst gering zu halten.\\
+    
+	Allerdings darf die Berechnung HashKeys wiederum nicht zu aufwendig sein, da eine Langsame HashFunktion ebenfalls einen negativen Einfluss auf die Performance hätte.\\
+	Die HashKeys werden in der SymbolTabelle wie folgt berechnet:\\
+	\pagebreak
+	\begin{lstlisting}
+unsigned int SymbolTable::hash(char const* lexem) {
+    unsigned int h = 0;
+	
+    while( *lexem != 0)
+    {
+        h = 31*h + *lexem;
+        lexem++;
+    }
+	
+    return h % TABLE_SIZE;
+}
+	\end{lstlisting}
+	
+    
+	Das unten stehende Diagramm zeigt die Verteilung der Einträge pro HashKey bei einem sehr großen Dokument(ca. 20.000 \emph{Identifier}). 
+    \begin{center}
+    	\includegraphics[width=\textwidth]{./charts/hashtable_distribution.png}
+    \end{center}
+	Es ist gut zu erkennen, dass die Anzahl der Einträge pro HashKey(die HashTable hat eine Größe von 256 Keys) relativ gleichmäßig verteilt sind.\\
+	Damit scheint die HashFunktion unseren Anforderungen zu genügen, nicht zu teuer zu sein und trotzdem möglichst gleich verteilte Werte zu liefern.
     
     
     \section{Automat}
