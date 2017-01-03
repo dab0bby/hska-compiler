@@ -49,15 +49,23 @@ class Token
             NEW_LINE = 1 << 24,
 
             // Keywords
-            IF = 1 << 25,
-            WHILE = 1 << 26
+            KW_IF = 1 << 25,
+            KW_WHILE = 1 << 26,
+
+            //NEW
+            KW_INT = 1 << 27, //The Keyword, not a number
+            KW_WRITE = 1 << 28,
+            KW_READ = 1 << 29,
+            KW_ELSE = 1 << 30
+
+
         };
 
         Token(TokenType type, const int& line, const int& column);
         Token(TokenType type, const int& line, const int& column, const unsigned int& value);
         Token(TokenType type, const int& line, const int& column, Information* information);
         Token(TokenType type, const int& line, const int& column, const char* errorToken);
-        ~Token();
+        virtual ~Token();
 
         /**
          * Return TokenType
@@ -154,7 +162,9 @@ class Token
             return "<UNKNOWN>";
         }
 
-    private:
+    static const char *valueOf(TokenType type);
+
+private:
         TokenType _type;
         const int _line;
         const int _column;

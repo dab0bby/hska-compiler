@@ -78,3 +78,69 @@ Token::~Token()
     if (this->_errorToken != nullptr)
         delete[] this->_errorToken;
 }
+
+
+const char *Token::valueOf(Token::TokenType type) {
+    switch (type) {
+        case DETECTING:
+            return "<detecting>";
+        case IGNORE:
+            return "<ignore>";
+        case ERROR:
+            return "<error>";
+        case EOF_TOKEN:
+            return "<eof>";
+        case PLUS:
+            return "+";
+        case MINUS:
+            return "-";
+        case COLON:
+            return ":";
+        case NOT:
+            return "!";
+        case STAR:
+            return "*";
+        case LESS:
+            return "<";
+        case GREATER:
+            return ">";
+        case EQUAL:
+            return "=";
+        case ASSIGN:
+            return ":=";
+        case EXPRESSION_EQUAL:
+            return "=:=";
+        case AND:
+            return "&";
+        case SEMICOLON:
+            return ";";
+        case BRACKET_OPEN:
+            return "(";
+        case BRACKET_CLOSE:
+            return ")";
+        case CURLY_BRACKET_OPEN:
+            return "{";
+        case CURLY_BRACKET_CLOSE:
+            return "}";
+        case SQUARE_BRACKET_OPEN:
+            return "[";
+        case SQUARE_BRACKET_CLOSE:
+            return "]";
+        case KW_IF:
+            return "if";
+        case KW_ELSE:
+            return "else";
+        case KW_WHILE:
+            return "while";
+        case KW_WRITE:
+            return "write";
+        case KW_READ:
+            return "read";
+        case KW_INT:
+            return "int";
+        case IDENTIFIER:
+            return "<identifier>";
+        case INTEGER:
+            return "<number>";
+    }
+}

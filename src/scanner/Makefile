@@ -14,6 +14,7 @@ BUFFER_DIR        = ../buffer
 SYMBOL_TABLE_DIR  = ../symbol-table
 STATE_MACHINE_DIR = ../state-machine
 
+
 # Target
 BUILD_DIR  = bin
 EXECUTABLE = scanner
