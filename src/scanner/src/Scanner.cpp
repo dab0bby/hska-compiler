@@ -92,7 +92,7 @@ Token* Scanner::_createIdentifier(const int& size, const int& offset) const
     // Get string and insert into symbolTable
     auto str = this->_buffer->subStr(size, offset);
     auto information = this->_symbolTable->insert(str, Token::TokenType::IDENTIFIER);
-    delete str;
+    delete[] str;
 
     const int begin = this->_getTokenBegin(size, offset);
 
@@ -121,11 +121,11 @@ Token* Scanner::_createInteger(const int& size, const int& offset) const
         std::cerr << "Number out of range: " << str << std::endl;
 
         errno = 0;
-        delete str; // Delete string
+        delete[] str; // Delete string
         return new Token(Token::TokenType::ERROR, this->_buffer->getLineNum(), begin);
     }
 
-    delete str;
+    delete[] str;
     return new Token(Token::TokenType::INTEGER, this->_buffer->getLineNum(), begin, value);
 }
 
