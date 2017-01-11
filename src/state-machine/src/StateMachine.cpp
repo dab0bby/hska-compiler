@@ -7,7 +7,7 @@
 #include <exception>
 
 StateMachine::StateMachine(int stateCount, int initialState, int finalState, Token::TokenType token) :
-    StateMachine(stateCount, initialState, new int[1]{ finalState }, finalState, token)
+    StateMachine(stateCount, initialState, new int[1]{ finalState }, 1, token)
 {
 }
 
