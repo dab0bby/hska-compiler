@@ -41,7 +41,10 @@ a4paper
 		
 		{\Large\itshape Timo Blust, 48594\par}
 		{\Large\itshape Gennadi Eirich, 50629\par}
-		{\Large\itshape Tim Essig, 49683\par}
+		{\Large\itshape Tim Essig, 49683\par\par}
+		\vspace{2cm}
+		
+		{\Large\itshape Gruppe 17 (WS 15/16)\par}
 		
 		\vfill
 		
@@ -61,9 +64,9 @@ a4paper
 	Für die Realisierung der Aufgabe legt der \textit{Buffer} zwei \textbf{char*} an, mir jeweils der Größe von 2048 (\textbf{HSKA\_BUFFER\_SIZE}). 
 	Diese werden mit \textbf{posix\_memalign} allokiert und mit \textbf{memset()} auf \textbf{0} gesetzt. Durch das auf \textbf{0} setzen, kann der \textit{Automat} das Ende der Datei erkennen. Folgender code wird für jedes der zwei Buffer (\textbf{\_previousBuffer, \_currentBuffer}) beim instanziieren aufgerufen.
 	\begin{lstlisting}
-	int err = posix_memalign(reinterpret_cast<void**>(buffer), 
-	HSKA_BUFFER_SIZE, HSKA_BUFFER_SIZE);
-	memset(*buffer, 0, HSKA_BUFFER_SIZE); // Fill buffer
+int err = posix_memalign(reinterpret_cast<void**>(buffer), 
+HSKA_BUFFER_SIZE, HSKA_BUFFER_SIZE);
+memset(*buffer, 0, HSKA_BUFFER_SIZE); // Fill buffer
 	\end{lstlisting}
 	
 	Um das aktuelle Zeichen vom \textit{Buffer} zu bekommen, wird die Methode \textbf{nextChar()} bereitgestellt. Bei jedem Aufruf von \textbf{nextChar()} wird das aktuelle Zeichen aus dem \textit{Buffer} gelesen und einige der folgenden Offsets werden manipuliert.
@@ -75,8 +78,8 @@ a4paper
 	
 	Ist \textbf{\_positionOffset} gleich \textbf{\_filePositionOffset}, so ist das Ende des aktuellen \textit{Buffer}s erreicht und es muss ein neues Teil der Eingabedatei mit der Länge \textbf{HSKA\_BUFFER\_SIZE} eingelesen werden.
 	\begin{lstlisting}
-	ssize_t size = read(_fileHandle, _currentBuffer, 
-	HSKA_BUFFER_SIZE);
+ssize_t size = read(_fileHandle, _currentBuffer, 
+			HSKA_BUFFER_SIZE);
 	\end{lstlisting}
 	
 	\begin{center}
@@ -111,17 +114,18 @@ a4paper
 	Die HashKeys werden in der SymbolTabelle wie folgt berechnet:\\
 	\pagebreak
 	\begin{lstlisting}
-	unsigned int SymbolTable::hash(char const* lexem) {
-	unsigned int h = 0;
+unsigned int SymbolTable::hash(char const* lexem)
+{
+ unsigned int h = 0;
 	
-	while( *lexem != 0)
-	{
-	h = 31*h + *lexem;
-	lexem++;
-	}
+ while( *lexem != 0)
+ {
+  h = 31*h + *lexem;
+  lexem++;
+ }
 	
-	return h % TABLE_SIZE;
-	}
+ return h % TABLE_SIZE;
+}
 	\end{lstlisting}
 	
 	
@@ -168,18 +172,18 @@ a4paper
 	\end{center}
 	Die drei Ableitungen \textbf{NotCondition}, \textbf{OrCondition} und \textbf{AndCondition} implementieren die Negation und die logischen Operatoren Oder und Und. Sollen z.B. nur alphanumerische Zeichen akzeptiert werden, kann die Bedingung wie folgt implementiert werden:	 
 	\begin{lstlisting}
-	auto alphanumerical = new OrCondition(
+auto alphanumerical = new OrCondition(
 	new CharRangeCondition('0', '9'),
 	new CharRangeCondition('a', 'z'), 
 	new CharRangeCondition('A', 'Z'));
 	\end{lstlisting}
 	Da viele Tokens aus nur einem Zeichen bestehen, benötigen die zugehörigen Automaten auch nur zwei Zuständen und eine Transition. Um die Initialisierung eines solchen Automaten zu erleichtern, steht die Methode \textit{StateMachine::createAtomic(Token::TokenType token, Condition* condition)} zur Verfügung. Der folgende Codeausschnitt aus der Datei '\textit{state-machine/TokenScanner.cpp}' zeigt die Initialisierung der Automaten für die größer, kleiner und gleich Token:
 	\begin{lstlisting}
-	_sms[8] = StateMachine::createAtomic(
+_sms[8] = StateMachine::createAtomic(
 	Token::GREATER, new CharCondition('>'));
-	_sms[9] = StateMachine::createAtomic(
+_sms[9] = StateMachine::createAtomic(
 	Token::LESS, new CharCondition('<'));
-	_sms[10] = StateMachine::createAtomic(
+_sms[10] = StateMachine::createAtomic(
 	Token::EQUAL, new CharCondition('='));
 	\end{lstlisting}
 	
@@ -209,24 +213,24 @@ a4paper
 	Folgend der Code für das Überprüfen, ob weitere \textit{Token} dem aktuellen anhängen. Da das \textbf{NEW\_LINE}-Token ignoriert wird, wird dieses gelöscht und es wird weiter geprüft. Sollte das nächste ein \textbf{nullptr} sein, so ist das Ende der Liste erreicht und es gibt keine weiteren \textit{Token} mehr. Ab jetzt kann wieder ein Zeichen aus dem \textit{Buffer} eingelesen werden.
 	
 	\begin{lstlisting}
-	void Scanner::_checkForPendingToken(TokenPosition* tokens)
-	{
-	auto next = tokens->getNext();
-	if (next == nullptr)
-	{
-	_pendingTokens = nullptr;
-	return;
-	}
+void Scanner::_checkForPendingToken(TokenPosition* tokens)
+{
+ auto next = tokens->getNext();
+ if (next == nullptr)
+ {
+  _pendingTokens = nullptr;
+  return;
+ }
 	
-	// Ignore the NEW_LINE token
-	if (next->token == Token::TokenType::NEW_LINE)
-	{
-	_checkForPendingToken(next); // Check next one for pending token
-	delete next; // delete it because its never used/ignored
-	}
-	else
-	_pendingTokens = next;
-	}
+// Ignore the NEW_LINE token
+if (next->token == Token::TokenType::NEW_LINE)
+{
+ _checkForPendingToken(next); // Check next one for pending token
+ delete next; // delete it because its never used/ignored
+}
+else
+ _pendingTokens = next;
+}
 	\end{lstlisting}
 	
 	
@@ -243,9 +247,9 @@ a4paper
 	Folgend die Kommandos für den Bau und die Ausführung des Scanners.
 	
 	\begin{lstlisting}
-	$ make 			// im root Ordner
-	$ cd bin/		// Ordner in dem das target liegt
-	$ ./HsKA-Scanner eingabedatei.txt ausgabedatei.txt
+$ make 			// im root Ordner
+$ cd bin/		// Ordner in dem das target liegt
+$ ./HsKA-Scanner eingabedatei.txt ausgabedatei.txt
 	\end{lstlisting}
 	
 	% Parser
