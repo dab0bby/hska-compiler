@@ -18,7 +18,7 @@ public:
     StringTabEntry* getNext() const;
     void setNext(StringTabEntry* next);
 
-    static const int DEFAULT_SIZE = 512;
+    static const int DEFAULT_SIZE = 4096;
 
 
 
