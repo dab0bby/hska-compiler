@@ -84,7 +84,7 @@ int main ( int argc, char* argv[] )
 {
     string paths[] =
     {
-        // "E:/Code/hska-compiler/test-files/scanner00.txt",
+        "E:/Code/hska-compiler/test-files/scanner00.txt",
         //"E:/Code/hska-compiler/test-files/scanner1.txt",
         //"E:/Code/hska-compiler/test-files/scanner2.txt",
         //"E:/Code/hska-compiler/test-files/scanner3.txt",
@@ -94,7 +94,6 @@ int main ( int argc, char* argv[] )
         //"E:/Code/hska-compiler/test-files/scanner7.txt",
         //"E:/Code/hska-compiler/test-files/scanner8.txt", // large
         //"E:/Code/hska-compiler/test-files/scanner9.txt",
-        "/Users/bob/OneDrive/02 - edu/99 - dev/04 - systemnahes programmieren/test-files/scanner00.txt"
     };
 
     for (auto path : paths)
