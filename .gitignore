@@ -294,3 +294,5 @@ doc.pdf
 *.gz
 *.toc
 *.opendb
+*.bbl
+*.blg
