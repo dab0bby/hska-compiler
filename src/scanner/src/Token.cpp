@@ -142,5 +142,7 @@ const char *Token::valueOf(Token::TokenType type) {
             return "<identifier>";
         case INTEGER:
             return "<number>";
+	default:
+            return "Unknown";
     }
 }
