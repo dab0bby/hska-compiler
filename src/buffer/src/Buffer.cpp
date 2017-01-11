@@ -80,7 +80,7 @@ unsigned int Buffer::getColumnNum() const
 
 const char* Buffer::subStr(const unsigned int& size, const int& offset) const
 {
-    char* str = new char[size];
+    char* str = new char[size + 1];
 
     // Get start position
     const int start = (this->_positionOffset % HSKA_BUFFER_SIZE) - size - offset;
