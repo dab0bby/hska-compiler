@@ -1,10 +1,12 @@
-/**
+﻿/**
  * StateMachine.cpp
  */
 
 #include "../include/StateMachine.h"
-#include <cstring>
-#include <exception>
+#include "../../utils/include/utils.h"
+#include "../include/Condition.h"
+#include <cstdarg>
+
 
 StateMachine::StateMachine(int stateCount, int initialState, int finalState, Token::TokenType token) :
     StateMachine(stateCount, initialState, new int[1]{ finalState }, 1, token)
@@ -117,5 +119,40 @@ StateMachine* StateMachine::createAtomic(Token::TokenType token, Condition* cond
 {
     auto sm = new StateMachine(2, 0, new int[1]{ 1 }, 1, token);
     sm->setTransitions(0, new Transition[1]{ Transition(1, condition) }, 1);
+    return sm;
+}
+
+StateMachine* StateMachine::createString(Token::TokenType token, const char* str)
+{
+    return createString(token, &str, 1);
+}
+
+StateMachine* StateMachine::createString(Token::TokenType token, const char** str, int size)
+{
+    int currentState = 0;
+    int stateCnt = 2;   // 2 -> initial + final state
+    auto startTransitions = new Transition[size];
+
+    for (int i = 0; i < size; i++)
+        stateCnt += strlen(str[i]) - 1;
+
+    auto sm = new StateMachine(stateCnt, 0, stateCnt - 1, token);
+    
+    for (int strIdx = 0; strIdx < size; strIdx++)
+    {
+        int strLen = strlen(str[strIdx]);
+
+        // add connection from inital state
+        startTransitions[strIdx] = Transition(++currentState, new CharCondition(str[strIdx][0]));
+
+        // chain connect chars, except the first and last of a string
+        for (int i = 1; i < strLen - 1; i++)
+            sm->setTransitions(currentState++, new Transition[1]{ Transition(currentState + 1, new CharCondition(str[strIdx][i])) }, 1);
+        
+        // connect to final state
+        sm->setTransitions(currentState, new Transition[1]{ Transition(stateCnt - 1, new CharCondition(str[strIdx][strLen - 1])) }, 1);        
+    }    
+
+    sm->setTransitions(0, startTransitions, size);
     return sm;
 }

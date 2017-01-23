@@ -14,12 +14,15 @@
     <Filter Include="utils">
       <UniqueIdentifier>{4d31b82a-10bc-4dd1-8750-6cbf0d2a8019}</UniqueIdentifier>
     </Filter>
+    <Filter Include="buffer">
+      <UniqueIdentifier>{3cc1e563-e44c-4e31-ab11-cd4f2b7b3c65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="symbol-table">
+      <UniqueIdentifier>{a64d7790-2e65-4a52-b501-9a82987cb13b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\state-machine\src\StateMachine.cpp">
-      <Filter>state-machine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\state-machine\src\StateMachine_Test.cpp">
       <Filter>state-machine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\state-machine\src\Transition.cpp">
@@ -34,6 +37,31 @@
     <ClCompile Include="..\src\state-machine\src\TokenPosition.cpp">
       <Filter>state-machine</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\buffer\src\Buffer.cpp">
+      <Filter>buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\symbol-table\src\Information.cpp">
+      <Filter>symbol-table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\symbol-table\src\StringTab.cpp">
+      <Filter>symbol-table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\symbol-table\src\StringTabNode.cpp">
+      <Filter>symbol-table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\symbol-table\src\SymbolTable.cpp">
+      <Filter>symbol-table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\symbol-table\src\SymbolTableEntry.cpp">
+      <Filter>symbol-table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scanner\src\Scanner.cpp">
+      <Filter>scanner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scanner\src\Token.cpp">
+      <Filter>scanner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\scanner\include\Token.h">
@@ -51,9 +79,6 @@
     <ClInclude Include="..\src\utils\include\colormod.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\utils\include\Helper.h">
-      <Filter>utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\utils\include\vector.h">
       <Filter>utils</Filter>
     </ClInclude>
@@ -62,6 +87,33 @@
     </ClInclude>
     <ClInclude Include="..\src\state-machine\include\TokenScanner.h">
       <Filter>state-machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\include\unistd_osinv.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\buffer\include\Buffer.h">
+      <Filter>buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\symbol-table\include\Information.h">
+      <Filter>symbol-table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\symbol-table\include\StringTab.h">
+      <Filter>symbol-table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\symbol-table\include\StringTabNode.h">
+      <Filter>symbol-table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\symbol-table\include\SymbolTable.h">
+      <Filter>symbol-table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\symbol-table\include\SymbolTableEntry.h">
+      <Filter>symbol-table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scanner\include\Scanner.h">
+      <Filter>scanner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\include\utils.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

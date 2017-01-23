@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by timo on 24.11.15.
 //
 
@@ -10,15 +10,20 @@ struct _isSame { static const bool value = false; };
 template<typename A>
 struct _isSame<A, A> { static const bool value = true; };
 
-class Helper
+
+template<typename A, typename B>
+static constexpr bool compareTypes(A a, B b)
 {
-public:
-    // compares two objects and returns true if they have the same type.
-    template<typename A, typename B> // template functions can not be split into declaration and definition
-    static bool compareTypes(A a, B b)
-    {
-        return _isSame<A, B>::value;
-    }
-};
+    return _isSame<A, B>::value;
+}
+
+constexpr size_t strlen(const char* str)
+{
+    size_t s = 0;
+    while (str[s] != '\0')
+        s++;
+
+    return s;
+}
 
 #endif //HSKA_COMPILER_HELPER_H

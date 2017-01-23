@@ -22,6 +22,13 @@ TokenScanner::TokenScanner()
     _sms[20] = StateMachine::createAtomic(Token::CURLY_BRACKET_CLOSE, new CharCondition('}'));
     _sms[22] = StateMachine::createAtomic(Token::EOF_TOKEN, new CharCondition('\0'));
 
+    _sms[23] = StateMachine::createString(Token::KW_IF, new const char*[2]{"IF", "if"}, 2);
+    _sms[24] = StateMachine::createString(Token::KW_WHILE, new const char*[2]{"WHILE", "while"}, 2);
+    _sms[25] = StateMachine::createString(Token::KW_ELSE, new const char*[2]{"ELSE", "else"}, 2);
+    _sms[26] = StateMachine::createString(Token::KW_READ, "read");
+    _sms[27] = StateMachine::createString(Token::KW_WRITE, "write");
+    _sms[28] = StateMachine::createString(Token::KW_INT, "int");
+
     // state machine for whitespaces and comments
     _sms[SM_IGN] = new StateMachine(4, 0, new int[3]{ 0,2,3 }, 3, Token::IGNORE);
     _sms[SM_IGN]->setTransitions(0, new Transition[2]{

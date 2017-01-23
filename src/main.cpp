@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file     main.cpp
  * @author   Bob
  * @date     30/12/2016
@@ -102,6 +102,10 @@ int main(int argc, char **argv)
     delete tokenScanner;
     delete symbolTable;
     delete buffer;
+
+#ifdef _WIN32
+    system("Pause");
+#endif
 
     return EXIT_SUCCESS;
 }

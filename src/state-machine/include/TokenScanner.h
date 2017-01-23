@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "TokenPosition.h"
 #include "StateMachine.h"
 #include <string>
@@ -22,7 +22,7 @@ private:
     static void _applyOffset(TokenPosition* token, int position);
     static bool _contains(TokenPosition* token, Token::TokenType type);
 
-    static const int SM_CNT = 23;
+    static const int SM_CNT = 29;
     static const int SM_IGN = 0;
     static const int SM_INT = 5;
     static const int SM_IDFR = 6;

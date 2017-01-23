@@ -1,4 +1,4 @@
-/**
+﻿/**
  * StateMachine.h
  */
 
@@ -30,7 +30,9 @@ public:
 
     static StateMachine* createAtomic(Token::TokenType token);
     static StateMachine* createAtomic(Token::TokenType token, Condition* condition);
-
+    static StateMachine* createString(Token::TokenType token, const char* str);
+    static StateMachine* createString(Token::TokenType token, const char** str, int size);
+    
     int startPosition = 0;
     int processed = 0;
 

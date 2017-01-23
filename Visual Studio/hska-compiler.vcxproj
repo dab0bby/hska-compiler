@@ -19,22 +19,38 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\buffer\src\Buffer.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\scanner\src\Scanner.cpp" />
+    <ClCompile Include="..\src\scanner\src\Token.cpp" />
     <ClCompile Include="..\src\state-machine\src\StateMachine.cpp" />
-    <ClCompile Include="..\src\state-machine\src\StateMachine_Test.cpp" />
     <ClCompile Include="..\src\state-machine\src\TokenPosition.cpp" />
     <ClCompile Include="..\src\state-machine\src\TokenScanner.cpp" />
     <ClCompile Include="..\src\state-machine\src\Transition.cpp" />
+    <ClCompile Include="..\src\symbol-table\src\Information.cpp" />
+    <ClCompile Include="..\src\symbol-table\src\StringTab.cpp" />
+    <ClCompile Include="..\src\symbol-table\src\StringTabNode.cpp" />
+    <ClCompile Include="..\src\symbol-table\src\SymbolTable.cpp" />
+    <ClCompile Include="..\src\symbol-table\src\SymbolTableEntry.cpp" />
     <ClCompile Include="..\src\utils\src\vector_test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\buffer\include\Buffer.h" />
+    <ClInclude Include="..\src\scanner\include\Scanner.h" />
     <ClInclude Include="..\src\scanner\include\Token.h" />
     <ClInclude Include="..\src\state-machine\include\Condition.h" />
     <ClInclude Include="..\src\state-machine\include\StateMachine.h" />
     <ClInclude Include="..\src\state-machine\include\TokenPosition.h" />
     <ClInclude Include="..\src\state-machine\include\TokenScanner.h" />
     <ClInclude Include="..\src\state-machine\include\Transition.h" />
+    <ClInclude Include="..\src\symbol-table\include\Information.h" />
+    <ClInclude Include="..\src\symbol-table\include\StringTab.h" />
+    <ClInclude Include="..\src\symbol-table\include\StringTabNode.h" />
+    <ClInclude Include="..\src\symbol-table\include\SymbolTable.h" />
+    <ClInclude Include="..\src\symbol-table\include\SymbolTableEntry.h" />
     <ClInclude Include="..\src\utils\include\colormod.h" />
-    <ClInclude Include="..\src\utils\include\Helper.h" />
+    <ClInclude Include="..\src\utils\include\utils.h" />
+    <ClInclude Include="..\src\utils\include\unistd_osinv.h" />
     <ClInclude Include="..\src\utils\include\vector.h" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +114,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

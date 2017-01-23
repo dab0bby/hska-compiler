@@ -19,7 +19,7 @@ class Information; // Forward declaration
 class Token
 {
     public:
-        enum TokenType
+        enum TokenType : int
         {
             DETECTING = 1 << 0,
             ERROR = 1 << 1,
@@ -150,7 +150,13 @@ class Token
 
                 // Keywords
                 "IF",
-                "WHILE"
+                "WHILE",
+
+                //NEW
+                "INT",
+                "WRITE",
+                "READ",
+                "ELSE",
             };
 
             for(int i = 0; i <= 32; i++)

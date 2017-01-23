@@ -1,0 +1,16 @@
+Token IF                     Line: 1     Column: 1    
+Token WHILE                  Line: 2     Column: 1    
+Token ELSE                   Line: 3     Column: 1    
+Token READ                   Line: 4     Column: 1    
+Token WRITE                  Line: 5     Column: 1    
+Token IF                     Line: 6     Column: 1    
+Token WHILE                  Line: 7     Column: 1    
+Token ELSE                   Line: 8     Column: 1    
+Token IDENTIFIER             Line: 10    Column: 1     Lexem: Read
+Token IDENTIFIER             Line: 11    Column: 1     Lexem: Write
+Token IDENTIFIER             Line: 12    Column: 1     Lexem: WHile
+Token IDENTIFIER             Line: 13    Column: 1     Lexem: If
+Token IDENTIFIER             Line: 14    Column: 1     Lexem: ElsE
+Token IDENTIFIER             Line: 16    Column: 1     Lexem: e
+Token IDENTIFIER             Line: 17    Column: 1     Lexem: If
+Token IDENTIFIER             Line: 18    Column: 1     Lexem: ElsE

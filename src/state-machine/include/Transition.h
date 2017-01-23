@@ -11,13 +11,15 @@ class Condition;
 class Transition
 {
 public:
-#if defined (__clang__)
-    Transition() {};
-#endif
+    Transition();
     Transition(const Transition& other);
+    Transition(Transition&& other) noexcept;
     Transition(int target, const Condition* condition);
-    ~Transition();
+    ~Transition();    
 
+    Transition& operator=(Transition&& other) noexcept;
+    Transition& operator=(const Transition& other) noexcept;
+    
     //int getFirstState() const;
     int getTarget() const;
     Condition* getCondition() const;

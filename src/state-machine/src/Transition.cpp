@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by timo on 05.11.15.
 //
 
@@ -7,10 +7,22 @@
 #include "../include/Condition.h"
 
 
+Transition::Transition(): _target(-1), _condition(nullptr)
+{
+}
+
 Transition::Transition(const Transition& other)
 {
+    operator=(other);
+}
+
+Transition::Transition(Transition&& other) noexcept
+{
     _target = other._target;
-    _condition = other._condition->clone();
+    _condition = other._condition;
+
+    // prevent deletion of condition
+    other._condition = nullptr;
 }
 
 Transition::Transition(int target, const Condition* condition) :
@@ -25,6 +37,24 @@ Transition::~Transition()
     delete _condition;
     _condition = nullptr;
 }
+
+Transition& Transition::operator=(Transition&& other) noexcept
+{
+    _target = other._target;
+    _condition = other._condition;
+
+    // prevent deletion of condition
+    other._condition = nullptr;
+    return *this;
+}
+
+Transition& Transition::operator=(const Transition& other) noexcept
+{
+    _target = other._target;
+    _condition = other._condition->clone();
+    return *this;
+}
+
 //
 //int Transition::getFirstState() const
 //{

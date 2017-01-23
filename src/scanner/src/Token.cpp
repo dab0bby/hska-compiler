@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file     Token.cpp
  * @author   Bob
  * @date     29/12/2016
@@ -142,7 +142,7 @@ const char *Token::valueOf(Token::TokenType type) {
             return "<identifier>";
         case INTEGER:
             return "<number>";
-	default:
+    default:
             return "Unknown";
     }
 }

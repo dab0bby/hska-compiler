@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file     Buffer.cpp
  * @author   Bob
  * @date     30/12/2016
@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include <cstring>
-#include <unistd.h>
+#include "../../utils/include/unistd_osinv.h"
 #include <fcntl.h>
 
 #include "../include/Buffer.h"
@@ -192,6 +192,6 @@ Buffer::~Buffer()
     _closeFile();
 
     // Clear buffer
-    free(_previousBuffer);
-    free(_currentBuffer);
+    posix_memalign_free(_previousBuffer);
+    posix_memalign_free(_currentBuffer);
 }
