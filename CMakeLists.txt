@@ -34,6 +34,8 @@ set(SCANNER_SRC
     src/scanner/include/Scanner.h src/scanner/src/Scanner.cpp
     src/scanner/src/Token.cpp src/scanner/include/Token.h)
 
+set(PARSER_SRC src/parser/src/Parser_Test.cpp src/parser/src/ParseTree.cpp src/parser/include/ParseTree.h src/parser/src/Node.cpp src/parser/include/Node.h src/parser/src/Parser.cpp src/parser/include/Parser.h)
+
 add_executable(HsKA-Compiler src/main.cpp ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
 add_executable(buffer src/buffer/src/Buffer_Test.cpp ${BUFFER_SRC})
 add_executable(scanner src/scanner/src/Scanner_Test.cpp ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
@@ -41,3 +43,4 @@ add_executable(state-machine src/state-machine/src/StateMachine_Test.cpp ${STATE
 add_executable(symbol-table src/symbol-table/src/SymbolTable_Test.cpp ${SYMB_TABLE_SRC})
 add_executable(utils src/utils/include/Helper.h src/utils/src/helper_test.cpp)
 add_executable(vector src/utils/include/vector.h src/utils/src/vector_test.cpp)
+add_executable(parser src/parser/src/Parser_Test.cpp ${PARSER_SRC} ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})

@@ -1,27 +1,46 @@
-#ifndef HSKA_PARSER_H_
-#define HSKA_PARSER_H_
+//
+// Created by tim on 02.01.17.
+//
+
+#ifndef HSKA_COMPILER_PARSER_H
+#define HSKA_COMPILER_PARSER_H
 
 
-/**
- * @file     Parser.h
- * @author   Gennadi Eirich
- * @date     11/01/2017
- * @version  1.0
- *
- * @brief    ...
- *
- */
+#include "../../scanner/include/Token.h"
+#include "../../scanner/include/Scanner.h"
+#include "ParseTree.h"
+#include "Node.h"
 
+class Parser {
 
-class Parser
-{
-    public:
-        Parser();
-        ~Parser();
+public:
+    Parser(Scanner *scanner);
 
-    private:
+    ParseTree parse();
+private:
+    Scanner *scanner;
+    Token *token;
+
+    Node *parseProg();
+    Node *parseDecls();
+    Node *parseStatements();
+    Node *parseDecl();
+    Node *parseArray();
+    Node *parseStatement();
+    Node *parseIndex();
+    Node *parseExp();
+    Node *parseExp2();
+    Node *parseOpExp();
+    Node *parseOp();
+    Information *parseIdent();
+    unsigned int parseInt();
+
+    void accept(Token::TokenType token);
+    void nextToken();
+
+    void logError(unsigned count, ...);
 
 };
 
 
-#endif // HSKA_PARSER_H_
+#endif //HSKA_COMPILER_PARSER_H

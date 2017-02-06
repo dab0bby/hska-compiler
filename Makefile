@@ -12,6 +12,7 @@ SCANNER_DIR       = $(SOURCE_DIR)/scanner
 STATE_MACHINE_DIR = $(SOURCE_DIR)/state-machine
 BUFFER_DIR        = $(SOURCE_DIR)/buffer
 SYM_TAB_DIR       = $(SOURCE_DIR)/symbol-table
+PARSER_DIR       = $(SOURCE_DIR)/parser
 
 # Target
 BUILD_DIR  = bin
@@ -35,6 +36,9 @@ buffer:
 
 symbol-table:
 	$(MAKE) -C $(SYM_TAB_DIR)
+
+parser:
+	$(MAKE) -C $(PARSER_DIR)
 
 
 # Builds complete Scanner into 'build/'

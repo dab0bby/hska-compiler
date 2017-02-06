@@ -76,7 +76,10 @@ class Token
         /**
          * Return TokenType string of this Token
          */
-        const char * getTypeStr() const { return Token::getTokenName(this->_type); }
+        const char * getTypeStr() const {
+            return Token::valueOf(getType());
+            //return Token::getTokenName(this->_type);
+        }
 
         /**
          * Returns line number where token was found.
