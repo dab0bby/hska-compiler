@@ -17,9 +17,9 @@ static constexpr bool compareTypes(A a, B b)
     return _isSame<A, B>::value;
 }
 
-constexpr size_t strlen(const char* str)
+unsigned strlen(const char* str)
 {
-    size_t s = 0;
+    unsigned s = 0;
     while (str[s] != '\0')
         s++;
 

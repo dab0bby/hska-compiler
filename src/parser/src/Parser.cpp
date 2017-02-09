@@ -209,7 +209,7 @@ void Parser::nextToken() {
 
 void Parser::logError(unsigned count, ...)
 {
-    fprintf(stderr, "unexpected token '%s' of type %s at line '%d', column '%d'",
+    fprintf(stderr, "unexpected token '%d' of type %s at line '%d', column '%d'",
             token->getValue(), token->getTypeStr(), token->getLine(), token->getColumn());
 
     va_list argptr;
