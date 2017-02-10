@@ -72,5 +72,4 @@ private:
     void dump(int i);
 };
 
-
 #endif //HSKA_COMPILER_NODE_H

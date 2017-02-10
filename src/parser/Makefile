@@ -5,12 +5,13 @@ CFLAGS = -Wall -c $(DEBUG) -std=c++11 -O3
 LFLAGS = -Wall $(DEBUG) -std=c++11 -O3
 
 # Sources
-HEADER_DIR = include
-SOURCE_DIR = src
-DEBUG_DIR  = debug
+HEADER_DIR        = include
+SOURCE_DIR        = src
+DEBUG_DIR         = debug
 BUFFER_DIR        = ../buffer
 SYMBOL_TABLE_DIR  = ../symbol-table
 STATE_MACHINE_DIR = ../state-machine
+SCANNER_DIR       = ../scanner
 
 # Target
 BUILD_DIR  = bin
@@ -33,6 +34,22 @@ $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(HEADER_DIR)/%.h
 	$(CC) $(CFLAGS) $< -o $@
 
 
+state-machine:
+	$(MAKE) -C $(STATE_MACHINE_DIR)
+
+
+scanner:
+	$(MAKE) -C $(SCANNER_DIR)
+
+
+buffer:
+	$(MAKE) -C $(BUFFER_DIR)
+
+
+symbol-table:
+	$(MAKE) -C $(SYMBOL_TABLE_DIR)
+
+
 # Builds test Target
 parser-test: clean
 	@echo 'Building Parser Test ...'
@@ -40,13 +57,14 @@ parser-test: clean
 
 
 # Build test executable
-parser-test-executable: clean parser parser-test
+parser-test-executable: clean buffer state-machine symbol-table scanner parser parser-test
 	@echo 'Building Parser Test Executable ...'
 	$(CC) $(LFLAGS) $(TARGETS) \
-		$(DEBUG_DIR)/$(EXECUTABLE)_test.o \	 
+		$(DEBUG_DIR)/$(EXECUTABLE)_test.o \
 		$(BUFFER_DIR)/$(BUILD_DIR)/*.o \
 		$(SYMBOL_TABLE_DIR)/$(BUILD_DIR)/*.o \
 		$(STATE_MACHINE_DIR)/$(BUILD_DIR)/*.o \
+		$(SCANNER_DIR)/$(BUILD_DIR)/*.o \
 		-o $(DEBUG_DIR)/$(EXECUTABLE)_test
 
 
