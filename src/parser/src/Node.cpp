@@ -137,7 +137,7 @@ void Node::dump(int i) {
 
     if(type == Op) {
         cout << " " << this->token->getTokenName(this->token->getType());
-    } else {
+    } else if(type == Exp2Int || type == Array){
         cout << " Value:" << this->value;
     }
 
