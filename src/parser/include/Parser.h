@@ -16,7 +16,7 @@ class Parser {
 public:
     Parser(Scanner *scanner);
 
-    ParseTree parse();
+    ParseTree* parse();
 private:
     Scanner *scanner;
     Token *token;

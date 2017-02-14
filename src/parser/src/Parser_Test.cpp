@@ -36,9 +36,10 @@ int main( int argc, char **argv )
     // Do parsing
     auto parser = new Parser(scanner);
     auto tree = parser->parse();
-    tree.dumpTree();
+    tree->dumpTree();
 
     // Cleanup
+    delete tree;
     delete parser;
     delete scanner;
     delete tokenScanner;

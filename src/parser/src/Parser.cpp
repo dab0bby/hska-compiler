@@ -18,11 +18,11 @@ token(nullptr)
 
 
 
-ParseTree Parser::parse() {
+ParseTree* Parser::parse() {
 
     nextToken();
     auto root = this->parseProg();
-    return ParseTree(root);
+    return new ParseTree(root);
 }
 
 Node *Parser::parseProg() {
