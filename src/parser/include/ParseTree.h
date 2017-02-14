@@ -16,6 +16,7 @@ public:
 
     Node* getRoot() const;
     void dumpTree() const;
+    bool typeCheck(Node* node) const;
 private:
     Node* root;
 

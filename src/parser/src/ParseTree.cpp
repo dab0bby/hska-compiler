@@ -4,18 +4,26 @@
 
 #include "../include/ParseTree.h"
 
-ParseTree::ParseTree(Node *root) : root(root) {
-
+ParseTree::ParseTree(Node *root) : root(root)
+{
 }
 
-ParseTree::~ParseTree() {
+ParseTree::~ParseTree()
+{
     delete root;
 }
 
-Node *ParseTree::getRoot() const {
+Node *ParseTree::getRoot() const
+{
     return root;
 }
 
-void ParseTree::dumpTree() const {
+void ParseTree::dumpTree() const
+{
     root->dump();
+}
+
+bool ParseTree::typeCheck(Node* node) const
+{
+    return true;
 }

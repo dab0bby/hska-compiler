@@ -58,12 +58,9 @@ public:
 
     void dump();
 
-    const char* typeToString(NodeType type) const;
-
-private:
-    Node* n1;
-    Node* n2;
-    Node* n3;
+    static const char* typeToString(NodeType type);
+    
+    Node* children[3];
     Information* information;
     Token* token;
     NodeType type;

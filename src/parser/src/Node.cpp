@@ -9,9 +9,7 @@ using namespace std;
 
 Node::Node(NodeType type, Node *n1) :
         type(type),
-        n1(n1),
-        n2(nullptr),
-        n3(nullptr),
+        children {n1, nullptr, nullptr},
         information(nullptr),
         token(nullptr),
         value(0)
@@ -21,9 +19,7 @@ Node::Node(NodeType type, Node *n1) :
 
 Node::Node(NodeType type, Node *n1, Node *n2) :
         type(type),
-        n1(n1),
-        n2(n2),
-        n3(nullptr),
+        children {n1, n2, nullptr},
         information(nullptr),
         token(nullptr),
         value(0)
@@ -32,9 +28,7 @@ Node::Node(NodeType type, Node *n1, Node *n2) :
 
 Node::Node(NodeType type, Node *n1, Node *n2, Node *n3) :
         type(type),
-        n1(n1),
-        n2(n2),
-        n3(n3),
+        children {n1, n2, n3},
         information(nullptr),
         token(nullptr),
         value(0)
@@ -43,9 +37,7 @@ Node::Node(NodeType type, Node *n1, Node *n2, Node *n3) :
 
 Node::Node(NodeType type, Information *information) :
         type(type),
-        n1(nullptr),
-        n2(nullptr),
-        n3(nullptr),
+        children {nullptr, nullptr, nullptr},
         information(information),
         token(nullptr),
         value(0)
@@ -55,9 +47,7 @@ Node::Node(NodeType type, Information *information) :
 
 Node::Node(NodeType type, Node *n1, Information *information) :
         type(type),
-        n1(n1),
-        n2(nullptr),
-        n3(nullptr),
+        children {n1, nullptr, nullptr},
         information(information),
         token(nullptr),
         value(0)
@@ -67,9 +57,7 @@ Node::Node(NodeType type, Node *n1, Information *information) :
 
 Node::Node(NodeType type, Information *information, Node *n1, Node *n2) :
         type(type),
-        n1(n1),
-        n2(n2),
-        n3(nullptr),
+        children {n1, n2, nullptr},
         information(information),
         token(nullptr),
         value(0)
@@ -79,9 +67,7 @@ Node::Node(NodeType type, Information *information, Node *n1, Node *n2) :
 
 Node::Node(NodeType type) :
         type(type),
-        n1(nullptr),
-        n2(nullptr),
-        n3(nullptr),
+        children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(nullptr),
         value(0)
@@ -90,9 +76,7 @@ Node::Node(NodeType type) :
 
 Node::Node(NodeType type, unsigned intValue) :
         type(type),
-        n1(nullptr),
-        n2(nullptr),
-        n3(nullptr),
+        children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(nullptr),
         value(intValue)
@@ -102,9 +86,7 @@ Node::Node(NodeType type, unsigned intValue) :
 
 Node::Node(NodeType type, Token *token) :
         type(type),
-        n1(nullptr),
-        n2(nullptr),
-        n3(nullptr),
+        children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(token),
         value(0)
@@ -112,12 +94,10 @@ Node::Node(NodeType type, Token *token) :
 }
 
 Node::~Node() {
-    if (n1 != nullptr)
-        delete n1;
-    if (n2 != nullptr)
-        delete n2;
-    if (n3 != nullptr)
-        delete n3;
+    for (int i = 0; i < 3; i++)
+        if (children[i] != nullptr)
+            delete children[i];
+
     if (token != nullptr)
         delete token;
 }
@@ -146,20 +126,12 @@ void Node::dump(int i) {
     cout << endl;
 
     //Print children
-    if(n1 != nullptr) {
-        n1->dump(i+1);
-    }
-
-    if(n2 != nullptr) {
-        n2->dump(i+1);
-    }
-
-    if(n3 != nullptr) {
-        n3->dump(i+1);
-    }
+    for (int x = 0; x < 3; x++)
+        if (children[x] != nullptr)
+            children[x]->dump(i + 1);
 }
 
-const char *Node::typeToString(NodeType type) const {
+const char *Node::typeToString(NodeType type) {
     switch(type) {
         case Prog:
             return "Prog";
