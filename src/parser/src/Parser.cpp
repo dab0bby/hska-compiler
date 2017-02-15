@@ -10,6 +10,8 @@
 
 #define DEBUG(x, y) do { std::cerr << __FILE__ << ":" << __LINE__ << ": " << x << " " << y << std::endl; } while (0)
 
+using namespace std;
+
 Parser::Parser(Scanner* scanner) :
 scanner(scanner),
 token(nullptr)
@@ -207,24 +209,34 @@ void Parser::nextToken() {
     token = scanner->nextToken();
 }
 
-void Parser::logError(unsigned count, ...)
-{
-    fprintf(stderr, "unexpected token '%d' of type %s at line '%d', column '%d'",
-            token->getValue(), token->getTypeStr(), token->getLine(), token->getColumn());
+
+/**
+ * Prints an error message on the console and quits the program
+ * @param count The number of expected TokenTypes
+ */
+void Parser::logError(unsigned count, ...) {
+
+    cerr << "unexpected token ";
+    if (token->getType() == Exp2Int || token->getType() == Array) {
+        cerr << "'" << token->getValue() << "' ";
+    } else if(token->getType() == StatementIdent) {
+        cerr << "'" << token->getInformation()->getName() << "' ";
+    }
+    cerr << "of type '" << token->getTypeStr() << "' at line: " << token->getLine() << " column: " << token->getColumn() << endl;
 
     va_list argptr;
     va_start(argptr, count);
     if (count > 0) {
         auto t = (Token::TokenType) va_arg(argptr, int);
-        fprintf(stderr, ". Expected: '%s'", Token::valueOf(t));
+        cerr << " Expected: " << Token::valueOf(t);
     }
     for (unsigned i = 1; i < count; ++i) {
         auto t = (Token::TokenType) va_arg(argptr, int);
-        fprintf(stderr, " or '%s'", Token::valueOf(t));
+        cerr << " or " << Token::valueOf(t);
     }
     va_end(argptr);
+    cerr << endl;
 
-    fprintf(stderr, ".\n");
     exit(1);
 }
 
