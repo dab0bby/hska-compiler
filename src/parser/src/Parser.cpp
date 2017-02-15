@@ -2,13 +2,18 @@
 // Created by tim on 02.01.17.
 //
 
+#include "../../utils/include/colormod.h"
 #include "../include/Parser.h"
+
 #include <iostream>
 #include <stdlib.h>
 #include<stdarg.h>
 
 
 #define DEBUG(x, y) do { std::cerr << __FILE__ << ":" << __LINE__ << ": " << x << " " << y << std::endl; } while (0)
+
+Color::Modifier red(Color::FG_RED);
+Color::Modifier def(Color::FG_DEFAULT);
 
 using namespace std;
 
@@ -216,26 +221,26 @@ void Parser::nextToken() {
  */
 void Parser::logError(unsigned count, ...) {
 
-    cerr << "unexpected token ";
+    cerr << red << "unexpected token ";
     if (token->getType() == Exp2Int || token->getType() == Array) {
         cerr << "'" << token->getValue() << "' ";
     } else if(token->getType() == StatementIdent) {
         cerr << "'" << token->getInformation()->getName() << "' ";
     }
-    cerr << "of type '" << token->getTypeStr() << "' at line: " << token->getLine() << " column: " << token->getColumn() << endl;
+    cerr << "of type '" << token->getTypeStr() << "' at line: " << token->getLine() << " column: " << token->getColumn();
 
     va_list argptr;
     va_start(argptr, count);
     if (count > 0) {
         auto t = (Token::TokenType) va_arg(argptr, int);
-        cerr << " Expected: " << Token::valueOf(t);
+        cerr << " Expected: '" << Token::valueOf(t) << "'";
     }
     for (unsigned i = 1; i < count; ++i) {
         auto t = (Token::TokenType) va_arg(argptr, int);
-        cerr << " or " << Token::valueOf(t);
+        cerr << " or '" << Token::valueOf(t) << "'";
     }
     va_end(argptr);
-    cerr << endl;
+    cerr << def << endl;
 
     exit(1);
 }
