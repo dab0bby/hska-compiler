@@ -98,7 +98,7 @@ Node *Parser::parseStatements() {
         case Token::TokenType::IDENTIFIER:
         case Token::TokenType::KW_WRITE:
         case Token::TokenType::KW_READ:
-        case Token::TokenType::BRACKET_OPEN:
+        case Token::TokenType::CURLY_BRACKET_OPEN:
         case Token::TokenType::KW_IF:
         case Token::TokenType::KW_WHILE:
             break;
