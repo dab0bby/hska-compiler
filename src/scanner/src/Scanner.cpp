@@ -96,13 +96,7 @@ Token* Scanner::_createIdentifier(const int& size, const int& offset) const
 
     const int begin = this->_getTokenBegin(size, offset);
 
-    if(information->compareLex("while")) {
-        return new Token(Token::TokenType::KW_WHILE, this->_buffer->getLineNum(), begin, information);
-    } else if(information->compareLex("int")) {
-        return new Token(Token::TokenType::KW_INT, this->_buffer->getLineNum(), begin, information);
-    } else {
-        return new Token(Token::TokenType::IDENTIFIER, this->_buffer->getLineNum(), begin, information);
-    }
+    return new Token(Token::TokenType::IDENTIFIER, this->_buffer->getLineNum(), begin, information);
 }
 
 
