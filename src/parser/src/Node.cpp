@@ -3,6 +3,7 @@
 //
 
 #include "../include/Node.h"
+#include "../../utils/include/colormod.h"
 
 #include <iostream>
 #include <stdlib.h>
