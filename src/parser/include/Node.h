@@ -37,52 +37,42 @@ enum NodeType {
 class Node {
 
 public:
+    //Static factory methods
+    static Node* makeStatementWrite(Node* exp);
+    static Node* makeStatementBlock(Node* statements);
+    static Node* makeIndex(Node* exp);
+    static Node* makeType(Node* exp);
+    static Node* makeExp2Minus(Node* exp2);
+    static Node* makeExp2Neg(Node* exp2);
+
+    static Node* makeProg(Node* decls, Node* statements);
+    static Node* makeDecls(Node* decl, Node* decls);
+    static Node* makeStatements(Node* statement, Node* statements);
+    static Node* makeStatementWhile(Node* exp, Node* statement);
+    static Node* makeExp(Node* exp2, Node* op);
+    static Node* makeOpExp(Node* op, Node* exp);
+
+    static Node* makeStatementIf(Node* exp, Node* ifStmt, Node* elseStmt);
+
+    static Node* makeDeclIdent(Information* ident);
+
+    static Node* makeDeclArray(Node* arr, Information* ident);
+    static Node* makeStatementRead(Node* idx, Information* ident);
+    static Node* makeExp2Ident(Node* idx, Information* ident);
+
+    static Node* makeStatementIdent(Information* ident, Node* idx, Node* exp);
+
+    static Node* makeArray(unsigned int size);
+    static Node* makeExp2Int(unsigned int i);
+
+    static Node* makeOp(Token* token);
+
+    static Node* makeNil();
+
 
     /**
-     * Constructor for Index-Node, Exp2-Node, Exp2Minus-Node, StatementWrite-Node and StatementBlock-Node
+     * Destructor
      */
-    explicit Node(NodeType type, Node *n1);
-
-    /**
-     * Constructor for Prog-Node, Decls-Node, OpExp-Node, Statements-Node, StatementWhile-Node
-     */
-    explicit Node(NodeType type, Node *n1, Node *n2);
-
-    /**
-     * Constructor for StatementIf-Node
-     */
-    explicit Node(NodeType type, Node *n1, Node *n2, Node *n3);
-
-    /**
-     * Constructor for DeclInt-Node
-     */
-    explicit Node(NodeType type, Information *information);
-
-    /**
-     * Constructor for DeclArray-Node, Exp2Ident-Node, StatementRead-Node
-     */
-    explicit Node(NodeType type, Node *n1, Information *information);
-
-    /**
-     * Constructor for StatementIdent-Node
-     */
-    explicit Node(NodeType type, Information *information, Node *n1, Node *n2);
-
-    /**
-     * Constructor for Nil-Node
-     */
-    explicit Node(NodeType type);
-
-    /**
-     * Constructor for Array-Node and Exp2Int-Node
-     */
-    explicit Node(NodeType type, unsigned intValue);
-
-    /**
-     * Constructor for Op-Node
-     */
-    explicit Node(NodeType type, Token *token);
-
     ~Node();
 
     /**
@@ -187,12 +177,56 @@ private:
     Information* information;
     Token* token;
     NodeType type;
+    unsigned int value;
 
-    unsigned int value; //Only positive
 
     void dump(int i);
     void error(const char* functionName) const;
 
+    /**
+     * Constructor for Index-Node, Exp2-Node, Exp2Minus-Node, StatementWrite-Node and StatementBlock-Node
+     */
+    explicit Node(NodeType type, Node *n1);
+
+    /**
+     * Constructor for Prog-Node, Decls-Node, OpExp-Node, Statements-Node, StatementWhile-Node
+     */
+    explicit Node(NodeType type, Node *n1, Node *n2);
+
+    /**
+     * Constructor for StatementIf-Node
+     */
+    explicit Node(NodeType type, Node *n1, Node *n2, Node *n3);
+
+    /**
+     * Constructor for DeclInt-Node
+     */
+    explicit Node(NodeType type, Information *information);
+
+    /**
+     * Constructor for StatementIdent-Node
+     */
+    explicit Node(NodeType type, Information *information, Node *n1, Node *n2);
+
+    /**
+     * Constructor for Array-Node and Exp2Int-Node
+     */
+    explicit Node(NodeType type, unsigned int intValue);
+
+    /**
+     * Constructor for Nil-Node
+     */
+    explicit Node(NodeType type);
+
+    /**
+     * Constructor for DeclArray-Node, Exp2Ident-Node, StatementRead-Node
+     */
+    explicit Node(NodeType type, Node *n1, Information *information);
+
+    /**
+     * Constructor for Op-Node
+     */
+    explicit Node(NodeType type, Token *token);
 };
 
 #endif //HSKA_COMPILER_NODE_H

@@ -77,7 +77,7 @@ Node::Node(NodeType type) :
 {
 }
 
-Node::Node(NodeType type, unsigned intValue) :
+Node::Node(NodeType type, unsigned int intValue) :
         type(type),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
@@ -378,6 +378,95 @@ const char *Node::typeToString(NodeType type) {
 void Node::error(const char *functionName) const {
     cout << Color::Modifier(Color::FG_RED) << "Unsupported function called: " << functionName << " for NodeType: " << typeToString(this->type) << Color::Modifier(Color::FG_DEFAULT) << endl;
     exit(1);
+}
+
+
+Node *Node::makeStatementWrite(Node *exp) {
+    return new Node(StatementWrite, exp);
+}
+
+Node *Node::makeStatementBlock(Node *statements) {
+    return new Node(StatementBlock, statements);
+}
+
+Node *Node::makeIndex(Node *exp) {
+    return new Node(NodeType::Index, exp);
+}
+
+Node *Node::makeType(Node *exp) {
+    return new Node(NodeType::Exp2, exp);
+}
+
+Node *Node::makeExp2Minus(Node *exp2) {
+    return new Node(NodeType::Exp2Minus, exp2);
+}
+
+Node *Node::makeExp2Neg(Node *exp2) {
+    return new Node(NodeType::Exp2Neg, exp2);
+}
+
+Node *Node::makeProg(Node *decls, Node *statements) {
+    return new Node(NodeType::Prog, decls, statements);
+}
+
+Node *Node::makeDecls(Node *decl, Node *decls) {
+    return new Node(NodeType::Decls, decl, decls);
+}
+
+Node *Node::makeStatements(Node *statement, Node *statements) {
+    return new Node(NodeType::Statements, statement, statements);
+}
+
+Node *Node::makeStatementWhile(Node *exp, Node *statement) {
+    return new Node(NodeType::StatementWhile, exp, statement);
+}
+
+Node *Node::makeExp(Node *exp2, Node *op) {
+    return new Node(NodeType::Exp, exp2, op);
+}
+
+Node *Node::makeOpExp(Node *op, Node *exp) {
+    return new Node(NodeType::OpExp, op, exp);
+}
+
+Node *Node::makeStatementIf(Node *exp, Node *ifStmt, Node *elseStmt) {
+    return new Node(NodeType::StatementIf, exp, ifStmt, elseStmt);
+}
+
+Node *Node::makeNil() {
+    return new Node(NodeType::Nil);
+}
+
+Node *Node::makeDeclIdent(Information *ident) {
+    return new Node(NodeType::DeclIdent, ident);
+}
+
+Node *Node::makeDeclArray(Node *arr, Information *ident) {
+    return new Node(NodeType ::DeclArray, arr, ident);
+}
+
+Node *Node::makeStatementRead(Node *idx, Information *ident) {
+    return new Node(NodeType::StatementRead, idx, ident);
+}
+
+Node *Node::makeExp2Ident(Node *idx, Information *ident) {
+    return new Node(NodeType::Exp2Ident, idx, ident);
+}
+
+Node *Node::makeStatementIdent(Information *ident, Node *idx, Node *exp) {
+    return new Node(NodeType::StatementIdent, ident, idx, exp);
+}
+
+Node *Node::makeArray(unsigned int size) {
+    return new Node(NodeType::Array, size);
+}
+
+Node *Node::makeExp2Int(unsigned int i) {
+    return new Node(NodeType::Exp2Int, i);
+}
+
+Node *Node::makeOp(Token *token) {
+    return new Node(NodeType::Op, token);
 }
 
 
