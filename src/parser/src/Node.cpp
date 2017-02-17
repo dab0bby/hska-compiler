@@ -5,6 +5,8 @@
 #include "../include/Node.h"
 
 #include <iostream>
+#include <stdlib.h>
+
 using namespace std;
 
 Node::Node(NodeType type, Node *n1) :
@@ -102,6 +104,196 @@ Node::~Node() {
         delete token;
 }
 
+Node *Node::getDecl() const
+{
+    switch (type) {
+        case Decls:
+            return children[0];
+        default:
+            error("decl");
+            return nullptr;
+    }
+}
+
+Node *Node::getDecls() const
+{
+    switch (type) {
+        case Prog:
+            return children[0];
+        case Decls:
+            return children[1];
+        default:
+            error("decls");
+            return nullptr;
+    }
+}
+
+Node *Node::getStatement() const
+{
+    switch (type) {
+        case Statements:
+            return children[0];
+        case StatementWhile:
+            return children[1];
+        default:
+            return nullptr;
+    }
+}
+
+Node *Node::getStatements() const
+{
+    switch (type) {
+        case Prog:
+            return children[1];
+        case StatementBlock:
+            return children[0];
+        case Statements:
+            return children[1];
+        default:
+            error("stmts");
+            return nullptr;
+    }
+}
+
+
+Node *Node::getArray() const
+{
+    switch (type) {
+        case DeclArray:
+            return children[0];
+        default:
+            error("arr");
+            return nullptr;
+    }
+}
+
+Node *Node::getExp() const
+{
+    switch (type) {
+        case StatementIdent:
+            return children[1];
+        case StatementWrite:
+            return children[0];
+        case StatementIf:
+            return children[0];
+        case StatementWhile:
+            return children[0];
+        case Exp2:
+            return children[0];
+        case Index:
+            return children[0];
+        case OpExp:
+            return children[1];
+        default:
+            error("exp");
+            return nullptr;
+    }
+}
+
+Node *Node::getExp2() const
+{
+    switch (type) {
+        case Exp:
+            return children[0];
+        case Exp2Minus:
+            return children[0];
+        case Exp2Neg:
+            return children[0];
+        default:
+            error("exp2");
+            return nullptr;
+    }
+}
+
+Node *Node::getOp() const
+{
+    switch (type) {
+        case Exp:
+            return children[1];
+        case OpExp:
+            return children[0];
+        default:
+            error("op");
+            return nullptr;
+    }
+}
+
+Node *Node::getIndex() const
+{
+    switch (type) {
+        case StatementIdent:
+            return children[0];
+        case StatementRead:
+            return children[0];
+        case Exp2Ident:
+            return children[0];
+        default:
+            error("index");
+            return nullptr;
+    }
+}
+
+Node *Node::getIfStatement() const
+{
+    switch (type) {
+        case StatementIf:
+            return children[1];
+        default:
+            error("ifStatement");
+            return nullptr;
+    }
+}
+
+Node *Node::getElseStatement() const
+{
+    switch (type) {
+        case StatementIf:
+            return children[2];
+        default:
+            error("elseStatement");
+            return nullptr;
+    }
+}
+
+Information *Node::getInformation() const
+{
+    switch (type) {
+        case DeclArray:
+        case DeclIdent:
+        case StatementIdent:
+        case StatementRead:
+        case Exp2Ident:
+            return information;
+        default:
+            error("information");
+            return nullptr;
+    }
+}
+
+unsigned int Node::getIntValue() const
+{
+    switch (type) {
+        case Array:
+        case Exp2Int:
+            return value;
+        default:
+            error("intValue");
+            return 0;
+    }
+}
+
+Token* Node::getToken() const
+{
+    switch (type) {
+        case Op:
+            return token;
+        default:
+            error("token");
+            return nullptr;
+    }
+}
+
+
 void Node::dump() {
     dump(0);
 }
@@ -180,6 +372,11 @@ const char *Node::typeToString(NodeType type) {
         default:
             return "Unknown";
     }
+}
+
+void Node::error(const char *functionName) const {
+    cout << Color::Modifier(Color::FG_RED) << "Unsupported function called: " << functionName << " for NodeType: " << typeToString(this->type) << Color::Modifier(Color::FG_DEFAULT) << endl;
+    exit(1);
 }
 
 

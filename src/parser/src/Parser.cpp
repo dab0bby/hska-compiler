@@ -7,13 +7,10 @@
 
 #include <iostream>
 #include <stdlib.h>
-#include<stdarg.h>
+#include <stdarg.h>
 
 
 #define DEBUG(x, y) do { std::cerr << __FILE__ << ":" << __LINE__ << ": " << x << " " << y << std::endl; } while (0)
-
-Color::Modifier red(Color::FG_RED);
-Color::Modifier def(Color::FG_DEFAULT);
 
 using namespace std;
 
@@ -78,7 +75,7 @@ Node *Parser::parseArray() {
 
 unsigned int Parser::parseInt() {
     if (token->getType() != Token::TokenType::INTEGER) {
-        logError(1, Token::TokenType::INTEGER);
+        error(1, Token::TokenType::INTEGER);
     }
 
     auto i = token->getValue();
@@ -88,7 +85,7 @@ unsigned int Parser::parseInt() {
 
 Information *Parser::parseIdent() {
     if (token->getType() != Token::TokenType::IDENTIFIER) {
-        logError(1, Token::TokenType::IDENTIFIER);
+        error(1, Token::TokenType::IDENTIFIER);
     }
 
     auto information = token->getInformation();
@@ -170,8 +167,8 @@ Node *Parser::parseStatement() {
             return new Node(NodeType::StatementWhile, exp, stmt);
         }
         default:
-            logError(6, Token::TokenType::IDENTIFIER, Token::TokenType::KW_WRITE, Token::TokenType::KW_READ,
-                     Token::TokenType::BRACKET_OPEN, Token::TokenType::KW_IF, Token::TokenType::KW_WHILE);
+            error(6, Token::TokenType::IDENTIFIER, Token::TokenType::KW_WRITE, Token::TokenType::KW_READ,
+                  Token::TokenType::BRACKET_OPEN, Token::TokenType::KW_IF, Token::TokenType::KW_WHILE);
             // can't be reached
             return nullptr;
     }
@@ -200,7 +197,7 @@ void Parser::accept(Token::TokenType type) {
     DEBUG("Accept ",  Token::getTokenName( type ));
 
     if(this->token->getType() != type) {
-        logError(1, type);
+        error(1, type);
     }
 
     delete token; //Not needed anymore
@@ -214,36 +211,6 @@ void Parser::nextToken() {
     token = scanner->nextToken();
 }
 
-
-/**
- * Prints an error message on the console and quits the program
- * @param count The number of expected TokenTypes
- */
-void Parser::logError(unsigned count, ...) {
-
-    cerr << red << "unexpected token ";
-    if (token->getType() == Exp2Int || token->getType() == Array) {
-        cerr << "'" << token->getValue() << "' ";
-    } else if(token->getType() == StatementIdent) {
-        cerr << "'" << token->getInformation()->getName() << "' ";
-    }
-    cerr << "of type '" << token->getTypeStr() << "' at line: " << token->getLine() << " column: " << token->getColumn();
-
-    va_list argptr;
-    va_start(argptr, count);
-    if (count > 0) {
-        auto t = (Token::TokenType) va_arg(argptr, int);
-        cerr << " Expected: '" << Token::valueOf(t) << "'";
-    }
-    for (unsigned i = 1; i < count; ++i) {
-        auto t = (Token::TokenType) va_arg(argptr, int);
-        cerr << " or '" << Token::valueOf(t) << "'";
-    }
-    va_end(argptr);
-    cerr << def << endl;
-
-    exit(1);
-}
 
 Node *Parser::parseExp() {
     auto exp2 = parseExp2();
@@ -279,8 +246,8 @@ Node *Parser::parseExp2()
             return new Node(NodeType::Exp2Neg, exp2);
         }
         default:
-            logError(5, Token::TokenType::BRACKET_OPEN, Token::TokenType::IDENTIFIER, Token::TokenType::INTEGER,
-                     Token::TokenType::MINUS, Token::TokenType::NOT);
+            error(5, Token::TokenType::BRACKET_OPEN, Token::TokenType::IDENTIFIER, Token::TokenType::INTEGER,
+                  Token::TokenType::MINUS, Token::TokenType::NOT);
             // can't be reached
             return nullptr;
     }
@@ -330,7 +297,35 @@ Node *Parser::parseOp()
     }
 }
 
+/**
+ * Prints an error message on the console and quits the program
+ * @param count The number of expected TokenTypes
+ */
+void Parser::error(unsigned count, ...) {
 
+    cerr << Color::Modifier(Color::FG_RED) << "unexpected token ";
+    if (token->getType() == Exp2Int || token->getType() == Array) {
+        cerr << "'" << token->getValue() << "' ";
+    } else if(token->getType() == StatementIdent) {
+        cerr << "'" << token->getInformation()->getName() << "' ";
+    }
+    cerr << "of type '" << token->getTypeStr() << "' at line: " << token->getLine() << " column: " << token->getColumn();
+
+    va_list argptr;
+    va_start(argptr, count);
+    if (count > 0) {
+        auto t = (Token::TokenType) va_arg(argptr, int);
+        cerr << " Expected: '" << Token::valueOf(t) << "'";
+    }
+    for (unsigned i = 1; i < count; ++i) {
+        auto t = (Token::TokenType) va_arg(argptr, int);
+        cerr << " or '" << Token::valueOf(t) << "'";
+    }
+    va_end(argptr);
+    cerr << Color::Modifier(Color::FG_DEFAULT) << endl;
+
+    exit(1);
+}
 
 
 

@@ -38,7 +38,7 @@ private:
     void accept(Token::TokenType token);
     void nextToken();
 
-    void logError(unsigned count, ...);
+    void error(unsigned count, ...);
 
 };
 
