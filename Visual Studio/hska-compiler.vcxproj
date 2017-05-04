@@ -20,10 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\buffer\src\Buffer.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\parser\src\Node.cpp" />
+    <ClCompile Include="..\src\parser\src\Parser.cpp" />
+    <ClCompile Include="..\src\parser\src\ParseTree.cpp" />
     <ClCompile Include="..\src\scanner\src\Scanner.cpp" />
     <ClCompile Include="..\src\scanner\src\Token.cpp" />
     <ClCompile Include="..\src\state-machine\src\StateMachine.cpp" />
+    <ClCompile Include="..\src\state-machine\src\StateMachine_Test.cpp" />
     <ClCompile Include="..\src\state-machine\src\TokenPosition.cpp" />
     <ClCompile Include="..\src\state-machine\src\TokenScanner.cpp" />
     <ClCompile Include="..\src\state-machine\src\Transition.cpp" />
@@ -36,10 +39,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\buffer\include\Buffer.h" />
+    <ClInclude Include="..\src\parser\include\Node.h" />
+    <ClInclude Include="..\src\parser\include\Parser.h" />
+    <ClInclude Include="..\src\parser\include\ParseTree.h" />
     <ClInclude Include="..\src\scanner\include\Scanner.h" />
     <ClInclude Include="..\src\scanner\include\Token.h" />
     <ClInclude Include="..\src\state-machine\include\Condition.h" />
     <ClInclude Include="..\src\state-machine\include\StateMachine.h" />
+    <ClInclude Include="..\src\state-machine\include\Buffer.h" />
     <ClInclude Include="..\src\state-machine\include\TokenPosition.h" />
     <ClInclude Include="..\src\state-machine\include\TokenScanner.h" />
     <ClInclude Include="..\src\state-machine\include\Transition.h" />
@@ -67,26 +74,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -122,6 +129,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,6 +152,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

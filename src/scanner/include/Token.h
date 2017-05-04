@@ -21,6 +21,7 @@ class Token
     public:
         enum TokenType : int
         {
+            NONE = 0,
             DETECTING = 1 << 0,
             ERROR = 1 << 1,
             EOF_TOKEN = 1 << 2,    // End of file token
@@ -56,9 +57,10 @@ class Token
             KW_INT = 1 << 27, //The Keyword, not a number
             KW_WRITE = 1 << 28,
             KW_READ = 1 << 29,
-            KW_ELSE = 1 << 30
+            KW_ELSE = 1 << 30,
 
-
+			// End
+			END_
         };
 
         Token(TokenType type, const int& line, const int& column);
@@ -170,6 +172,8 @@ class Token
 
             return "<UNKNOWN>";
         }
+
+		static bool isKeyword(TokenType type);
 
     static const char *valueOf(TokenType type);
 

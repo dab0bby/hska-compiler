@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "TokenPosition.h"
 #include "StateMachine.h"
-#include <string>
 
 class TokenScanner
 {
@@ -19,6 +18,7 @@ public:
 private:
     void _appendToken(TokenPosition* token);
     void _mergePendingToken(bool skippedLast);
+
     static void _applyOffset(TokenPosition* token, int position);
     static bool _contains(TokenPosition* token, Token::TokenType type);
 

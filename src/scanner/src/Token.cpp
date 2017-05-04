@@ -80,6 +80,11 @@ Token::~Token()
 }
 
 
+bool Token::isKeyword(TokenType type)
+{
+    return type & (KW_IF | KW_WHILE | KW_INT | KW_WRITE | KW_READ | KW_ELSE);
+}
+
 const char *Token::valueOf(Token::TokenType type) {
     switch (type) {
         case DETECTING:
@@ -142,6 +147,8 @@ const char *Token::valueOf(Token::TokenType type) {
             return "<identifier>";
         case INTEGER:
             return "<number>";
+        case NEW_LINE:
+            return "<linefeed>";
     default:
             return "Unknown";
     }

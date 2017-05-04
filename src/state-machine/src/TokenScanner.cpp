@@ -22,9 +22,9 @@ TokenScanner::TokenScanner()
     _sms[20] = StateMachine::createAtomic(Token::CURLY_BRACKET_CLOSE, new CharCondition('}'));
     _sms[22] = StateMachine::createAtomic(Token::EOF_TOKEN, new CharCondition('\0'));
 
-    _sms[23] = StateMachine::createString(Token::KW_IF, new const char*[2]{"IF", "if"}, 2);
-    _sms[24] = StateMachine::createString(Token::KW_WHILE, new const char*[2]{"WHILE", "while"}, 2);
-    _sms[25] = StateMachine::createString(Token::KW_ELSE, new const char*[2]{"ELSE", "else"}, 2);
+    _sms[23] = StateMachine::createString(Token::KW_IF, new const char*[2]{ "IF", "if" }, 2);
+    _sms[24] = StateMachine::createString(Token::KW_WHILE, new const char*[2]{ "WHILE", "while" }, 2);
+    _sms[25] = StateMachine::createString(Token::KW_ELSE, new const char*[2]{ "ELSE", "else" }, 2);
     _sms[26] = StateMachine::createString(Token::KW_READ, "read");
     _sms[27] = StateMachine::createString(Token::KW_WRITE, "write");
     _sms[28] = StateMachine::createString(Token::KW_INT, "int");
@@ -32,17 +32,17 @@ TokenScanner::TokenScanner()
     // state machine for whitespaces and comments
     _sms[SM_IGN] = new StateMachine(4, 0, new int[3]{ 0,2,3 }, 3, Token::IGNORE);
     _sms[SM_IGN]->setTransitions(0, new Transition[2]{
-        Transition(0, Condition::createWhitespace()),
-        Transition(1, new CharCondition(':')) }, 2);
+                                     Transition(0, Condition::createWhitespace()),
+                                     Transition(1, new CharCondition(':')) }, 2);
     _sms[SM_IGN]->setTransitions(1, new Transition[1]{
-        Transition(2, new CharCondition('*')) }, 1);
+                                     Transition(2, new CharCondition('*')) }, 1);
     _sms[SM_IGN]->setTransitions(2, new Transition[2]{
-        Transition(3, new CharCondition('*')),
-        Transition(2, new NotCondition(new CharCondition('*'))) }, 2);
+                                     Transition(3, new CharCondition('*')),
+                                     Transition(2, new NotCondition(new CharCondition('*'))) }, 2);
     _sms[SM_IGN]->setTransitions(3, new Transition[3]{
-        Transition(3, new CharCondition('*')),
-        Transition(0, new CharCondition(':')),
-        Transition(2, new NotCondition(new OrCondition(new CharCondition('*'), new CharCondition(':')))) }, 3);
+                                     Transition(3, new CharCondition('*')),
+                                     Transition(0, new CharCondition(':')),
+                                     Transition(2, new NotCondition(new OrCondition(new CharCondition('*'), new CharCondition(':')))) }, 3);
 
     // state machine for integers
     _sms[SM_INT] = StateMachine::createAtomic(Token::INTEGER);
@@ -72,7 +72,6 @@ TokenScanner::TokenScanner()
 
     // state machine for line breaks
     _sms[SM_LF] = StateMachine::createAtomic(Token::NEW_LINE, Condition::createLinefeed());
-
 }
 
 TokenScanner::~TokenScanner()
@@ -127,7 +126,7 @@ bool TokenScanner::consume(char c)
     }
 
     if (_sms[SM_LF]->isInFinalState() && _sms[SM_IGN]->startPosition == _position)
-            _sms[SM_IGN]->startPosition++;
+        _sms[SM_IGN]->startPosition++;
 
     if (!anyProgress)
         _appendToken(new TokenPosition(Token::ERROR, _position, 1));
@@ -181,7 +180,7 @@ void TokenScanner::_appendToken(TokenPosition* token)
     // make an error if unresolved spaces are between tokens
     if (_lastTokenEnd < token->begin)
         _appendToken(new TokenPosition(Token::ERROR, _lastTokenEnd, token->begin - _lastTokenEnd));
-
+    
     bool accept = _filter & token->token;
 
     // initial call
@@ -194,9 +193,18 @@ void TokenScanner::_appendToken(TokenPosition* token)
         return;
     }
 
+
     // last token is larger then the new token or the new token begins before the last token
-    if ((_pendingToken->begin < token->begin && _pendingToken->begin + _pendingToken->size > token->begin + token->size) || (token->begin < _lastOutputEnd))
+    if ((_pendingToken->begin < token->begin && _pendingToken->begin + _pendingToken->size > token->begin + token->size) ||
+        (token->begin < _lastOutputEnd))        
         return;
+    
+    // special case if a keyword tries to overwrite an identifier
+    if (_pendingToken->token == Token::IDENTIFIER && Token::isKeyword(token->token) && _pendingToken->begin < token->begin)
+    {
+        _lastTokenEnd = token->begin + token->size;
+        return;
+    }
 
     // move end position of last token
     if (token->begin + token->size > _lastTokenEnd)
@@ -264,9 +272,10 @@ void TokenScanner::_mergePendingToken(bool skippedLast)
     if (_pendingToken->token == Token::COLON || _pendingToken->token == Token::EQUAL || (_pendingToken->token == Token::AND && _pendingToken->size < 2))
         return;
 
-    // pending Identifier and Integers
+    // pending identifier, integers and keywords
     if ((_pendingToken->token == Token::IDENTIFIER && _sms[SM_IDFR]->isInFinalState()) ||
-        (_pendingToken->token == Token::INTEGER && _sms[SM_INT]->isInFinalState()))
+        (_pendingToken->token == Token::INTEGER && _sms[SM_INT]->isInFinalState()) || 
+        (Token::isKeyword(_pendingToken->token) && _sms[SM_IDFR]->isInFinalState()))
         return;
 
     // Identifier and Intergers
@@ -312,7 +321,6 @@ void TokenScanner::_mergePendingToken(bool skippedLast)
     _pendingToken = nullptr;
     _lastOutputEnd = _lastToken->begin + _lastToken->size;
 }
-
 
 void TokenScanner::_applyOffset(TokenPosition* token, int position)
 {

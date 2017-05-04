@@ -7,6 +7,7 @@
 #include "../include/Condition.h"
 #include "../include/StateMachine.h"
 #include "../include/TokenScanner.h"
+#include <experimental/filesystem>
 
 #define BENCHMARK 0
 
@@ -80,48 +81,55 @@ void testTokenScanner(string text)
     }
 }
 
-int main ( int argc, char* argv[] )
+void testWithKeywords(const string& path)
 {
-    string paths[] =
+    TokenScanner tokenScanner;
+        
+    ifstream file(path);
+    cout << path << endl << endl;
+    stringstream ss;
+    ss << "\t";
+
+    for (string line; getline(file, line);)
     {
-        "E:/Code/hska-compiler/test-files/scanner00.txt",
-        //"E:/Code/hska-compiler/test-files/scanner1.txt",
-        //"E:/Code/hska-compiler/test-files/scanner2.txt",
-        //"E:/Code/hska-compiler/test-files/scanner3.txt",
-        //"E:/Code/hska-compiler/test-files/scanner4.txt",
-        //"E:/Code/hska-compiler/test-files/scanner5.txt",
-        //"E:/Code/hska-compiler/test-files/scanner6.txt", // large
-        //"E:/Code/hska-compiler/test-files/scanner7.txt",
-        //"E:/Code/hska-compiler/test-files/scanner8.txt", // large
-        //"E:/Code/hska-compiler/test-files/scanner9.txt",
-    };
+        if (line == "")
+            continue;
 
-    for (auto path : paths)
-    {
-        ifstream file(path);
-        stringstream fileContent;
-        string testString;
-        string str;
+        line += "\n";
+        cout << "\t" << line;
 
-        while (getline(file, str))
-            fileContent << str << "\n";
+        for (auto c : line)
+        {
+            tokenScanner.consume(c);
+            auto pending = tokenScanner.getPendingTokens();
 
-        // add some null terminator
-        testString = fileContent.str() + '\0';
-
-        auto benchmarkStart = std::chrono::high_resolution_clock::now();
-
-        cout << "testing state-machine with input file: " << path << endl << endl;
-
-        testTokenScanner(testString);
-
-        auto benchmarkEnd = std::chrono::high_resolution_clock::now();
-        auto time = benchmarkEnd - benchmarkStart;
-
-        cout << endl  << "finished in " << std::chrono::duration_cast<std::chrono::microseconds>(time).count() / 1000.0 << "ms" << endl << endl << endl;
+            while (pending != nullptr)
+            {
+                ss << Token(pending->token, 1, 1).getTypeStr() << " ";
+                auto tmp = pending;
+                pending = pending->getNext();
+                delete tmp;
+            }
+        }
+        ss << endl << "\t";
     }
 
+    cout << endl << "interpreted as" << endl << endl << ss.str() << endl;
+}
 
+int main ( int argc, char* argv[] )
+{
+    string root = R"(F:\Code\hska-compiler\test-files\parser)";
+          
+    for (auto& entry : experimental::filesystem::directory_iterator(root))
+    {                
+        if (!experimental::filesystem::is_regular_file(entry.status()))
+            continue;
+
+        testWithKeywords(entry.path().string());
+        cout << "######################################################" << endl << endl;
+    }
+    
 #ifdef _WIN32
     system("Pause");
 #endif

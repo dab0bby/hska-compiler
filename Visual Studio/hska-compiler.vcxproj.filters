@@ -20,6 +20,9 @@
     <Filter Include="symbol-table">
       <UniqueIdentifier>{a64d7790-2e65-4a52-b501-9a82987cb13b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="parser">
+      <UniqueIdentifier>{525b64f5-60f6-4761-86f4-3fd82e6e2a93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\state-machine\src\StateMachine.cpp">
@@ -61,7 +64,18 @@
     <ClCompile Include="..\src\scanner\src\Token.cpp">
       <Filter>scanner</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\parser\src\Node.cpp">
+      <Filter>parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\src\Parser.cpp">
+      <Filter>parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\parser\src\ParseTree.cpp">
+      <Filter>parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\state-machine\src\StateMachine_Test.cpp">
+      <Filter>state-machine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\scanner\include\Token.h">
@@ -114,6 +128,18 @@
     </ClInclude>
     <ClInclude Include="..\src\utils\include\utils.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\include\Node.h">
+      <Filter>parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\include\Parser.h">
+      <Filter>parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\include\ParseTree.h">
+      <Filter>parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\state-machine\include\Buffer.h">
+      <Filter>state-machine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
