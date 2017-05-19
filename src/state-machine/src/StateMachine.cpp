@@ -147,7 +147,10 @@ StateMachine* StateMachine::createString(Token::TokenType token, const char** st
 
         // chain connect chars, except the first and last of a string
         for (int i = 1; i < strLen - 1; i++)
-            sm->setTransitions(currentState++, new Transition[1]{ Transition(currentState + 1, new CharCondition(str[strIdx][i])) }, 1);
+        {
+            sm->setTransitions(currentState, new Transition[1]{ Transition(currentState + 1, new CharCondition(str[strIdx][i])) }, 1);
+            currentState++;
+        }
         
         // connect to final state
         sm->setTransitions(currentState, new Transition[1]{ Transition(stateCnt - 1, new CharCondition(str[strIdx][strLen - 1])) }, 1);        

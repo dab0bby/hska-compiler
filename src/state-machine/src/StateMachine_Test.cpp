@@ -119,11 +119,11 @@ void testWithKeywords(const string& path)
 
 int main ( int argc, char* argv[] )
 {
-    string root = R"(F:\Code\hska-compiler\test-files\parser)";
+    string root = R"(F:\Code\hska-compiler\test-files)";
           
     for (auto& entry : experimental::filesystem::directory_iterator(root))
     {                
-        if (!experimental::filesystem::is_regular_file(entry.status()))
+        if (!experimental::filesystem::is_regular_file(entry.status()) || experimental::filesystem::file_size(entry.path()) > 10000)
             continue;
 
         testWithKeywords(entry.path().string());
