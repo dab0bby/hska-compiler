@@ -38,32 +38,32 @@ class Node {
 
 public:
     //Static factory methods
-    static Node* makeStatementWrite(Node* exp);
-    static Node* makeStatementBlock(Node* statements);
-    static Node* makeIndex(Node* exp);
-    static Node* makeType(Node* exp);
-    static Node* makeExp2Minus(Node* exp2);
-    static Node* makeExp2Neg(Node* exp2);
+    static Node* makeStatementWrite(Node* exp, Token* token);
+    static Node* makeStatementBlock(Node* statements, Token* token);
+    static Node* makeIndex(Node* exp, Token* token);
+    static Node* makeType(Node* exp, Token* token);
+    static Node* makeExp2Minus(Node* exp2, Token* token);
+    static Node* makeExp2Neg(Node* exp2, Token* token);
 
-    static Node* makeProg(Node* decls, Node* statements);
-    static Node* makeDecls(Node* decl, Node* decls);
-    static Node* makeStatements(Node* statement, Node* statements);
-    static Node* makeStatementWhile(Node* exp, Node* statement);
-    static Node* makeExp(Node* exp2, Node* op);
-    static Node* makeOpExp(Node* op, Node* exp);
+    static Node* makeProg(Node* decls, Node* statements, Token* token);
+    static Node* makeDecls(Node* decl, Node* decls, Token* token);
+    static Node* makeStatements(Node* statement, Node* statements, Token* token);
+    static Node* makeStatementWhile(Node* exp, Node* statement, Token* token);
+    static Node* makeExp(Node* exp2, Node* op, Token* token);
+    static Node* makeOpExp(Node* op, Node* exp, Token* token);
 
-    static Node* makeStatementIf(Node* exp, Node* ifStmt, Node* elseStmt);
+    static Node* makeStatementIf(Node* exp, Node* ifStmt, Node* elseStmt, Token* token);
 
-    static Node* makeDeclIdent(Information* ident);
+    static Node* makeDeclIdent(Information* ident, Token* token);
 
-    static Node* makeDeclArray(Node* arr, Information* ident);
-    static Node* makeStatementRead(Node* idx, Information* ident);
-    static Node* makeExp2Ident(Node* idx, Information* ident);
+    static Node* makeDeclArray(Node* arr, Information* ident, Token* token);
+    static Node* makeStatementRead(Node* idx, Information* ident, Token* token);
+    static Node* makeExp2Ident(Node* idx, Information* ident, Token* token);
 
-    static Node* makeStatementIdent(Information* ident, Node* idx, Node* exp);
+    static Node* makeStatementIdent(Information* ident, Node* idx, Node* exp, Token* token);
 
-    static Node* makeArray(unsigned int size);
-    static Node* makeExp2Int(unsigned int i);
+    static Node* makeArray(unsigned int size, Token* token);
+    static Node* makeExp2Int(unsigned int i, Token* token);
 
     static Node* makeOp(Token* token);
 
@@ -186,32 +186,32 @@ private:
     /**
      * Constructor for Index-Node, Exp2-Node, Exp2Minus-Node, StatementWrite-Node and StatementBlock-Node
      */
-    explicit Node(NodeType type, Node *n1);
+    explicit Node(NodeType type, Node *n1, Token* token);
 
     /**
      * Constructor for Prog-Node, Decls-Node, OpExp-Node, Statements-Node, StatementWhile-Node
      */
-    explicit Node(NodeType type, Node *n1, Node *n2);
+    explicit Node(NodeType type, Node *n1, Node *n2, Token* token);
 
     /**
      * Constructor for StatementIf-Node
      */
-    explicit Node(NodeType type, Node *n1, Node *n2, Node *n3);
+    explicit Node(NodeType type, Node *n1, Node *n2, Node *n3, Token* token);
 
     /**
      * Constructor for DeclInt-Node
      */
-    explicit Node(NodeType type, Information *information);
+    explicit Node(NodeType type, Information *information, Token* token);
 
     /**
      * Constructor for StatementIdent-Node
      */
-    explicit Node(NodeType type, Information *information, Node *n1, Node *n2);
+    explicit Node(NodeType type, Information *information, Node *n1, Node *n2, Token* token);
 
     /**
      * Constructor for Array-Node and Exp2Int-Node
      */
-    explicit Node(NodeType type, unsigned int intValue);
+    explicit Node(NodeType type, unsigned int intValue, Token* token);
 
     /**
      * Constructor for Nil-Node
@@ -221,7 +221,7 @@ private:
     /**
      * Constructor for DeclArray-Node, Exp2Ident-Node, StatementRead-Node
      */
-    explicit Node(NodeType type, Node *n1, Information *information);
+    explicit Node(NodeType type, Node *n1, Information *information, Token* token);
 
     /**
      * Constructor for Op-Node

@@ -35,7 +35,7 @@ Node *Parser::parseProg() {
 
     accept(Token::TokenType::EOF_TOKEN);
 
-    return Node::makeProg(decls, statements);
+    return Node::makeProg(decls, statements, token);
 }
 
 Node *Parser::parseDecls() {
@@ -45,7 +45,7 @@ Node *Parser::parseDecls() {
 
     auto decl = parseDecl();
     accept(Token::TokenType::SEMICOLON);
-    return Node::makeDecls(decl, parseDecls());
+    return Node::makeDecls(decl, parseDecls(), token);
 }
 
 Node *Parser::parseDecl() {
@@ -55,12 +55,12 @@ Node *Parser::parseDecl() {
         case Token::TokenType::SQUARE_BRACKET_OPEN: {
             auto arr = parseArray();
             auto ident = parseIdent();
-            return Node::makeDeclArray(arr, ident);
+            return Node::makeDeclArray(arr, ident, token);
         }
 
         default: {
             auto ident = parseIdent();
-            return Node::makeDeclIdent(ident);
+            return Node::makeDeclIdent(ident, token);
         }
     }
 }
@@ -70,7 +70,7 @@ Node *Parser::parseArray() {
     auto size = parseInt();
     accept(Token::TokenType ::SQUARE_BRACKET_CLOSE);
 
-    return Node::makeArray(size);
+    return Node::makeArray(size, token);
 }
 
 unsigned int Parser::parseInt() {
@@ -110,7 +110,7 @@ Node *Parser::parseStatements() {
 
     auto statement = parseStatement();
     accept(Token::TokenType::SEMICOLON);
-    return Node::makeStatements(statement, parseStatements());
+    return Node::makeStatements(statement, parseStatements(), token);
 }
 
 Node *Parser::parseStatement() {
@@ -120,7 +120,7 @@ Node *Parser::parseStatement() {
             auto idx = parseIndex();
             accept(Token::TokenType::ASSIGN);
             auto exp = parseExp();
-            return Node::makeStatementIdent(ident, idx, exp);
+            return Node::makeStatementIdent(ident, idx, exp, token);
         }
         case Token::TokenType::KW_WRITE: {
             accept(Token::TokenType::KW_WRITE);
@@ -128,7 +128,7 @@ Node *Parser::parseStatement() {
             auto exp = parseExp();
             accept(Token::TokenType::BRACKET_CLOSE);
 
-            return Node::makeStatementWrite(exp);
+            return Node::makeStatementWrite(exp, token);
         }
         case Token::TokenType::KW_READ: {
             accept(Token::TokenType::KW_READ);
@@ -136,14 +136,14 @@ Node *Parser::parseStatement() {
             auto ident = parseIdent();
             auto idx = parseIndex();
             accept(Token::TokenType::BRACKET_CLOSE);
-            return Node::makeStatementRead(idx, ident);
+            return Node::makeStatementRead(idx, ident, token);
         }
         case Token::TokenType::CURLY_BRACKET_OPEN: {
             accept(Token::TokenType::CURLY_BRACKET_OPEN);
             auto statements = parseStatements();
             accept(Token::TokenType::CURLY_BRACKET_CLOSE);
 
-            return Node::makeStatementBlock(statements);
+            return Node::makeStatementBlock(statements, token);
         }
         case Token::TokenType::KW_IF: {
             accept(Token::TokenType::KW_IF);
@@ -155,9 +155,9 @@ Node *Parser::parseStatement() {
             if (token->getType() == Token::TokenType::KW_ELSE) {
                 accept(Token::TokenType::KW_ELSE);
                 auto elseStmt = parseStatement();
-                return Node::makeStatementIf(exp, ifStmt, elseStmt);
+                return Node::makeStatementIf(exp, ifStmt, elseStmt, token);
             }
-            return Node::makeStatementIf(exp, ifStmt, Node::makeNil());
+            return Node::makeStatementIf(exp, ifStmt, Node::makeNil(), token);
         }
         case Token::TokenType::KW_WHILE: {
             accept(Token::TokenType::KW_WHILE);
@@ -165,7 +165,7 @@ Node *Parser::parseStatement() {
             auto exp = parseExp();
             accept(Token::TokenType::BRACKET_CLOSE);
             auto statement = parseStatement();
-            return Node::makeStatementWhile(exp, statement);
+            return Node::makeStatementWhile(exp, statement, token);
         }
         default:
             error(6, Token::TokenType::IDENTIFIER, Token::TokenType::KW_WRITE, Token::TokenType::KW_READ,
@@ -184,7 +184,7 @@ Node *Parser::parseIndex() {
     auto exp = parseExp();
     accept(Token::TokenType ::SQUARE_BRACKET_CLOSE);
 
-    return Node::makeIndex(exp);
+    return Node::makeIndex(exp, token);
 }
 
 
@@ -216,7 +216,7 @@ void Parser::nextToken() {
 Node *Parser::parseExp() {
     auto exp2 = parseExp2();
     auto op = parseOpExp();
-    return Node::makeExp(exp2, op);
+    return Node::makeExp(exp2, op, token);
 }
 Node *Parser::parseExp2()
 {
@@ -225,26 +225,26 @@ Node *Parser::parseExp2()
             accept(Token::TokenType::BRACKET_OPEN);
             auto exp = parseExp();
             accept(Token::TokenType::BRACKET_CLOSE);
-            return Node::makeType(exp);
+            return Node::makeType(exp, token);
         }
         case Token::TokenType::IDENTIFIER: {
             auto ident = parseIdent();
             auto idx = parseIndex();
-            return Node::makeExp2Ident(idx, ident);
+            return Node::makeExp2Ident(idx, ident, token);
         }
         case Token::TokenType::INTEGER: {
             auto i = parseInt();
-            return Node::makeExp2Int(i);
+            return Node::makeExp2Int(i, token);
         }
         case Token::TokenType::MINUS: {
             accept(Token::TokenType::MINUS);
             auto exp2 = parseExp2();
-            return Node::makeExp2Minus(exp2);
+            return Node::makeExp2Minus(exp2, token);
         }
         case Token::TokenType::NOT: {
             accept(Token::TokenType::NOT);
             auto exp2 = parseExp2();
-            return Node::makeExp2Neg(exp2);
+            return Node::makeExp2Neg(exp2, token);
         }
         default:
             error(5, Token::TokenType::BRACKET_OPEN, Token::TokenType::IDENTIFIER, Token::TokenType::INTEGER,
@@ -274,7 +274,7 @@ Node *Parser::parseOpExp()
 
     auto op = parseOp();
     auto exp = parseExp();
-    return Node::makeOpExp(op, exp);
+    return Node::makeOpExp(op, exp, token);
 }
 
 Node *Parser::parseOp()
