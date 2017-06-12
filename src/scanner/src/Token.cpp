@@ -113,7 +113,7 @@ const char *Token::valueOf(Token::TokenType type) {
             return "=";
         case ASSIGN:
             return ":=";
-        case EXPRESSION_EQUAL:
+        case UNEQUAL:
             return "=:=";
         case AND:
             return "&";

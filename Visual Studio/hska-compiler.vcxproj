@@ -22,11 +22,11 @@
     <ClCompile Include="..\src\buffer\src\Buffer.cpp" />
     <ClCompile Include="..\src\parser\src\Node.cpp" />
     <ClCompile Include="..\src\parser\src\Parser.cpp" />
+    <ClCompile Include="..\src\parser\src\Parser_Test.cpp" />
     <ClCompile Include="..\src\parser\src\ParseTree.cpp" />
     <ClCompile Include="..\src\scanner\src\Scanner.cpp" />
     <ClCompile Include="..\src\scanner\src\Token.cpp" />
     <ClCompile Include="..\src\state-machine\src\StateMachine.cpp" />
-    <ClCompile Include="..\src\state-machine\src\StateMachine_Test.cpp" />
     <ClCompile Include="..\src\state-machine\src\TokenPosition.cpp" />
     <ClCompile Include="..\src\state-machine\src\TokenScanner.cpp" />
     <ClCompile Include="..\src\state-machine\src\Transition.cpp" />
@@ -59,11 +59,6 @@
     <ClInclude Include="..\src\utils\include\utils.h" />
     <ClInclude Include="..\src\utils\include\unistd_osinv.h" />
     <ClInclude Include="..\src\utils\include\vector.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\test-files\test_01.txt">
-      <DeploymentContent>false</DeploymentContent>
-    </Text>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3F26454C-9F68-4DE0-A881-2752C3AA856E}</ProjectGuid>

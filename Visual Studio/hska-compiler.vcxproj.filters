@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Ressourcendateien">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="scanner">
       <UniqueIdentifier>{f93877cc-cb08-4c77-879f-6e2e3ab67099}</UniqueIdentifier>
     </Filter>
@@ -73,8 +69,8 @@
     <ClCompile Include="..\src\parser\src\ParseTree.cpp">
       <Filter>parser</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\state-machine\src\StateMachine_Test.cpp">
-      <Filter>state-machine</Filter>
+    <ClCompile Include="..\src\parser\src\Parser_Test.cpp">
+      <Filter>parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,10 +137,5 @@
     <ClInclude Include="..\src\state-machine\include\Buffer.h">
       <Filter>state-machine</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\test-files\test_01.txt">
-      <Filter>Ressourcendateien</Filter>
-    </Text>
   </ItemGroup>
 </Project>

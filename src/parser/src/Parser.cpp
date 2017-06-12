@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by tim on 02.01.17.
 //
 
@@ -264,7 +264,7 @@ Node *Parser::parseOpExp()
         case Token::TokenType::LESS:
         case Token::TokenType::GREATER:
         case Token::TokenType::EQUAL:
-        case Token::TokenType::EXPRESSION_EQUAL:
+        case Token::TokenType::UNEQUAL:
         case Token::TokenType::AND:
             break;
 
@@ -287,7 +287,7 @@ Node *Parser::parseOp()
         case Token::TokenType::LESS:
         case Token::TokenType::GREATER:
         case Token::TokenType::EQUAL:
-        case Token::TokenType::EXPRESSION_EQUAL:
+        case Token::TokenType::UNEQUAL:
         case Token::TokenType::AND: {
             auto n = Node::makeOp(token);
             nextToken();

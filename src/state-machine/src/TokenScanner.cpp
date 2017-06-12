@@ -60,7 +60,7 @@ TokenScanner::TokenScanner()
     _sms[11]->setTransitions(1, Transition(2, new CharCondition('=')));
 
     // state machine for =:=
-    _sms[12] = new StateMachine(4, 0, 3, Token::EXPRESSION_EQUAL);
+    _sms[12] = new StateMachine(4, 0, 3, Token::UNEQUAL);
     _sms[12]->setTransitions(0, Transition(1, new CharCondition('=')));
     _sms[12]->setTransitions(1, Transition(2, new CharCondition(':')));
     _sms[12]->setTransitions(2, Transition(3, new CharCondition('=')));

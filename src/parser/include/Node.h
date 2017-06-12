@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by tim on 02.01.17.
 //
 
@@ -32,6 +32,24 @@ enum NodeType {
     OpExp,
     Op,
     Nil,
+};
+
+enum TypeInfo
+{
+	TI_NOTYPE,
+	TI_ERROR,
+	TI_INT,
+	TI_ARRAY,
+	TI_INT_ARRAY,
+	TI_OP_PLUS,
+	TI_OP_MINUS,
+	TI_OP_MULTIPLICATION,
+	TI_OP_DIVISION,
+	TI_OP_LESS,
+	TI_OP_GREATER,
+	TI_OP_EQUAL,
+	TI_OP_UNEQUAL,
+	TI_OP_AND,
 };
 
 class Node {
@@ -165,6 +183,10 @@ public:
      */
     void dump();
 
+	NodeType getNodeType() const;
+
+	TypeInfo type = TI_NOTYPE;
+
     /**
      * Returns the Name of the given Type as a char array
      * @param type
@@ -176,7 +198,7 @@ private:
     Node* children[3];
     Information* information;
     Token* token;
-    NodeType type;
+    NodeType nodeType;
     unsigned int value;
 
 

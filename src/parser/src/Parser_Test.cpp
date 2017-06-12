@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by tim on 02.01.17.
 //
 
@@ -37,7 +37,11 @@ int main(int argc, char **argv)
     auto parser = new Parser(scanner);
     auto tree = parser->parse();
     tree->dumpTree();
-
+    auto valid = tree->typeCheck(tree->getRoot());
+    
+    if (valid)
+        cout << "type check sucessfully passed" << endl;
+    
     // Cleanup
     delete tree;
     delete parser;
