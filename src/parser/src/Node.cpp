@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by tim on 02.01.17.
 //
 
@@ -10,66 +10,66 @@
 
 using namespace std;
 
-Node::Node(NodeType type, Node *n1) :
-        nodeType(type),
+Node::Node(NodeType type, Node *n1, Token* token) :
+        type(type),
         children {n1, nullptr, nullptr},
         information(nullptr),
-        token(nullptr),
+        token(token),
         value(0)
 {
 
 }
 
-Node::Node(NodeType type, Node *n1, Node *n2) :
-        nodeType(type),
+Node::Node(NodeType type, Node *n1, Node *n2, Token* token) :
+        type(type),
         children {n1, n2, nullptr},
         information(nullptr),
-        token(nullptr),
+        token(token),
         value(0)
 {
 }
 
-Node::Node(NodeType type, Node *n1, Node *n2, Node *n3) :
-        nodeType(type),
+Node::Node(NodeType type, Node *n1, Node *n2, Node *n3, Token* token) :
+        type(type),
         children {n1, n2, n3},
         information(nullptr),
-        token(nullptr),
+        token(token),
         value(0)
 {
 }
 
-Node::Node(NodeType type, Information *information) :
-        nodeType(type),
+Node::Node(NodeType type, Information *information, Token* token) :
+        type(type),
         children {nullptr, nullptr, nullptr},
         information(information),
-        token(nullptr),
+        token(token),
         value(0)
 {
 
 }
 
-Node::Node(NodeType type, Node *n1, Information *information) :
-        nodeType(type),
+Node::Node(NodeType type, Node *n1, Information *information, Token* token) :
+        type(type),
         children {n1, nullptr, nullptr},
         information(information),
-        token(nullptr),
+        token(token),
         value(0)
 {
 
 }
 
-Node::Node(NodeType type, Information *information, Node *n1, Node *n2) :
-        nodeType(type),
+Node::Node(NodeType type, Information *information, Node *n1, Node *n2, Token* token) :
+        type(type),
         children {n1, n2, nullptr},
         information(information),
-        token(nullptr),
+        token(token),
         value(0)
 {
 
 }
 
 Node::Node(NodeType type) :
-        nodeType(type),
+        type(type),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(nullptr),
@@ -77,18 +77,18 @@ Node::Node(NodeType type) :
 {
 }
 
-Node::Node(NodeType type, unsigned int intValue) :
-        nodeType(type),
+Node::Node(NodeType type, unsigned int intValue, Token* token) :
+        type(type),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
-        token(nullptr),
+        token(token),
         value(intValue)
 {
 
 }
 
-Node::Node(NodeType type, Token *token) :
-        nodeType(type),
+Node::Node(NodeType type, Token* token) :
+        type(type),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(token),
@@ -101,13 +101,15 @@ Node::~Node() {
         if (children[i] != nullptr)
             delete children[i];
 
-    if (token != nullptr)
-        delete token;
+
+        //TODO Who is deleting tokens?
+    //if (token != nullptr)
+       // delete token;
 }
 
 Node *Node::getDecl() const
 {
-    switch (nodeType) {
+    switch (type) {
         case Decls:
             return children[0];
         default:
@@ -118,7 +120,7 @@ Node *Node::getDecl() const
 
 Node *Node::getDecls() const
 {
-    switch (nodeType) {
+    switch (type) {
         case Prog:
             return children[0];
         case Decls:
@@ -131,7 +133,7 @@ Node *Node::getDecls() const
 
 Node *Node::getStatement() const
 {
-    switch (nodeType) {
+    switch (type) {
         case Statements:
             return children[0];
         case StatementWhile:
@@ -143,7 +145,7 @@ Node *Node::getStatement() const
 
 Node *Node::getStatements() const
 {
-    switch (nodeType) {
+    switch (type) {
         case Prog:
             return children[1];
         case StatementBlock:
@@ -159,7 +161,7 @@ Node *Node::getStatements() const
 
 Node *Node::getArray() const
 {
-    switch (nodeType) {
+    switch (type) {
         case DeclArray:
             return children[0];
         default:
@@ -170,7 +172,7 @@ Node *Node::getArray() const
 
 Node *Node::getExp() const
 {
-    switch (nodeType) {
+    switch (type) {
         case StatementIdent:
             return children[1];
         case StatementWrite:
@@ -193,7 +195,7 @@ Node *Node::getExp() const
 
 Node *Node::getExp2() const
 {
-    switch (nodeType) {
+    switch (type) {
         case Exp:
             return children[0];
         case Exp2Minus:
@@ -208,7 +210,7 @@ Node *Node::getExp2() const
 
 Node *Node::getOp() const
 {
-    switch (nodeType) {
+    switch (type) {
         case Exp:
             return children[1];
         case OpExp:
@@ -221,7 +223,7 @@ Node *Node::getOp() const
 
 Node *Node::getIndex() const
 {
-    switch (nodeType) {
+    switch (type) {
         case StatementIdent:
             return children[0];
         case StatementRead:
@@ -236,7 +238,7 @@ Node *Node::getIndex() const
 
 Node *Node::getIfStatement() const
 {
-    switch (nodeType) {
+    switch (type) {
         case StatementIf:
             return children[1];
         default:
@@ -247,7 +249,7 @@ Node *Node::getIfStatement() const
 
 Node *Node::getElseStatement() const
 {
-    switch (nodeType) {
+    switch (type) {
         case StatementIf:
             return children[2];
         default:
@@ -258,7 +260,7 @@ Node *Node::getElseStatement() const
 
 Information *Node::getInformation() const
 {
-    switch (nodeType) {
+    switch (type) {
         case DeclArray:
         case DeclIdent:
         case StatementIdent:
@@ -273,7 +275,7 @@ Information *Node::getInformation() const
 
 unsigned int Node::getIntValue() const
 {
-    switch (nodeType) {
+    switch (type) {
         case Array:
         case Exp2Int:
             return value;
@@ -285,12 +287,12 @@ unsigned int Node::getIntValue() const
 
 Token* Node::getToken() const
 {
-    switch (nodeType) {
-        case Op:
-            return token;
-        default:
-            error("token");
+    switch (type) {
+        case Nil:
+            error("token""");
             return nullptr;
+        default:
+            return token;
     }
 }
 
@@ -299,23 +301,18 @@ void Node::dump() {
     dump(0);
 }
 
-NodeType Node::getNodeType() const
-{
-    return nodeType;
-}
-
 void Node::dump(int i) {
     //Intend
     for(int j=0; j<i; j++)
         cout << "  ";
 
     //Print Node
-    cout << "-" << typeToString(nodeType);
+    cout << "-" << typeToString(type);
 
 
-    if(nodeType == Op) {
+    if(type == Op) {
         cout << " " << this->token->getTokenName(this->token->getType());
-    } else if(nodeType == Exp2Int || nodeType == Array){
+    } else if(type == Exp2Int || type == Array){
         cout << " Value:" << this->value;
     }
 
@@ -381,93 +378,93 @@ const char *Node::typeToString(NodeType type) {
 }
 
 void Node::error(const char *functionName) const {
-    cout << Color::Modifier(Color::FG_RED) << "Unsupported function called: " << functionName << " for NodeType: " << typeToString(this->nodeType) << Color::Modifier(Color::FG_DEFAULT) << endl;
+    cout << Color::Modifier(Color::FG_RED) << "Unsupported function called: " << functionName << " for NodeType: " << typeToString(this->type) << Color::Modifier(Color::FG_DEFAULT) << endl;
     exit(1);
 }
 
 
-Node *Node::makeStatementWrite(Node *exp) {
-    return new Node(StatementWrite, exp);
+Node *Node::makeStatementWrite(Node *exp, Token* token) {
+    return new Node(StatementWrite, exp, token);
 }
 
-Node *Node::makeStatementBlock(Node *statements) {
-    return new Node(StatementBlock, statements);
+Node *Node::makeStatementBlock(Node *statements, Token* token) {
+    return new Node(StatementBlock, statements, token);
 }
 
-Node *Node::makeIndex(Node *exp) {
-    return new Node(NodeType::Index, exp);
+Node *Node::makeIndex(Node *exp, Token* token) {
+    return new Node(NodeType::Index, exp, token);
 }
 
-Node *Node::makeType(Node *exp) {
-    return new Node(NodeType::Exp2, exp);
+Node *Node::makeType(Node *exp, Token* token) {
+    return new Node(NodeType::Exp2, exp, token);
 }
 
-Node *Node::makeExp2Minus(Node *exp2) {
-    return new Node(NodeType::Exp2Minus, exp2);
+Node *Node::makeExp2Minus(Node *exp2, Token* token) {
+    return new Node(NodeType::Exp2Minus, exp2, token);
 }
 
-Node *Node::makeExp2Neg(Node *exp2) {
-    return new Node(NodeType::Exp2Neg, exp2);
+Node *Node::makeExp2Neg(Node *exp2, Token* token) {
+    return new Node(NodeType::Exp2Neg, exp2, token);
 }
 
-Node *Node::makeProg(Node *decls, Node *statements) {
-    return new Node(NodeType::Prog, decls, statements);
+Node *Node::makeProg(Node *decls, Node *statements, Token* token) {
+    return new Node(NodeType::Prog, decls, statements, token);
 }
 
-Node *Node::makeDecls(Node *decl, Node *decls) {
-    return new Node(NodeType::Decls, decl, decls);
+Node *Node::makeDecls(Node *decl, Node *decls, Token* token) {
+    return new Node(NodeType::Decls, decl, decls, token);
 }
 
-Node *Node::makeStatements(Node *statement, Node *statements) {
-    return new Node(NodeType::Statements, statement, statements);
+Node *Node::makeStatements(Node *statement, Node *statements, Token* token) {
+    return new Node(NodeType::Statements, statement, statements, token);
 }
 
-Node *Node::makeStatementWhile(Node *exp, Node *statement) {
-    return new Node(NodeType::StatementWhile, exp, statement);
+Node *Node::makeStatementWhile(Node *exp, Node *statement, Token* token) {
+    return new Node(NodeType::StatementWhile, exp, statement, token);
 }
 
-Node *Node::makeExp(Node *exp2, Node *op) {
-    return new Node(NodeType::Exp, exp2, op);
+Node *Node::makeExp(Node *exp2, Node *op, Token* token) {
+    return new Node(NodeType::Exp, exp2, op, token);
 }
 
-Node *Node::makeOpExp(Node *op, Node *exp) {
-    return new Node(NodeType::OpExp, op, exp);
+Node *Node::makeOpExp(Node *op, Node *exp, Token* token) {
+    return new Node(NodeType::OpExp, op, exp, token);
 }
 
-Node *Node::makeStatementIf(Node *exp, Node *ifStmt, Node *elseStmt) {
-    return new Node(NodeType::StatementIf, exp, ifStmt, elseStmt);
+Node *Node::makeStatementIf(Node *exp, Node *ifStmt, Node *elseStmt, Token* token) {
+    return new Node(NodeType::StatementIf, exp, ifStmt, elseStmt, token);
 }
 
 Node *Node::makeNil() {
     return new Node(NodeType::Nil);
 }
 
-Node *Node::makeDeclIdent(Information *ident) {
-    return new Node(NodeType::DeclIdent, ident);
+Node *Node::makeDeclIdent(Information *ident, Token* token) {
+    return new Node(NodeType::DeclIdent, ident, token);
 }
 
-Node *Node::makeDeclArray(Node *arr, Information *ident) {
-    return new Node(NodeType ::DeclArray, arr, ident);
+Node *Node::makeDeclArray(Node *arr, Information *ident, Token* token) {
+    return new Node(NodeType ::DeclArray, arr, ident, token);
 }
 
-Node *Node::makeStatementRead(Node *idx, Information *ident) {
-    return new Node(NodeType::StatementRead, idx, ident);
+Node *Node::makeStatementRead(Node *idx, Information *ident, Token* token) {
+    return new Node(NodeType::StatementRead, idx, ident, token);
 }
 
-Node *Node::makeExp2Ident(Node *idx, Information *ident) {
-    return new Node(NodeType::Exp2Ident, idx, ident);
+Node *Node::makeExp2Ident(Node *idx, Information *ident, Token* token) {
+    return new Node(NodeType::Exp2Ident, idx, ident, token);
 }
 
-Node *Node::makeStatementIdent(Information *ident, Node *idx, Node *exp) {
-    return new Node(NodeType::StatementIdent, ident, idx, exp);
+Node *Node::makeStatementIdent(Information *ident, Node *idx, Node *exp, Token* token) {
+    return new Node(NodeType::StatementIdent, ident, idx, exp, token);
 }
 
-Node *Node::makeArray(unsigned int size) {
-    return new Node(NodeType::Array, size);
+Node *Node::makeArray(unsigned int size, Token* token) {
+    return new Node(NodeType::Array, size, token);
 }
 
-Node *Node::makeExp2Int(unsigned int i) {
-    return new Node(NodeType::Exp2Int, i);
+Node *Node::makeExp2Int(unsigned int i, Token* token) {
+    return new Node(NodeType::Exp2Int, i, token);
 }
 
 Node *Node::makeOp(Token *token) {
