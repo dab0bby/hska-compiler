@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by tim on 02.01.17.
 //
 
@@ -10,8 +10,8 @@
 
 using namespace std;
 
-Node::Node(NodeType type, Node *n1, Token* token) :
-        type(type),
+Node::Node(NodeType nodeType, Node *n1, Token* token) :
+        nodeType(nodeType),
         children {n1, nullptr, nullptr},
         information(nullptr),
         token(token),
@@ -20,8 +20,8 @@ Node::Node(NodeType type, Node *n1, Token* token) :
 
 }
 
-Node::Node(NodeType type, Node *n1, Node *n2, Token* token) :
-        type(type),
+Node::Node(NodeType nodeType, Node *n1, Node *n2, Token* token) :
+        nodeType(nodeType),
         children {n1, n2, nullptr},
         information(nullptr),
         token(token),
@@ -29,8 +29,8 @@ Node::Node(NodeType type, Node *n1, Node *n2, Token* token) :
 {
 }
 
-Node::Node(NodeType type, Node *n1, Node *n2, Node *n3, Token* token) :
-        type(type),
+Node::Node(NodeType nodeType, Node *n1, Node *n2, Node *n3, Token* token) :
+        nodeType(nodeType),
         children {n1, n2, n3},
         information(nullptr),
         token(token),
@@ -38,8 +38,8 @@ Node::Node(NodeType type, Node *n1, Node *n2, Node *n3, Token* token) :
 {
 }
 
-Node::Node(NodeType type, Information *information, Token* token) :
-        type(type),
+Node::Node(NodeType nodeType, Information *information, Token* token) :
+        nodeType(nodeType),
         children {nullptr, nullptr, nullptr},
         information(information),
         token(token),
@@ -48,8 +48,8 @@ Node::Node(NodeType type, Information *information, Token* token) :
 
 }
 
-Node::Node(NodeType type, Node *n1, Information *information, Token* token) :
-        type(type),
+Node::Node(NodeType nodeType, Node *n1, Information *information, Token* token) :
+        nodeType(nodeType),
         children {n1, nullptr, nullptr},
         information(information),
         token(token),
@@ -58,8 +58,8 @@ Node::Node(NodeType type, Node *n1, Information *information, Token* token) :
 
 }
 
-Node::Node(NodeType type, Information *information, Node *n1, Node *n2, Token* token) :
-        type(type),
+Node::Node(NodeType nodeType, Information *information, Node *n1, Node *n2, Token* token) :
+        nodeType(nodeType),
         children {n1, n2, nullptr},
         information(information),
         token(token),
@@ -68,8 +68,8 @@ Node::Node(NodeType type, Information *information, Node *n1, Node *n2, Token* t
 
 }
 
-Node::Node(NodeType type) :
-        type(type),
+Node::Node(NodeType nodeType) :
+        nodeType(nodeType),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(nullptr),
@@ -77,8 +77,8 @@ Node::Node(NodeType type) :
 {
 }
 
-Node::Node(NodeType type, unsigned int intValue, Token* token) :
-        type(type),
+Node::Node(NodeType nodeType, unsigned int intValue, Token* token) :
+        nodeType(nodeType),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(token),
@@ -87,8 +87,8 @@ Node::Node(NodeType type, unsigned int intValue, Token* token) :
 
 }
 
-Node::Node(NodeType type, Token* token) :
-        type(type),
+Node::Node(NodeType nodeType, Token* token) :
+        nodeType(nodeType),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(token),
@@ -109,7 +109,7 @@ Node::~Node() {
 
 Node *Node::getDecl() const
 {
-    switch (type) {
+    switch (nodeType) {
         case Decls:
             return children[0];
         default:
@@ -120,7 +120,7 @@ Node *Node::getDecl() const
 
 Node *Node::getDecls() const
 {
-    switch (type) {
+    switch (nodeType) {
         case Prog:
             return children[0];
         case Decls:
@@ -133,7 +133,7 @@ Node *Node::getDecls() const
 
 Node *Node::getStatement() const
 {
-    switch (type) {
+    switch (nodeType) {
         case Statements:
             return children[0];
         case StatementWhile:
@@ -145,7 +145,7 @@ Node *Node::getStatement() const
 
 Node *Node::getStatements() const
 {
-    switch (type) {
+    switch (nodeType) {
         case Prog:
             return children[1];
         case StatementBlock:
@@ -161,7 +161,7 @@ Node *Node::getStatements() const
 
 Node *Node::getArray() const
 {
-    switch (type) {
+    switch (nodeType) {
         case DeclArray:
             return children[0];
         default:
@@ -172,7 +172,7 @@ Node *Node::getArray() const
 
 Node *Node::getExp() const
 {
-    switch (type) {
+    switch (nodeType) {
         case StatementIdent:
             return children[1];
         case StatementWrite:
@@ -195,7 +195,7 @@ Node *Node::getExp() const
 
 Node *Node::getExp2() const
 {
-    switch (type) {
+    switch (nodeType) {
         case Exp:
             return children[0];
         case Exp2Minus:
@@ -210,7 +210,7 @@ Node *Node::getExp2() const
 
 Node *Node::getOp() const
 {
-    switch (type) {
+    switch (nodeType) {
         case Exp:
             return children[1];
         case OpExp:
@@ -223,7 +223,7 @@ Node *Node::getOp() const
 
 Node *Node::getIndex() const
 {
-    switch (type) {
+    switch (nodeType) {
         case StatementIdent:
             return children[0];
         case StatementRead:
@@ -238,7 +238,7 @@ Node *Node::getIndex() const
 
 Node *Node::getIfStatement() const
 {
-    switch (type) {
+    switch (nodeType) {
         case StatementIf:
             return children[1];
         default:
@@ -249,7 +249,7 @@ Node *Node::getIfStatement() const
 
 Node *Node::getElseStatement() const
 {
-    switch (type) {
+    switch (nodeType) {
         case StatementIf:
             return children[2];
         default:
@@ -260,7 +260,7 @@ Node *Node::getElseStatement() const
 
 Information *Node::getInformation() const
 {
-    switch (type) {
+    switch (nodeType) {
         case DeclArray:
         case DeclIdent:
         case StatementIdent:
@@ -275,7 +275,7 @@ Information *Node::getInformation() const
 
 unsigned int Node::getIntValue() const
 {
-    switch (type) {
+    switch (nodeType) {
         case Array:
         case Exp2Int:
             return value;
@@ -287,7 +287,7 @@ unsigned int Node::getIntValue() const
 
 Token* Node::getToken() const
 {
-    switch (type) {
+    switch (nodeType) {
         case Nil:
             error("token""");
             return nullptr;
@@ -301,18 +301,23 @@ void Node::dump() {
     dump(0);
 }
 
+NodeType Node::getNodeType() const
+{
+    return nodeType;
+}
+
 void Node::dump(int i) {
     //Intend
     for(int j=0; j<i; j++)
         cout << "  ";
 
     //Print Node
-    cout << "-" << typeToString(type);
+    cout << "-" << typeToString(nodeType);
 
 
-    if(type == Op) {
+    if(nodeType == Op) {
         cout << " " << this->token->getTokenName(this->token->getType());
-    } else if(type == Exp2Int || type == Array){
+    } else if(nodeType == Exp2Int || nodeType == Array){
         cout << " Value:" << this->value;
     }
 
@@ -326,8 +331,8 @@ void Node::dump(int i) {
             children[x]->dump(i + 1);
 }
 
-const char *Node::typeToString(NodeType type) {
-    switch(type) {
+const char *Node::typeToString(NodeType nodeType) {
+    switch(nodeType) {
         case Prog:
             return "Prog";
         case Decls:
@@ -378,7 +383,7 @@ const char *Node::typeToString(NodeType type) {
 }
 
 void Node::error(const char *functionName) const {
-    cout << Color::Modifier(Color::FG_RED) << "Unsupported function called: " << functionName << " for NodeType: " << typeToString(this->type) << Color::Modifier(Color::FG_DEFAULT) << endl;
+    cout << Color::Modifier(Color::FG_RED) << "Unsupported function called: " << functionName << " for NodeType: " << typeToString(this->nodeType) << Color::Modifier(Color::FG_DEFAULT) << endl;
     exit(1);
 }
 

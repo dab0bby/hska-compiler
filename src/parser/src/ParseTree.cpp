@@ -54,7 +54,7 @@ bool ParseTree::typeCheck(Node* node)
             auto name = node->getInformation()->getName();
             if (getType(name) != TI_NOTYPE)
             {
-                error(0, 0, "identifier already defined", name);
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier already defined", name);
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -68,7 +68,7 @@ bool ParseTree::typeCheck(Node* node)
             auto name = node->getInformation()->getName();
             if (getType(name) != TI_NOTYPE)
             {
-                error(0, 0, "identifier already defined", name);
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier already defined", name);
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -84,7 +84,7 @@ bool ParseTree::typeCheck(Node* node)
                 node->type = TI_ARRAY;
             else
             {
-                error(0, 0, "invalid dimension", nullptr);
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "invalid dimension", nullptr);
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -106,7 +106,7 @@ bool ParseTree::typeCheck(Node* node)
             auto type = getType(name);
             if (type == TI_NOTYPE)
             {
-                error(0, 0, "identifier not defined", name);
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier not defined", name);
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -114,7 +114,7 @@ bool ParseTree::typeCheck(Node* node)
                 type == TI_INT && index->type == TI_NOTYPE ||
                 type == TI_INT_ARRAY && index->type == TI_ARRAY)))
             {
-                error(0, 0, "incomaptible types", name);
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "incompatible types ", node->getToken()->getTypeStr()/*, name*/);
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -132,14 +132,14 @@ bool ParseTree::typeCheck(Node* node)
             valid &= typeCheck(node->getIndex()) ;
             if (type == TI_NOTYPE)
             {
-                error(0, 0, "identifier not defined", node->getInformation()->getName());
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier not defined", node->getInformation()->getName());
                 node->type = TI_ERROR;
                 valid = false;
             }
             else if (!(type == TI_INT && index->type == TI_NOTYPE ||
                 type == TI_INT_ARRAY && index->type == TI_ARRAY))
             {
-                error(0, 0, "incomaptible types", node->getInformation()->getName());
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "incompatible types", node->getInformation()->getName());
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -208,7 +208,7 @@ bool ParseTree::typeCheck(Node* node)
             auto type = getType(node->getInformation()->getName());
             if (type == TI_NOTYPE)
             {
-                error(0, 0, "identifier not defined", node->getInformation()->getName());
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier not defined", node->getInformation()->getName());
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -218,7 +218,7 @@ bool ParseTree::typeCheck(Node* node)
                 node->type = TI_INT;
             else
             {
-                error(0, 0, "no primitive type", node->getInformation()->getName());
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "no primitive type", node->getInformation()->getName());
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -303,7 +303,7 @@ bool ParseTree::typeCheck(Node* node)
             break;
 
         default:
-            error(0, 0, "unknown operation", nullptr);
+            error(node->getToken()->getLine(), node->getToken()->getColumn(), "unknown operation", nullptr);
             valid = false;
             break;
         }
@@ -313,7 +313,7 @@ bool ParseTree::typeCheck(Node* node)
         break;
 
     default:
-        error(0, 0, "unknown type", nullptr);
+        error(node->getToken()->getLine(), node->getToken()->getColumn(), "unknown type", nullptr);
     }
       
     return valid;
