@@ -1,0 +1,16 @@
+:* parseer03.txt *:
+int a;
+int b;
+int c;
+int d;
+
+
+WHILE ( 0 < b ){
+ d := a : b;
+ c := a - (d * b);
+ a := b;
+ b := c;
+ };
+ 
+
+:* Wenn in Zeile 14 ein Leerzeichen steht, kommt es hier zu einem Fehler *:
