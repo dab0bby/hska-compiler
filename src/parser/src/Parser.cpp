@@ -218,9 +218,10 @@ void Parser::nextToken() {
 
 
 Node *Parser::parseExp() {
+    auto startToken = token;
     auto exp2 = parseExp2();
     auto op = parseOpExp();
-    return Node::makeExp(exp2, op, token);
+    return Node::makeExp(exp2, op, startToken);
 }
 Node *Parser::parseExp2()
 {

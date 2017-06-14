@@ -314,6 +314,10 @@ void Node::dump(int i) {
     //Print Node
     cout << "- NodeType:" << typeToString(nodeType);
 
+    if(this->token != nullptr) {
+        cout << " Token: " << this->token->getTypeStr();
+    }
+
     if(nodeType == Op) {
         cout << " " << this->token->getTokenName(this->token->getType());
     } else if(nodeType == Exp2Int || nodeType == Array){
