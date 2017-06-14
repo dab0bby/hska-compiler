@@ -6,6 +6,7 @@
 #include <chrono>
 #include "../../scanner/include/Scanner.h"
 #include "../include/Parser.h"
+#include "../../utils/include/colormod.h"
 
 using namespace std;
 
@@ -40,8 +41,8 @@ int main(int argc, char **argv)
     auto valid = tree->typeCheck(tree->getRoot());
     
     if (valid)
-        cout << "type check sucessfully passed" << endl;
-    
+        cout <<"type check sucessfully passed" << endl;
+
     // Cleanup
     delete tree;
     delete parser;

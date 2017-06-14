@@ -1,3 +1,5 @@
+:* Parse02.txt *:
+:* This comment is causing an error *:
 int[3] value;
 int i;
 

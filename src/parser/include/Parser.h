@@ -20,6 +20,7 @@ public:
 private:
     Scanner *scanner;
     Token *token;
+    Token *prevToken;
 
     Node *parseProg();
     Node *parseDecls();

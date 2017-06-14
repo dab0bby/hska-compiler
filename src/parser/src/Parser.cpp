@@ -16,7 +16,8 @@ using namespace std;
 
 Parser::Parser(Scanner* scanner) :
 scanner(scanner),
-token(nullptr)
+token(nullptr),
+prevToken(nullptr)
 {
 }
 
@@ -110,17 +111,18 @@ Node *Parser::parseStatements() {
 
     auto statement = parseStatement();
     accept(Token::TokenType::SEMICOLON);
-    return Node::makeStatements(statement, parseStatements(), token);
+    return Node::makeStatements(statement, parseStatements(), prevToken);
 }
 
 Node *Parser::parseStatement() {
+    auto startToken = token;
     switch (token->getType()) {
         case Token::TokenType::IDENTIFIER: {
             auto ident = parseIdent();
             auto idx = parseIndex();
             accept(Token::TokenType::ASSIGN);
             auto exp = parseExp();
-            return Node::makeStatementIdent(ident, idx, exp, token);
+            return Node::makeStatementIdent(ident, idx, exp, startToken);
         }
         case Token::TokenType::KW_WRITE: {
             accept(Token::TokenType::KW_WRITE);
@@ -128,7 +130,7 @@ Node *Parser::parseStatement() {
             auto exp = parseExp();
             accept(Token::TokenType::BRACKET_CLOSE);
 
-            return Node::makeStatementWrite(exp, token);
+            return Node::makeStatementWrite(exp, startToken);
         }
         case Token::TokenType::KW_READ: {
             accept(Token::TokenType::KW_READ);
@@ -136,14 +138,14 @@ Node *Parser::parseStatement() {
             auto ident = parseIdent();
             auto idx = parseIndex();
             accept(Token::TokenType::BRACKET_CLOSE);
-            return Node::makeStatementRead(idx, ident, token);
+            return Node::makeStatementRead(idx, ident, startToken);
         }
         case Token::TokenType::CURLY_BRACKET_OPEN: {
             accept(Token::TokenType::CURLY_BRACKET_OPEN);
             auto statements = parseStatements();
             accept(Token::TokenType::CURLY_BRACKET_CLOSE);
 
-            return Node::makeStatementBlock(statements, token);
+            return Node::makeStatementBlock(statements, startToken);
         }
         case Token::TokenType::KW_IF: {
             accept(Token::TokenType::KW_IF);
@@ -153,11 +155,12 @@ Node *Parser::parseStatement() {
             auto ifStmt = parseStatement();
 
             if (token->getType() == Token::TokenType::KW_ELSE) {
+                auto elseToken = token;
                 accept(Token::TokenType::KW_ELSE);
                 auto elseStmt = parseStatement();
-                return Node::makeStatementIf(exp, ifStmt, elseStmt, token);
+                return Node::makeStatementIf(exp, ifStmt, elseStmt, elseToken);
             }
-            return Node::makeStatementIf(exp, ifStmt, Node::makeNil(), token);
+            return Node::makeStatementIf(exp, ifStmt, Node::makeNil(), startToken);
         }
         case Token::TokenType::KW_WHILE: {
             accept(Token::TokenType::KW_WHILE);
@@ -165,7 +168,7 @@ Node *Parser::parseStatement() {
             auto exp = parseExp();
             accept(Token::TokenType::BRACKET_CLOSE);
             auto statement = parseStatement();
-            return Node::makeStatementWhile(exp, statement, token);
+            return Node::makeStatementWhile(exp, statement, startToken);
         }
         default:
             error(6, Token::TokenType::IDENTIFIER, Token::TokenType::KW_WRITE, Token::TokenType::KW_READ,
@@ -180,11 +183,12 @@ Node *Parser::parseIndex() {
         return Node::makeNil();
     }
 
+    auto openToken = token;
     accept(Token::TokenType ::SQUARE_BRACKET_OPEN);
     auto exp = parseExp();
     accept(Token::TokenType ::SQUARE_BRACKET_CLOSE);
 
-    return Node::makeIndex(exp, token);
+    return Node::makeIndex(exp, openToken);
 }
 
 
@@ -195,13 +199,12 @@ Node *Parser::parseIndex() {
  * @param type The TokenType to accept
  */
 void Parser::accept(Token::TokenType type) {
-    DEBUG("Accept ",  Token::getTokenName( type ));
+    //DEBUG("Accept ",  Token::getTokenName( type ));
 
     if(this->token->getType() != type) {
         error(1, type);
     }
 
-    delete token; //Not needed anymore
     nextToken(); //Get next token
 }
 
@@ -209,6 +212,7 @@ void Parser::accept(Token::TokenType type) {
  *
  */
 void Parser::nextToken() {
+    prevToken = token;
     token = scanner->nextToken();
 }
 
@@ -220,31 +224,33 @@ Node *Parser::parseExp() {
 }
 Node *Parser::parseExp2()
 {
+    auto startToken = token;
     switch (token->getType()) {
         case Token::TokenType::BRACKET_OPEN: {
             accept(Token::TokenType::BRACKET_OPEN);
             auto exp = parseExp();
             accept(Token::TokenType::BRACKET_CLOSE);
-            return Node::makeType(exp, token);
+            return Node::makeType(exp, startToken);
         }
         case Token::TokenType::IDENTIFIER: {
             auto ident = parseIdent();
             auto idx = parseIndex();
-            return Node::makeExp2Ident(idx, ident, token);
+            return Node::makeExp2Ident(idx, ident, startToken);
         }
         case Token::TokenType::INTEGER: {
             auto i = parseInt();
-            return Node::makeExp2Int(i, token);
+
+            return Node::makeExp2Int(i, startToken);
         }
         case Token::TokenType::MINUS: {
             accept(Token::TokenType::MINUS);
             auto exp2 = parseExp2();
-            return Node::makeExp2Minus(exp2, token);
+            return Node::makeExp2Minus(exp2, startToken);
         }
         case Token::TokenType::NOT: {
             accept(Token::TokenType::NOT);
             auto exp2 = parseExp2();
-            return Node::makeExp2Neg(exp2, token);
+            return Node::makeExp2Neg(exp2, startToken);
         }
         default:
             error(5, Token::TokenType::BRACKET_OPEN, Token::TokenType::IDENTIFIER, Token::TokenType::INTEGER,

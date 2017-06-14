@@ -102,9 +102,9 @@ Node::~Node() {
             delete children[i];
 
 
-        //TODO Who is deleting tokens?
+    //TODO Who is deleting tokens?
     //if (token != nullptr)
-       // delete token;
+    //    delete token;
 }
 
 Node *Node::getDecl() const
@@ -312,8 +312,7 @@ void Node::dump(int i) {
         cout << "  ";
 
     //Print Node
-    cout << "-" << typeToString(nodeType);
-
+    cout << "- NodeType:" << typeToString(nodeType);
 
     if(nodeType == Op) {
         cout << " " << this->token->getTokenName(this->token->getType());
