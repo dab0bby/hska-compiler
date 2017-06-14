@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     // Do parsing
     auto parser = new Parser(scanner);
     auto tree = parser->parse();
-    tree->dumpTree();
+    //tree->dumpTree();
     auto valid = tree->typeCheck(tree->getRoot());
     
     if (valid)

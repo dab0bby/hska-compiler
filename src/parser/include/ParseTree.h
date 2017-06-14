@@ -18,8 +18,7 @@ public:
     void dumpTree() const;
     bool typeCheck(Node* node);
 
-private:
-	static void error(int row, int col, const char* msg, const char* name = nullptr);
+private:	
 	void addIdentifier(const char* name, TypeInfo type);
 	TypeInfo getType(const char* identifier) const;
     
@@ -35,6 +34,5 @@ private:
 
 	
 };
-
 
 #endif //HSKA_COMPILER_PARSETREE_H

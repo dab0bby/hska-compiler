@@ -8,6 +8,7 @@
 #include "../../utils/include/colormod.h"
 #include <iomanip>
 #include <string>
+#include "../../utils/include/utils.h"
 
 ParseTree::ParseTree(Node* root) : root(root)
 {
@@ -54,7 +55,7 @@ bool ParseTree::typeCheck(Node* node)
             auto name = node->getInformation()->getName();
             if (getType(name) != TI_NOTYPE)
             {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier already defined", name);
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier already defined: \"", name, "\"");
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -67,8 +68,8 @@ bool ParseTree::typeCheck(Node* node)
         {
             auto name = node->getInformation()->getName();
             if (getType(name) != TI_NOTYPE)
-            {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier already defined", name);
+            {   
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier already defined: \"", name, "\"");
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -84,7 +85,7 @@ bool ParseTree::typeCheck(Node* node)
                 node->type = TI_ARRAY;
             else
             {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "invalid dimension", nullptr);
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "invalid dimension: ", index);
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -106,7 +107,7 @@ bool ParseTree::typeCheck(Node* node)
             auto type = getType(name);
             if (type == TI_NOTYPE)
             {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier not defined", name);
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier not defined: \"", name, "\"");
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -114,7 +115,7 @@ bool ParseTree::typeCheck(Node* node)
                 type == TI_INT && index->type == TI_NOTYPE ||
                 type == TI_INT_ARRAY && index->type == TI_ARRAY)))
             {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "incompatible types ", node->getToken()->getTypeStr()/*, name*/);
+                error(exp->getToken()->getLine(), exp->getToken()->getColumn(), "cannot convert int (", exp->getToken()->getValue(), ") to array (\"", name, "\")");
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -132,14 +133,14 @@ bool ParseTree::typeCheck(Node* node)
             valid &= typeCheck(node->getIndex()) ;
             if (type == TI_NOTYPE)
             {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier not defined", node->getInformation()->getName());
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier not defined: \"", node->getInformation()->getName(), "\"");
                 node->type = TI_ERROR;
                 valid = false;
             }
             else if (!(type == TI_INT && index->type == TI_NOTYPE ||
                 type == TI_INT_ARRAY && index->type == TI_ARRAY))
             {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "incompatible types", node->getInformation()->getName());
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "incompatible types: \"", node->getInformation()->getName(), "\"");
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -208,7 +209,7 @@ bool ParseTree::typeCheck(Node* node)
             auto type = getType(node->getInformation()->getName());
             if (type == TI_NOTYPE)
             {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier not defined", node->getInformation()->getName());
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier not defined: \"", node->getInformation()->getName(), "\"");
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -218,7 +219,7 @@ bool ParseTree::typeCheck(Node* node)
                 node->type = TI_INT;
             else
             {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "no primitive type", node->getInformation()->getName());
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "no primitive type: \"", node->getInformation()->getName(), "\"");
                 node->type = TI_ERROR;
                 valid = false;
             }
@@ -303,7 +304,7 @@ bool ParseTree::typeCheck(Node* node)
             break;
 
         default:
-            error(node->getToken()->getLine(), node->getToken()->getColumn(), "unknown operation", nullptr);
+            error(node->getToken()->getLine(), node->getToken()->getColumn(), "unknown operation");
             valid = false;
             break;
         }
@@ -313,23 +314,10 @@ bool ParseTree::typeCheck(Node* node)
         break;
 
     default:
-        error(node->getToken()->getLine(), node->getToken()->getColumn(), "unknown type", nullptr);
+        error(node->getToken()->getLine(), node->getToken()->getColumn(), "unknown type");
     }
       
     return valid;
-}
-
-void ParseTree::error(int row, int col, const char* msg, const char* name)
-{
-    if (name == nullptr)
-        std::cerr << Color::Modifier(Color::FG_RED) << "row " << std::setw(3) << row << ", col " << std::setw(3) << col
-            << ": " << msg << Color::Modifier(Color::FG_DEFAULT) << std::endl;
-    else
-        std::cerr << Color::Modifier(Color::FG_RED) << "row " << std::setw(3) << row << ", col " << std::setw(3) << col
-            << ": " << msg << ": " << name << Color::Modifier(Color::FG_DEFAULT) << std::endl;
-    
-    // warning: exit on type check error is disabled 
-    //exit(1);
 }
 
 void ParseTree::addIdentifier(const char* name, TypeInfo type)

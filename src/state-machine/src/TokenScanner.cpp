@@ -29,8 +29,8 @@ TokenScanner::TokenScanner()
     _sms[27] = StateMachine::createString(Token::KW_WRITE, "write");
     _sms[28] = StateMachine::createString(Token::KW_INT, "int");
 
-    // state machine for whitespaces and comments
-    _sms[SM_IGN] = new StateMachine(4, 0, new int[3]{ 0,2,3 }, 3, Token::IGNORE);
+    // state machine for whitespaces and comments    
+    _sms[SM_IGN] = new StateMachine(5, 0, new int[4]{ 0, 2, 3, 4 }, 4, Token::IGNORE);
     _sms[SM_IGN]->setTransitions(0, new Transition[2]{
                                      Transition(0, Condition::createWhitespace()),
                                      Transition(1, new CharCondition(':')) }, 2);
@@ -41,9 +41,10 @@ TokenScanner::TokenScanner()
                                      Transition(2, new NotCondition(new CharCondition('*'))) }, 2);
     _sms[SM_IGN]->setTransitions(3, new Transition[3]{
                                      Transition(3, new CharCondition('*')),
-                                     Transition(0, new CharCondition(':')),
+                                     Transition(4, new CharCondition(':')),
                                      Transition(2, new NotCondition(new OrCondition(new CharCondition('*'), new CharCondition(':')))) }, 3);
-
+    
+    
     // state machine for integers
     _sms[SM_INT] = StateMachine::createAtomic(Token::INTEGER);
     _sms[SM_INT]->setTransitions(0, new Transition[1]{ Transition(1, Condition::createDigit()) }, 1);
