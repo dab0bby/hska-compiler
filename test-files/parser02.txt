@@ -1,6 +1,7 @@
 :* Parse02.txt *:
 int[3] value;
 int i;
+int i;
 
 value[0] := 1+1;
 value[1] := -(5*2);
