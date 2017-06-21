@@ -1,13 +1,13 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.8)
 project(hska-compiler)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -O3")
 
 set(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/")
 set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/lib/")
-
-# Building Project with Makefile
-# add_custom_target( hska-compiler COMMAND make -C ${hska-compiler_SOURCE_DIR} CLION_EXE_DIR=${PROJECT_BINARY_DIR} )
 
 # Buffer sources
 set(BUFFER_SRC
@@ -36,17 +36,16 @@ set(SCANNER_SRC
 
 # Parser sources
 set(PARSER_SRC
-    src/parser/include/Parser.h src/parser/src/
     src/parser/include/Parser.h src/parser/src/Parser.cpp
     src/parser/include/ParseTree.h src/parser/src/ParseTree.cpp
     src/parser/include/Node.h src/parser/src/Node.cpp
 )
 
 add_executable(HsKA-Compiler src/main.cpp ${PARSER_SRC} ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
-add_executable(buffer src/buffer/src/Buffer_Test.cpp ${BUFFER_SRC})
-add_executable(scanner src/scanner/src/Scanner_Test.cpp ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
-add_executable(state-machine src/state-machine/src/StateMachine_Test.cpp ${STATE_MACHINE_SRC})
-add_executable(symbol-table src/symbol-table/src/SymbolTable_Test.cpp ${SYMB_TABLE_SRC})
-add_executable(parser src/parser/src/Parser_Test.cpp ${PARSER_SRC} ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
+add_executable(buffer-tester src/buffer/src/Buffer_Test.cpp ${BUFFER_SRC})
+add_executable(scanner-tester src/scanner/src/Scanner_Test.cpp ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
+add_executable(state-machine-tester src/state-machine/src/StateMachine_Test.cpp ${STATE_MACHINE_SRC})
+add_executable(symbol-table-tester src/symbol-table/src/SymbolTable_Test.cpp ${SYMB_TABLE_SRC})
+add_executable(parser-tester src/parser/src/Parser_Test.cpp ${PARSER_SRC} ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
 #add_executable(utils src/utils/include/Helper.h src/utils/src/helper_test.cpp)
 #add_executable(vector src/utils/include/vector.h src/utils/src/vector_test.cpp)

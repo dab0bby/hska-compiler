@@ -1,15 +1,14 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "name": "Buffer Debug",
+            "name": "Buffer",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/src/buffer/debug/Buffer_Test",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceRoot}/bin/buffer-tester",
             "args": ["test-files/scanner3.txt"],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": false,
             "linux": {
@@ -37,13 +36,13 @@
             }
         },
         {
-            "name": "Scanner Debug",
+            "name": "Scanner",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/src/scanner/debug/scanner_Test",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceRoot}/bin/scanner-tester",
             "args": ["test-files/scanner3.txt"],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": false,
             "linux": {
@@ -69,15 +68,15 @@
                     }
                 ]
             }
-        },        
+        },
         {
-            "name": "Parser Debug",
+            "name": "Parser",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/src/parser/debug/parser_test",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceRoot}/bin/parser-tester",
             "args": ["test-files/parser01.txt"],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": false,
             "linux": {
@@ -103,6 +102,6 @@
                     }
                 ]
             }
-        },
+        }
     ]
 }

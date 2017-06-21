@@ -1,9 +1,11 @@
 .DS_Store
-.idea/
 *.dSYM/
-bin/
-debug/
+bin
+lib
+debug
+build
 cmake-build-debug
+cmake-build-release
 output
 
 ## Ignore Visual Studio temporary files, build results, and

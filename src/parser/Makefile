@@ -1,8 +1,8 @@
 # Compiler
 CC     = g++
 DEBUG  = -g
-CFLAGS = -Wall -c $(DEBUG) -std=c++11 -O3
-LFLAGS = -Wall $(DEBUG) -std=c++11 -O3
+CFLAGS = -Wall -c $(DEBUG) -std=c++1z -O3
+LFLAGS = -Wall $(DEBUG) -std=c++1z -O3
 
 # Sources
 HEADER_DIR        = include
@@ -19,7 +19,8 @@ BUILD_DIR  = bin
 # List of targets
 TARGETS = $(BUILD_DIR)/Parser.o \
 	$(BUILD_DIR)/Node.o \
-	$(BUILD_DIR)/ParseTree.o
+	$(BUILD_DIR)/ParseTree.o \
+	$(BUILD_DIR)/CodeGenerator.o
 	# add more here
 	# last without escape sequence
 

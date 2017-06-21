@@ -1,8 +1,8 @@
 # Compiler
 CC     = g++
 DEBUG  = -g
-CFLAGS = -Wall -c $(DEBUG) -std=c++11 -O3
-LFLAGS = -Wall $(DEBUG) -std=c++11 -O3
+CFLAGS = -Wall -c $(DEBUG) -std=c++1z -O3
+LFLAGS = -Wall $(DEBUG) -std=c++1z -O3
 
 # Sources
 HEADER_DIR = include
