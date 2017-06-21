@@ -36,15 +36,14 @@ static constexpr bool compareTypes(A a, B b)
     return _isSame<A, B>::value;
 }
 
-inline unsigned strlen(const char* str)
+inline size_t strlen(const char* str)
 {
-    unsigned s = 0;
-    while (str[s] != '\0')
-        s++;
+   unsigned s = 0;
+   while (str[s] != '\0')
+       s++;
 
-    return s;
+   return s;
 }
-
 
 template <typename ... Args>
 void error(int line, int col, Args... msg)
@@ -62,7 +61,7 @@ void error(Args... msg)
 {
     std::cerr << Color::Modifier(Color::FG_RED);
     _errorImpl(msg...);
-        
+
 #if ERROR_IS_EXIT
     exit(1);
 #endif

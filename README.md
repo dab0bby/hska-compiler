@@ -15,7 +15,7 @@ $ cd bin/
 $ ./HsKA-Compiler ../test-files/scanner00.txt out.txt
 ```
 
-### Tasks for Visual Studio Code
+#### Tasks for Visual Studio Code
 - `Generate CMake Debug`
 - `Generate CMake Release`
 - `Build`

@@ -11,87 +11,87 @@
 using namespace std;
 
 Node::Node(NodeType nodeType, Node *n1, Token* token) :
-        nodeType(nodeType),
         children {n1, nullptr, nullptr},
         information(nullptr),
         token(token),
+        nodeType(nodeType),
         value(0)
 {
 
 }
 
 Node::Node(NodeType nodeType, Node *n1, Node *n2, Token* token) :
-        nodeType(nodeType),
         children {n1, n2, nullptr},
         information(nullptr),
         token(token),
+        nodeType(nodeType),
         value(0)
 {
 }
 
 Node::Node(NodeType nodeType, Node *n1, Node *n2, Node *n3, Token* token) :
-        nodeType(nodeType),
         children {n1, n2, n3},
         information(nullptr),
         token(token),
+        nodeType(nodeType),
         value(0)
 {
 }
 
 Node::Node(NodeType nodeType, Information *information, Token* token) :
-        nodeType(nodeType),
         children {nullptr, nullptr, nullptr},
         information(information),
         token(token),
+        nodeType(nodeType),
         value(0)
 {
 
 }
 
 Node::Node(NodeType nodeType, Node *n1, Information *information, Token* token) :
-        nodeType(nodeType),
         children {n1, nullptr, nullptr},
         information(information),
         token(token),
+        nodeType(nodeType),
         value(0)
 {
 
 }
 
 Node::Node(NodeType nodeType, Information *information, Node *n1, Node *n2, Token* token) :
-        nodeType(nodeType),
         children {n1, n2, nullptr},
         information(information),
         token(token),
+        nodeType(nodeType),
         value(0)
 {
 
 }
 
 Node::Node(NodeType nodeType) :
-        nodeType(nodeType),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(nullptr),
+        nodeType(nodeType),
         value(0)
 {
 }
 
 Node::Node(NodeType nodeType, unsigned int intValue, Token* token) :
-        nodeType(nodeType),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(token),
+        nodeType(nodeType),
         value(intValue)
 {
 
 }
 
 Node::Node(NodeType nodeType, Token* token) :
-        nodeType(nodeType),
         children {nullptr, nullptr, nullptr},
         information(nullptr),
         token(token),
+        nodeType(nodeType),
         value(0)
 {
 }

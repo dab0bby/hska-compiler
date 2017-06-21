@@ -18,21 +18,20 @@ public:
     void dumpTree() const;
     bool typeCheck(Node* node);
 
-private:	
+private:
 	void addIdentifier(const char* name, TypeInfo type);
 	TypeInfo getType(const char* identifier) const;
-    
+
 	Node* root;
-	NodeType currentType;
 	int identifierCount = 0;
-	
+
 	struct IdentifierInfo
 	{
 		const char* name;
 		TypeInfo type;
 	} identifiers[5000];
 
-	
+
 };
 
 #endif //HSKA_COMPILER_PARSETREE_H

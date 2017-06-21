@@ -47,5 +47,3 @@ add_executable(scanner-tester src/scanner/src/Scanner_Test.cpp ${SCANNER_SRC} ${
 add_executable(state-machine-tester src/state-machine/src/StateMachine_Test.cpp ${STATE_MACHINE_SRC})
 add_executable(symbol-table-tester src/symbol-table/src/SymbolTable_Test.cpp ${SYMB_TABLE_SRC})
 add_executable(parser-tester src/parser/src/Parser_Test.cpp ${PARSER_SRC} ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})
-#add_executable(utils src/utils/include/Helper.h src/utils/src/helper_test.cpp)
-#add_executable(vector src/utils/include/vector.h src/utils/src/vector_test.cpp)

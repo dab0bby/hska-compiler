@@ -68,7 +68,7 @@ bool ParseTree::typeCheck(Node* node)
         {
             auto name = node->getInformation()->getName();
             if (getType(name) != TI_NOTYPE)
-            {   
+            {
                 error(node->getToken()->getLine(), node->getToken()->getColumn(), "identifier already defined: \"", name, "\"");
                 node->type = TI_ERROR;
                 valid = false;
@@ -112,8 +112,8 @@ bool ParseTree::typeCheck(Node* node)
                 valid = false;
             }
             else if (!(exp->type == TI_INT && (
-                type == TI_INT && index->type == TI_NOTYPE ||
-                type == TI_INT_ARRAY && index->type == TI_ARRAY)))
+                (type == TI_INT && index->type == TI_NOTYPE) ||
+                (type == TI_INT_ARRAY && index->type == TI_ARRAY))))
             {
                 error(exp->getToken()->getLine(), exp->getToken()->getColumn(), "cannot convert int (", exp->getToken()->getValue(), ") to array (\"", name, "\")");
                 node->type = TI_ERROR;
@@ -137,8 +137,8 @@ bool ParseTree::typeCheck(Node* node)
                 node->type = TI_ERROR;
                 valid = false;
             }
-            else if (!(type == TI_INT && index->type == TI_NOTYPE ||
-                type == TI_INT_ARRAY && index->type == TI_ARRAY))
+            else if (!((type == TI_INT && index->type == TI_NOTYPE) ||
+                (type == TI_INT_ARRAY && index->type == TI_ARRAY)))
             {
                 error(node->getToken()->getLine(), node->getToken()->getColumn(), "incompatible types: \"", node->getInformation()->getName(), "\"");
                 node->type = TI_ERROR;
@@ -316,7 +316,7 @@ bool ParseTree::typeCheck(Node* node)
     default:
         error(node->getToken()->getLine(), node->getToken()->getColumn(), "unknown type");
     }
-      
+
     return valid;
 }
 
