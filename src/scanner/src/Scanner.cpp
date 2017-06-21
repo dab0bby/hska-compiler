@@ -139,7 +139,7 @@ Token* Scanner::_createError(const int& size, const int& offset) const
     auto str = this->_buffer->subStr(size, offset);
     const int begin = this->_getTokenBegin(size, offset);
 
-    // Don't delete strbecause Token is the new owner
+    // Don't delete str because Token is the new owner
     return new Token(Token::TokenType::ERROR, this->_buffer->getLineNum(), begin, str);
 }
 
