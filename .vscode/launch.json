@@ -103,6 +103,41 @@
                     }
                 ]
             }
+        },
+        {
+            "name": "HSKA-Compiler",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceRoot}/bin/HSKA-Compiler",
+            "args": ["test-files/parser01.txt", "bin/out.code"],
+            "stopAtEntry": false,
+            "environment": [],
+            "externalConsole": false,
+            "preLaunchTask": "Build",
+            "linux": {
+                "MIMode": "gdb",
+                "setupCommands": [
+                    {
+                        "description": "Enable pretty-printing for gdb",
+                        "text": "-enable-pretty-printing",
+                        "ignoreFailures": true
+                    }
+                ]
+            },
+            "osx": {
+                "MIMode": "lldb"
+            },
+            "windows": {
+                "MIMode": "gdb",
+                "setupCommands": [
+                    {
+                        "description": "Enable pretty-printing for gdb",
+                        "text": "-enable-pretty-printing",
+                        "ignoreFailures": true
+                    }
+                ]
+            }
         }
     ]
 }

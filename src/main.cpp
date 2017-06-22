@@ -1,25 +1,29 @@
 ﻿/**
- * @file     main.cpp
- * @author   Bob
- * @date     30/12/2016
- * @version  1.0
+ * \author      Bob
+ * \date        22/06/2017
+ * \version     1.0
  *
- * @brief    ...
+ * \brief       ...
  *
  */
 
 
 #include <chrono>
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 
 #include "buffer/include/Buffer.h"
 #include "symbol-table/include/SymbolTable.h"
 #include "state-machine/include/TokenScanner.h"
 #include "scanner/include/Scanner.h"
+#include "parser/include/Parser.h"
+#include "parser/include/CodeGenerator.h"
 
 
 #define BENCHMARK 0
+#define SCANNER   0
+#define PARSER    1
 
 
 void _openFile(const char* path, FILE*& file);
@@ -43,10 +47,6 @@ int main(int argc, char **argv)
     std::cout << "Input file:  " << argv[1] << std::endl;
     std::cout << "Output file: " << argv[2] << "\n" << std::endl;
 
-    // Open file
-    FILE* file = NULL;
-    _openFile(argv[2], file);
-
 #if BENCHMARK
     // Start timer
     auto start = std::chrono::high_resolution_clock::now();
@@ -56,6 +56,11 @@ int main(int argc, char **argv)
     auto symbolTable = new SymbolTable();
     auto tokenScanner = new TokenScanner();
     auto scanner = new Scanner(buffer, symbolTable, tokenScanner);
+
+#if SCANNER
+    // Open file
+    FILE* file = NULL;
+    _openFile(argv[2], file);
 
     // Get first token
     auto token = scanner->nextToken();
@@ -82,6 +87,48 @@ int main(int argc, char **argv)
         token = scanner->nextToken();
     }
 
+    if (!hasError)
+        std::cout << "No Errors." << std::endl;
+
+    // Cleanup
+    delete token;
+
+    // Close file
+    _closeFile(file);
+
+#endif // SCANNER
+
+#if PARSER
+    // Parse input
+    std::cout << "Parsing . . .           ";
+    auto parser = new Parser(scanner);
+    auto tree = parser->parse();
+    std::cout << "Done\n" << std::endl;
+
+    // Typecheck
+    std::cout << "Type checking . . .     ";
+    auto valid = tree->typeCheck(tree->getRoot());
+    std::cout << "Done\n" << std::endl;
+
+    // Create filestream
+    std::ofstream file;
+    file.open(argv[2], std::ios::out);
+
+    // Generate code
+    std::cout << "Generating code . . .   ";
+    auto generator = new CodeGenerator();
+    generator->generate(tree->getRoot(), file);
+    std::cout << "Done\n" << std::endl;
+
+    // Close file
+    file.close();
+
+    // Cleanup
+    delete generator;
+    delete tree;
+    delete parser;
+#endif // PARSER
+
 #if BENCHMARK
     // Stop timer
     auto end = std::chrono::high_resolution_clock::now();
@@ -90,14 +137,7 @@ int main(int argc, char **argv)
     std::cout << "\nDuration: " << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << "ms" << std::endl;
 #endif // BENCHMARK
 
-    // Close file
-    _closeFile(file);
-
-    if (!hasError)
-        std::cout << "No Errors." << std::endl;
-
     // Some cleanup
-    delete token;
     delete scanner;
     delete tokenScanner;
     delete symbolTable;
