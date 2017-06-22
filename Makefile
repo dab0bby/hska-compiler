@@ -1,8 +1,8 @@
 # Compiler
 CC     = g++
 DEBUG  = -g
-CFLAGS = -Wall -c $(DEBUG) -std=c++11 -O3
-LFLAGS = -Wall $(DEBUG) -std=c++11 -O3
+CFLAGS = -Wall -c $(DEBUG) -std=c++1z -O3
+LFLAGS = -Wall $(DEBUG) -std=c++1z -O3
 
 # Sources
 HEADER_DIR        = include
@@ -12,7 +12,7 @@ SCANNER_DIR       = $(SOURCE_DIR)/scanner
 STATE_MACHINE_DIR = $(SOURCE_DIR)/state-machine
 BUFFER_DIR        = $(SOURCE_DIR)/buffer
 SYM_TAB_DIR       = $(SOURCE_DIR)/symbol-table
-PARSER_DIR       = $(SOURCE_DIR)/parser
+PARSER_DIR        = $(SOURCE_DIR)/parser
 
 # Target
 BUILD_DIR  = bin
@@ -50,6 +50,7 @@ scanner-build: $(SOURCE_DIR)/main.cpp
 		$(STATE_MACHINE_DIR)/$(BUILD_DIR)/*.o \
 		$(BUFFER_DIR)/$(BUILD_DIR)/*.o \
 		$(SYM_TAB_DIR)/$(BUILD_DIR)/*.o \
+		$(PARSER_DIR)/$(BUILD_DIR)/*.o \
 		-o $(BUILD_DIR)/$(EXECUTABLE)
 
 
