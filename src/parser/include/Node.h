@@ -36,20 +36,20 @@ enum NodeType {
 
 enum TypeInfo
 {
-	TI_NOTYPE,
-	TI_ERROR,
-	TI_INT,
-	TI_ARRAY,
-	TI_INT_ARRAY,
-	TI_OP_PLUS,
-	TI_OP_MINUS,
-	TI_OP_MULTIPLICATION,
-	TI_OP_DIVISION,
-	TI_OP_LESS,
-	TI_OP_GREATER,
-	TI_OP_EQUAL,
-	TI_OP_UNEQUAL,
-	TI_OP_AND,
+    TI_NOTYPE,
+    TI_ERROR,
+    TI_INT,
+    TI_ARRAY,
+    TI_INT_ARRAY,
+    TI_OP_PLUS,
+    TI_OP_MINUS,
+    TI_OP_MULTIPLICATION,
+    TI_OP_DIVISION,
+    TI_OP_LESS,
+    TI_OP_GREATER,
+    TI_OP_EQUAL,
+    TI_OP_UNEQUAL,
+    TI_OP_AND,
 };
 
 class Node {
@@ -135,7 +135,6 @@ public:
      */
     Node* getExp2() const;
 
-
     /**
      * Valid for Exp-Node and OpExp-Node
      * @return A Op-Node
@@ -183,9 +182,9 @@ public:
      */
     void dump();
 
-	NodeType getNodeType() const;
+    NodeType getNodeType() const;
 
-	TypeInfo type = TI_NOTYPE;
+    TypeInfo type = TI_NOTYPE;
 
     /**
      * Returns the Name of the given Type as a char array

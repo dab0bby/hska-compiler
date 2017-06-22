@@ -158,7 +158,6 @@ Node *Node::getStatements() const
     }
 }
 
-
 Node *Node::getArray() const
 {
     switch (nodeType) {
@@ -296,7 +295,6 @@ Token* Node::getToken() const
     }
 }
 
-
 void Node::dump() {
     dump(0);
 }
@@ -390,7 +388,6 @@ void Node::error(const char *functionName) const {
     exit(1);
 }
 
-
 Node *Node::makeStatementWrite(Node *exp, Token* token) {
     return new Node(StatementWrite, exp, token);
 }
@@ -478,5 +475,3 @@ Node *Node::makeExp2Int(unsigned int i, Token* token) {
 Node *Node::makeOp(Token *token) {
     return new Node(NodeType::Op, token);
 }
-
-

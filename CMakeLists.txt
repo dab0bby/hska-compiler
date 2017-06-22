@@ -39,6 +39,7 @@ set(PARSER_SRC
     src/parser/include/Parser.h src/parser/src/Parser.cpp
     src/parser/include/ParseTree.h src/parser/src/ParseTree.cpp
     src/parser/include/Node.h src/parser/src/Node.cpp
+    src/parser/include/CodeGenerator.h src/parser/src/CodeGenerator.cpp
 )
 
 add_executable(HsKA-Compiler src/main.cpp ${PARSER_SRC} ${SCANNER_SRC} ${BUFFER_SRC} ${SYMB_TABLE_SRC} ${STATE_MACHINE_SRC})

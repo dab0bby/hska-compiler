@@ -79,6 +79,7 @@
             "stopAtEntry": false,
             "environment": [],
             "externalConsole": false,
+            "preLaunchTask": "Build",
             "linux": {
                 "MIMode": "gdb",
                 "setupCommands": [

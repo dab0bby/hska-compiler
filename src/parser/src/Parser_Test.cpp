@@ -3,15 +3,17 @@
 //
 
 #include <iostream>
-#include <chrono>
+
 #include "../../scanner/include/Scanner.h"
 #include "../include/Parser.h"
 #include "../../utils/include/colormod.h"
+#include "../include/CodeGenerator.h"
+
 
 using namespace std;
 
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     std::cout << "--- parser test ---\n" << std::endl;
 
@@ -26,9 +28,6 @@ int main(int argc, char **argv)
 
     std::cout << "Input file: " << argv[1] << "\n" << std::endl;
 
-    // Start timer
-    // auto start = std::chrono::high_resolution_clock::now();
-
     auto buffer = new Buffer(argv[1]);
     auto symbolTable = new SymbolTable();
     auto tokenScanner = new TokenScanner();
@@ -37,13 +36,18 @@ int main(int argc, char **argv)
     // Do parsing
     auto parser = new Parser(scanner);
     auto tree = parser->parse();
-    //tree->dumpTree();
+    tree->dumpTree();
     auto valid = tree->typeCheck(tree->getRoot());
-    
+
     if (valid)
-        cout <<"type check sucessfully passed" << endl;
+        cout << "type check sucessfully passed" << endl;
+
+    // Generate code
+    auto generator = new CodeGenerator();
+    generator->generate(tree->getRoot(), std::cout);
 
     // Cleanup
+    delete generator;
     delete tree;
     delete parser;
     delete scanner;

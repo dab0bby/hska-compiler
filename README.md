@@ -6,13 +6,13 @@ Assignment in _Operating Systems_ at [University of Applied Sciences Karlsuhe](h
 
 #### Build
 ```
-$ mkdir build && cd build/
+$ mkdir build && cd build
 $ cmake .. && make
 ```
 
 #### Usage
 ```
-$ cd bin/
+$ cd bin
 $ ./HsKA-Compiler ../test-files/scanner00.txt out.code
 ```
 
