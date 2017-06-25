@@ -32,7 +32,7 @@ TokenScanner::TokenScanner()
     // state machine for whitespaces and comments    
     _sms[SM_IGN] = new StateMachine(5, 0, new int[4]{ 0, 2, 3, 4 }, 4, Token::IGNORE);
     _sms[SM_IGN]->setTransitions(0, new Transition[2]{
-                                     Transition(0, Condition::createWhitespace()),
+                                     Transition(0, Condition::createWhitespace(false)),
                                      Transition(1, new CharCondition(':')) }, 2);
     _sms[SM_IGN]->setTransitions(1, new Transition[1]{
                                      Transition(2, new CharCondition('*')) }, 1);

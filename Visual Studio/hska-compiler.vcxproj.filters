@@ -19,6 +19,9 @@
     <Filter Include="parser">
       <UniqueIdentifier>{525b64f5-60f6-4761-86f4-3fd82e6e2a93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="generator">
+      <UniqueIdentifier>{f7f18e75-5060-4711-9561-c1c010d76663}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\state-machine\src\StateMachine.cpp">
@@ -26,9 +29,6 @@
     </ClCompile>
     <ClCompile Include="..\src\state-machine\src\Transition.cpp">
       <Filter>state-machine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\utils\src\vector_test.cpp">
-      <Filter>utils</Filter>
     </ClCompile>
     <ClCompile Include="..\src\state-machine\src\TokenScanner.cpp">
       <Filter>state-machine</Filter>
@@ -72,6 +72,9 @@
     <ClCompile Include="..\src\parser\src\Parser_Test.cpp">
       <Filter>parser</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\parser\src\CodeGenerator.cpp">
+      <Filter>generator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\scanner\include\Token.h">
@@ -87,9 +90,6 @@
       <Filter>state-machine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\utils\include\colormod.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\utils\include\vector.h">
       <Filter>utils</Filter>
     </ClInclude>
     <ClInclude Include="..\src\state-machine\include\TokenPosition.h">
