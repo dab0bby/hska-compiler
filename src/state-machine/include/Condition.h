@@ -1,4 +1,4 @@
-#ifndef CONDITION_H
+﻿#ifndef CONDITION_H
 #define CONDITION_H
 
 
@@ -6,7 +6,9 @@ class Condition
 {
 public:
 
-    virtual ~Condition() { }
+    virtual ~Condition()
+    {
+    }
 
     virtual bool accepts(char input) const = 0;
     virtual Condition* clone() const = 0;
@@ -14,11 +16,10 @@ public:
     static Condition* createAlphabet();
     static Condition* createDigit();
     static Condition* createAlphanumerical();
-    static Condition* createWhitespace();
+    static Condition* createWhitespace(bool includeLineFeeds);
     static Condition* createLinefeed();
     static Condition* createWhitespaceWithoutLinefeed();
 };
-
 
 
 class CharCondition : public Condition
@@ -142,15 +143,15 @@ public:
 class OrCondition : public Condition
 {
 public:
-    OrCondition(Condition* c) : OrCondition(new Condition*[1] {c}, 1)
+    OrCondition(Condition* c) : OrCondition(new Condition*[1] { c }, 1)
     {
     }
 
-    OrCondition(Condition* c1, Condition* c2) : OrCondition(new Condition*[2] {c1, c2}, 2)
+    OrCondition(Condition* c1, Condition* c2) : OrCondition(new Condition*[2] { c1, c2 }, 2)
     {
     }
 
-    OrCondition(Condition* c1, Condition* c2, Condition* c3) : OrCondition(new Condition*[3] {c1, c2, c3}, 3)
+    OrCondition(Condition* c1, Condition* c2, Condition* c3) : OrCondition(new Condition*[3] { c1, c2, c3 }, 3)
     {
     }
 
@@ -193,15 +194,15 @@ private:
 class AndCondition : public Condition
 {
 public:
-    AndCondition(Condition* c) : AndCondition(new Condition*[1] {c}, 1)
+    AndCondition(Condition* c) : AndCondition(new Condition*[1] { c }, 1)
     {
     }
 
-    AndCondition(Condition* c1, Condition* c2) : AndCondition(new Condition*[2] {c1, c2}, 2)
+    AndCondition(Condition* c1, Condition* c2) : AndCondition(new Condition*[2] { c1, c2 }, 2)
     {
     }
 
-    AndCondition(Condition* c1, Condition* c2, Condition* c3) : AndCondition(new Condition*[3] {c1, c2, c3}, 3)
+    AndCondition(Condition* c1, Condition* c2, Condition* c3) : AndCondition(new Condition*[3] { c1, c2, c3 }, 3)
     {
     }
 
@@ -242,7 +243,6 @@ private:
 };
 
 
-
 inline Condition* Condition::createAlphabet()
 {
     return new OrCondition(new CharRangeCondition('a', 'z'), new CharRangeCondition('A', 'Z'));
@@ -258,9 +258,11 @@ inline Condition* Condition::createAlphanumerical()
     return new OrCondition(new CharRangeCondition('0', '9'), new CharRangeCondition('a', 'z'), new CharRangeCondition('A', 'Z'));
 }
 
-inline Condition* Condition::createWhitespace()
+inline Condition* Condition::createWhitespace(bool includeLineFeeds = true)
 {
-    return new AnyOfCondition(" \t\r\n");
+    return includeLineFeeds
+               ? new AnyOfCondition(" \t\r\n")
+               : new AnyOfCondition(" \t");
 }
 
 inline Condition* Condition::createLinefeed()
