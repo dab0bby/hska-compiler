@@ -59,9 +59,6 @@
     <ClInclude Include="..\src\utils\include\utils.h" />
     <ClInclude Include="..\src\utils\include\unistd_osinv.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3F26454C-9F68-4DE0-A881-2752C3AA856E}</ProjectGuid>
     <RootNamespace>hskacompiler</RootNamespace>
