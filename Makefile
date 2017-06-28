@@ -7,7 +7,6 @@ LFLAGS = -Wall $(DEBUG) -std=c++1z -O3
 # Sources
 HEADER_DIR        = include
 SOURCE_DIR        = src
-DEBUG_DIR         = debug
 SCANNER_DIR       = $(SOURCE_DIR)/scanner
 STATE_MACHINE_DIR = $(SOURCE_DIR)/state-machine
 BUFFER_DIR        = $(SOURCE_DIR)/buffer
@@ -16,7 +15,7 @@ PARSER_DIR        = $(SOURCE_DIR)/parser
 
 # Target
 BUILD_DIR  = bin
-EXECUTABLE = HsKA-Scanner
+EXECUTABLE = HsKA-Compiler
 
 
 all: clean buffer state-machine symbol-table scanner scanner-build
@@ -36,6 +35,7 @@ buffer:
 
 symbol-table:
 	$(MAKE) -C $(SYM_TAB_DIR)
+
 
 parser:
 	$(MAKE) -C $(PARSER_DIR)
