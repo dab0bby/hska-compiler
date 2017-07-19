@@ -82,13 +82,15 @@ StateMachine::createString(Token::KW_ELSE,
 \end{figure}
 
 \chapter{Parser}
+Der Parser hat die Aufgabe, aus der Tokensequenz die der Scanner liefert, einen Strukturbaum zu erstellen, hierbei prüft er auch die syntaktische Korrektheit. Der Datenfluss ist wie folgt: Der Parser fordert die Tokens vom Scanner an. Der Parser führt nach der Erstellung des Strukturbauems ebenfalls einen Typenprüfung durch und generiert den Code für die VM.
 \section{Parse Tree}
-Der Parser hat die Aufgabe aus den Tokens, welche der Scanner liefert, einen ParseTree auf zu spannen. \\
+Der Parser hat die Aufgabe aus den Tokens, welche der Scanner liefert, einen ParseTree auf zu spannen.  Um dies umzusetzen schaut der Parser immer ein Token voraus, somit wird die Ableitung eindeutig. Der Parser startet mit dem Startsymbol \textit{PROG} und erzeugt von da ausgehen für jede erkannte Regel einen neuen Teilbaum.\\
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{./diagramms/parser.pdf}
 \caption{Klassendiagramm des ParseTree}
+\label{parseTree}
 \end{figure}
 
 
