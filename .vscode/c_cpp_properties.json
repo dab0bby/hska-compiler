@@ -3,6 +3,7 @@
         {
             "name": "Mac",
             "includePath": [
+                "${workspaceRoot}",
                 "/usr/include",
                 "/usr/include/c++/4.2.1",
                 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include"
@@ -11,11 +12,13 @@
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
+                    "${workspaceRoot}",
                     "/usr/include",
                     "/usr/include/c++/4.2.1",
                     "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include"
                 ]
-            }
+            },
+            "intelliSenseMode": "clang-x64"
         },
         {
             "name": "Linux",
@@ -26,9 +29,11 @@
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "/usr/include"
+                    "/usr/include",
+                    "${workspaceRoot}"
                 ]
-            }
+            },
+            "intelliSenseMode": "clang-x64"
         },
         {
             "name": "Win32",
@@ -39,9 +44,12 @@
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "c:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include"
+                    "c:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include",
+                    "${workspaceRoot}"
                 ]
-            }
+            },
+            "intelliSenseMode": "msvc-x64"
         }
-    ]
+    ],
+    "version": 2
 }
