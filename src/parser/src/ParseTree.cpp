@@ -85,7 +85,7 @@ bool ParseTree::typeCheck(Node* node)
                 node->type = TI_ARRAY;
             else
             {
-                error(node->getToken()->getLine(), node->getToken()->getColumn(), "invalid dimension: ", index);
+                error(node->getToken()->getLine(), node->getToken()->getColumn(), "invalid array size: ", index);
                 node->type = TI_ERROR;
                 valid = false;
             }
