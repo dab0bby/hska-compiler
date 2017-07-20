@@ -1,5 +1,5 @@
 \documentclass[
-a4paper
+	a4paper
 ]{scrreprt}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -29,27 +29,27 @@ a4paper
 
 % Titelseite
 \begin{titlepage}
-\centering
-\includegraphics[width=0.8\textwidth]{./images/logo_hska.png}\par\vspace{1cm}
-\vspace{1cm}
+	\centering
+	\includegraphics[width=0.8\textwidth]{./images/logo_hska.png}\par\vspace{1cm}
+	\vspace{1cm}
+	
+	{\scshape\Large Systemnahes Programmieren\par}
+	\vspace{1.5cm}
+	
+	{\huge\textbf{Compiler}\par}
+	\vspace{2cm}
+	
+	{\Large\itshape Timo Blust, 48594\par}
+	{\Large\itshape Gennadi Eirich, 50629\par}
+	{\Large\itshape Tim Essig, 49683\par\par}
+	\vspace{2cm}
+	
+	{\Large\itshape Gruppe 17 (WS 15/16)\par}
+	
+	\vfill
 
-{\scshape\Large Systemnahes Programmieren\par}
-\vspace{1.5cm}
-
-{\huge\textbf{Compiler}\par}
-\vspace{2cm}
-
-{\Large\itshape Timo Blust, 48594\par}
-{\Large\itshape Gennadi Eirich, 50629\par}
-{\Large\itshape Tim Essig, 49683\par\par}
-\vspace{2cm}
-
-{\Large\itshape Gruppe 17 (WS 15/16)\par}
-
-\vfill
-
-% Bottom of the page
-{\large \today\par}
+	% Bottom of the page
+	{\large \today\par}
 \end{titlepage}
 
 
@@ -122,8 +122,73 @@ Das Ablaufdiagramm in Abbildung \ref{TypeCheck1} und \ref{TypeCheck2} zeigt die 
 \end{figure}
 
 
-\section{Code Generation}
-//TODO: Gena
+    \section{Code Generation}
+Die Klasse \textit{CodeGeneration} kümmert sich um die Codegenerierung. Dafür stellt die Klasse eine öffentliche Methode:
+\begin{lstlisting}
+void generate(const Node* tree, std::ostream& out);
+\end{lstlisting}
+
+Dieser Klasse wird der Wurzelknoten des \textit{ParseTree}, und ein \textit{std::ostream} übergeben.
+
+Für den übergebenen Knoten wird der jeweils entsprechende Code generiert und in den \textit{std::ostream} geschrieben. Dieses kann z.B. das \textit{std::cout} (Konsole) oder auch eine Datei \textit{std::oftream} sein.\\
+Für Debug Zwecke wurde \textit{std::cout} verwendet. Um eine Datei für den Code zu erstellen, die der Interpreter lesen kann \textit{std::ofstream}.
+
+Sollte der Übergeben Knoten aus weiteren Knoten bestehen, wird für den jeweiligen Knoten, die methode \textit{generate} aufgerufen. Damit ist die Abarbeitung rekursiv und alle Knoten, die am Wurzelknoten hängen werden in sich hirarchisch abgearbeitet. Sollte der Knoten zu einem Endknoten gelangen endet die Rekursion. Entweder ist die Codegenerierung zu ende oder es wird der nächste Knoten bearbeitet, bis alle Knoten abgearbeitet wurden.
+
+Innerhalb der \textit{generate} Funktion befinden sich ein \textbf{switch} Statement, das je nach Knotentyp (Prog, Decls, Array, ...) den entsprechenden Code generiert. Im Falle eines leeren Knoten \textit{nullptr} oder einem Knote des Typs \textit{Nil} wird die Rekursion unterbrochen.
+
+Die jeweiligen Regeln für die Codegenerierung sind dem Aufgabenblatt zu entnehmen. 
+
+
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{./images/code_generation.png}
+\end{center}
+
+\subsection{Erzeugung eindeutiger Identifier}
+Für die \textbf{JMP} und \textbf{JIN} Befehle werden eindeutige Identifier benötigt. Zu diesen eindeutigen Label wird bei der Ausführung je nach Bedingung gesprungen
+\begin{lstlisting}
+const char* CodeGenerator::_createLabel()
+{
+const int digitCount = _labelCount > 0 ? log10(_labelCount) + 1 : 1;
+const auto size = strlen("lbl") + digitCount;
+auto label = new char[size + 1];
+
+// Fill label
+sprintf(label, "lbl%u", _labelCount);
+
+// Terminate label
+label[size] = 0;
+
+// Increment label count
+_labelCount++;
+return label;
+}
+\end{lstlisting}
+
+\section{Ausführung}
+Gebaut wird das Programm mit \textbf{Makefile}:
+\begin{lstlisting}
+$ make 			// build project
+\end{lstlisting}
+
+Alternativ können die Makefiles auch mit \textbf{CMake} generiert werden:
+\begin{lstlisting}
+$ mkdir build && cd build 	// create build directory
+$ cmake ..			// generate makefiles
+$ make				// build project
+\end{lstlisting}
+
+Für die Ausführung müssen dem Programm zwei Parameter übergeben werden.
+
+\begin{enumerate}
+	\item Eingabedatei (Sourcecode)
+	\item Ausgabedatei (Generierter Code)
+\end{enumerate}
+
+\begin{lstlisting}
+$ cd bin		// target directory
+$ ./HsKA-Compiler input.txt output.code
+\end{lstlisting}
 
 
 \end{document}
