@@ -9,9 +9,9 @@
 
 
 #include <math.h>
+#include <string.h>
 
 #include "../include/CodeGenerator.h"
-#include <string.h>
 
 
 CodeGenerator::CodeGenerator()

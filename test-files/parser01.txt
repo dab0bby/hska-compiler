@@ -1,9 +1,49 @@
 :* Parse01.txt *:
-int     v1;
+
+int n;
+int[3] m;
+n := 3 + 4;
+n := 3*n--5;
+write(n);
+
+:*int     v1;
 int     v2;
+v2 := (3);
+v2 := 3 - (2 && 1);
+v2 := 3 + 2;
+
+read(v1[3]);
+
+if (v1 > v2)
+    v2 := v1
+else
+    v2 := 0;
+
+if (!v2)
+    v2 := v1
+else
+    v2 := 0;
+
+write(v1);*:
+
+:*
 int[20] v3;
 int [5] v4;
 int v5;
+int     testname;
 
 v1 := 2;
 v1 := v2 + 3;
+testname := v1 + v2 - 0;
+
+if (v1 > v2)
+    v2 := v1
+else
+    v2 := 0;
+
+while (v5 < 10)
+{
+    v5 := v5 + 1;
+    write(v5);
+};
+*:
