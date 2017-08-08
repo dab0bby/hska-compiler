@@ -2,8 +2,6 @@
 
 Assignment in _Operating Systems_ at [University of Applied Sciences Karlsuhe](https://www.hs-karlsruhe.de/en/)
 
-[![Build Status](https://travis-ci.com/daB0bby/hska-compiler.svg?token=73a8dGHWvg7aSEGFEBxC&branch=master)](https://travis-ci.com/daB0bby/hska-compiler)
-
 #### Build
 ```
 $ mkdir build && cd build
